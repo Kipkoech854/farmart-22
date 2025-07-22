@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import '../Stylesheets/OrderCard.css'; 
 import { Checkout } from '../Utils/Checkout';
-
+import { AddToCart } from './AddtoCart';
+import { useCart } from '../context/CartContext';
+import { RemovefromCart } from './RemovefromCart'
 
 
 const AnimalCard = ({ animal }) => {
@@ -40,15 +42,24 @@ const AnimalCard = ({ animal }) => {
           {animal.is_available ? "Available" : "Unavailable"}
         </span>
       </div>
+      <div>
+        <RemovefromCart item ={animal} />
+      </div>
     </div>
   );
 };
 
 export const OrderCard = ({ animals }) => {
+  
+  const normalizedAnimals = Array.isArray(animals)
+    ? animals
+    : animals && typeof animals === "object"
+    ? [animals]
+    : [];
 
   return (
     <div className="animal-list">
-      {animals.map((animal, index) => (
+      {normalizedAnimals.map((animal, index) => (
         <AnimalCard key={index} animal={animal} />
       ))}
     </div>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown } from "./Dropdown";
 import { kenyaLocations } from "./Kenyanlocations";
+import { Link } from "react-router-dom";
+import { PaymentFormsToogle } from "./PaymentFormsToogle";
 
 export const Checkout = ({ cart }) => {
   const [items, setItems] = useState(cart || []);
@@ -9,6 +11,10 @@ export const Checkout = ({ cart }) => {
   const [paymentMethod, setPaymentMethod] = useState('');
   const [deliveryMethod, setDeliveryMethod] = useState('');
   const [pickupLocation, setPickupLocation] = useState('');
+  const [active, setactive] = useState(false)
+  
+   
+
 
   useEffect(() => {
     const total = items.reduce((acc, item) => acc + item.price, 0);
@@ -17,6 +23,9 @@ export const Checkout = ({ cart }) => {
 
   return (
     <div className="checkout-container">
+      <nav>
+        <Link to = '/cart'>←</Link>
+      </nav>
       <div className="checkout-header">
         <h2>Checkout</h2>
         <p>Total price: Ksh {totalPrice}</p>
@@ -27,8 +36,10 @@ export const Checkout = ({ cart }) => {
           label="Select Payment Method"
           options={["MPESA", "Credit Card", "PayPal", "Cash", "Pay on delivery"]}
           onSelect={(option) => setPaymentMethod(option)}
+          
         />
         <p>Selected: {paymentMethod}</p>
+        <PaymentFormsToogle paymentMethod={paymentMethod}/> 
       </div>
 
       <div className="dropdown-section">
