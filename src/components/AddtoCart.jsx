@@ -26,6 +26,16 @@ export const AddToCart = ({ animal }) => {
   };
 
   return (
-    <button onClick={handleAddToCart}>🛒 Add to cart</button>
+   <button onClick={() => {
+       if (is_available) {
+          handleAddToCart();
+       } else {
+       alert('Cannot add an unavailable animal to cart');
+      }
+      }}
+     >
+  🛒 Add to cart
+</button>
+
   );
 };

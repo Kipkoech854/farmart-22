@@ -2,7 +2,8 @@ import React from 'react';
 import { OrderCard } from '../components/OrderCard';
 import { Checkout } from '../Utils/Checkout';
 import { useCart } from '../context/CartContext';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
+import { ConfirmedOrders } from '../Orders/ConfirmedOrders'; 
 
 function Cart() {
   //const { cart } = useCart();
@@ -40,10 +41,7 @@ function Cart() {
 
   return (
     <div>
-      <OrderCard animals={cart} />
-      <nav>
-        <Link to = '/checkout'>Checkout</Link>
-      </nav>
+      <ConfirmedOrders/>
     </div>
   );
 }
