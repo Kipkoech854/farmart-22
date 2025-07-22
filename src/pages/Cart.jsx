@@ -8,7 +8,7 @@ function Cart() {
 
   if (cart.length === 0) {
     return (
-      <div className="empty-cart">
+      <div className="w-50 h-50 d-flex flex-column justify-center items-center">
         <h2>Your cart is empty</h2>
         <p>Please add some items to your cart.</p>
       </div>
