@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const pendingOrders = async ()   =>{
 try{
-    const response = await axios.get('https://farmart-y80m.onrender.com/api/orders/pending',options);
+    const response = await axios.get('https://farmart-y80m.onrender.com/api/Orders/pending',options);
     const options ={
         headers:{
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -13,4 +13,60 @@ try{
 } catch(error){
     console.error(error)
 }
+}
+
+export const Confirmed = async () => {
+    try {
+        const response = await axios.get('https://farmart-y80m.onrender.com/api/Orders/Confirmed', options);
+        const options = {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            }
+        }
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const DeliveredOrders = async () => {
+    try {
+        const response = await axios.get('https://farmart-y80m.onrender.com/api/Orders', options);
+        const options = {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            }
+        }
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const allOrders = async () => {
+    try {
+        const response = await axios.get('https://farmart-y80m.onrender.com/api/Orders/all', options);
+        const options = {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            }
+        }
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const PaidOrders = async () => {
+    try {
+        const response = await axios.get('https://farmart-y80m.onrender.com/api/Orders', options);
+        const options = {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            }
+        }
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
 }
