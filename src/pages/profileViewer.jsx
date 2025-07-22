@@ -69,7 +69,7 @@ const Profile = () => {
     }
   };
 
-  if (!profile) return <p>Loading profile...</p>;
+  if (!profile) return <p>Loading profile....</p>;
 
   return (
     <div>
