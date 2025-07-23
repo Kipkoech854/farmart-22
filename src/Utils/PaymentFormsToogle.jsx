@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import StripeContainer from '../Payment/StripeContainer';
+import '../Stylesheets/PaymentFormsToogle.css'
 
 export const PaymentFormsToogle = ({ paymentMethod }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -12,10 +13,10 @@ export const PaymentFormsToogle = ({ paymentMethod }) => {
   if (paymentMethod === 'MPESA') {
     return (
       <div>
-        <form onSubmit={handlePhoneSubmit}>
+        <form className = 'phone-number-form'onSubmit={handlePhoneSubmit}>
           <label htmlFor="phone-number">Phone Number:</label>
           <input
-            type="number"
+            type="tel"
             id="phone-number"
             placeholder="Enter phone number"
             value={phoneNumber}

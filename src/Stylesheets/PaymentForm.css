@@ -1,0 +1,115 @@
+
+.payment-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+}
+
+
+.payment-form {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 100, 0, 0.1);
+  padding: 40px 30px;
+  border: 1px solid #e8f5e9;
+}
+
+
+.payment-heading {
+  color: #1b5e20;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.payment-subheading {
+  color: #4caf50;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+
+.card-element-wrapper {
+  padding: 18px 16px;
+  border: 2px solid #e8f5e9;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+  background-color: #f8fff8;
+}
+
+.card-element-wrapper:hover {
+  border-color: #c8e6c9;
+}
+
+.card-element-wrapper.StripeElement--focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+
+.pay-button {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(to right, #2c5f2d, #4caf50);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(44, 95, 45, 0.25);
+}
+
+.pay-button:hover {
+  background: linear-gradient(to right, #1e3c1e, #3d8b40);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(44, 95, 45, 0.35);
+}
+
+.pay-button:active {
+  transform: translateY(1px);
+}
+
+.pay-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+
+.payment-security {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+  font-family: 'Quicksand', sans-serif;
+  color: #757575;
+  font-size: 14px;
+}
+
+.lock-icon {
+  font-size: 16px;
+}
+
+
+@media (max-width: 480px) {
+  .payment-form {
+    padding: 30px 20px;
+  }
+  
+  .payment-heading {
+    font-size: 24px;
+  }
+}
