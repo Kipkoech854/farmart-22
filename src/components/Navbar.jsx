@@ -1,11 +1,15 @@
-import React from "react";
+import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import { isTokenExpired } from "../utils/jwt";
 import "../Stylesheets/Navbar.css";
 
 const Navbar = () => {
+
   const storedUser = localStorage.getItem("user");
   const isLoggedIn = storedUser && !isTokenExpired(JSON.parse(storedUser).token);
+
+  const { cart } = useCart(); 
+
 
   return (
     <div className="navbar">
@@ -13,6 +17,7 @@ const Navbar = () => {
       <nav>
         <Link to="/">Home</Link>
         <Link to="/shop">Shop</Link>
+
         <Link to="/cart">🛒</Link>
         <Link to="/about">About</Link>
 
@@ -26,6 +31,20 @@ const Navbar = () => {
             <Link to="/Signup">Sign up</Link>
           </div>
         )}
+
+        <Link to="/cart">
+          🛒
+          {cart.length > 0 && (
+            <sup className="cart-count">{cart.length}</sup> 
+          )}
+        </Link>
+        <Link to="/about">About</Link>
+
+        <div className="auth-links">
+          <Link to="/signin">Sign in</Link>
+          <Link to="/signup">Sign up</Link>
+        </div>
+
       </nav>
     </div>
   );

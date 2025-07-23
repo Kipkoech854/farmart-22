@@ -13,19 +13,25 @@ const Login = () => {
     const navigate = useNavigate();
     const { loading, error } = useSelector((state) => state.auth);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const result = await dispatch(login({ email, password }));
-            if (result.meta.requestStatus === 'fulfilled') {
-                clearForm();
-                // Redirect to home or dashboard after successful login
-                navigate('/');
-            }
-        } catch (error) {
-            console.error('Login failed:', error);
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+        const result =  login({ email, password });
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('role', result.role);
+
+        // Redirect based on role
+        if (result.role === 'farmer') {
+            navigate('/farmer/dashboard');
+        } else {
+            navigate('/user/dashboard');
         }
-    };
+    } catch (error) {
+        console.error('Login failed:', error.message);
+        alert(error.message);
+    }
+};
+
 
     // clear form fields after submission
     const clearForm = () => {
