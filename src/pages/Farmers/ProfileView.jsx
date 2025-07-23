@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import FarmerNavbar from "../../components/FarmerNavbar";
+import "../../Stylesheets/ProfileView.css";
+import defaultPic from "../../assets/default-profile.jpeg";
 
 const ProfileView = () => {
   const [farmer, setFarmer] = useState(null);
@@ -19,14 +21,19 @@ const ProfileView = () => {
   return (
     <div>
       <FarmerNavbar />
-      <div className="p-4 max-w-md mx-auto mt-8 bg-white shadow rounded">
-        <h2 className="text-2xl font-bold mb-4">My Profile</h2>
+      <div className="profile-container">
+        <h2 className="profile-title">My Profile</h2>
         {farmer ? (
-          <>
+          <div className="profile-card">
+            <img
+              className="profile-pic"
+              src={farmer.profile_picture || defaultPic}
+              alt="Profile"
+            />
             <p><strong>Username:</strong> {farmer.username}</p>
             <p><strong>Email:</strong> {farmer.email}</p>
             <p><strong>Phone:</strong> {farmer.phone || "N/A"}</p>
-          </>
+          </div>
         ) : (
           <p>Loading...</p>
         )}
