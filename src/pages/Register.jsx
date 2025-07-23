@@ -21,19 +21,17 @@ const Register = () => {
         });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const result = await dispatch(register(form));
-            if (result.meta.requestStatus === 'fulfilled') {
-                clearForm();
-                // Redirect to login page after successful registration
-                navigate('/login');
-            }
-        } catch (error) {
-            console.error('Registration failed:', error);
-        }
-    };
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+        await register(form); 
+        clearForm();
+        navigate('/');
+    } catch (error) {
+        console.error('Registration failed:', error);
+    }
+};
+
 
     // clear form fields after submission
     const clearForm = () => {
@@ -41,7 +39,7 @@ const Register = () => {
             username: '',
             email: '',
             password: '',
-            role: 'user', // Reset to default role
+            role: 'user',
         });
     };
 

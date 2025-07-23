@@ -1,4 +1,4 @@
-import { Confirmed } from "../../public/Api/Ordersapi";
+/*import { Confirmed } from "../../public/Api/Ordersapi";
 import React, { useState, useEffect } from "react";
 
 export const ConfirmedOrders = () => {
@@ -46,3 +46,4 @@ export const ConfirmedOrders = () => {
     </div>
   );
 };
+*/

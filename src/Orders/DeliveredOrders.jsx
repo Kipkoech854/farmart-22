@@ -1,4 +1,4 @@
-import { DeliveredOrders } from "../../public/Api/Ordersapi";
+/*import { DeliveredOrders } from "../../public/Api/Ordersapi";
 import React, { useState, useEffect } from "react";
 
 export const DeliveredOrders = () => {
@@ -46,3 +46,4 @@ export const DeliveredOrders = () => {
     </div>
   );
 };
+*/

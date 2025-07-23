@@ -3,7 +3,8 @@ import { Home } from "../pages/Home";
 import { About } from "../pages/About";
 import Shop from '../pages/Shop';
 import Cart from '../pages/Cart';
-import Authmodal from '../components/Authmodal'
+import Login from '../pages/Login'
+import Register from '../pages/Register'
 import { Checkout } from "../Utils/Checkout";
 
 const appRoutes = [
@@ -11,8 +12,8 @@ const appRoutes = [
   { path: "/about", element: <About /> },
   {path: '/shop', element:<Shop/>},
   {path:'/cart', element:<Cart/>},
-  {path:'/Signin', element:<Authmodal/>},
-  {path:'/Signup', element:<Authmodal/>},
+  {path:'/Signin', element:<Login/>},
+  {path:'/Signup', element:<Register/>},
   {path:'/checkout', element:<Checkout/>}
 ];
 

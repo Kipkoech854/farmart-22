@@ -3,7 +3,7 @@ import { OrderCard } from '../components/OrderCard';
 import { Checkout } from '../Utils/Checkout';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
-import { ConfirmedOrders } from '../Orders/ConfirmedOrders'; 
+//import { ConfirmedOrders } from '../Orders/ConfirmedOrders'; 
 
 function Cart() {
   //const { cart } = useCart();
@@ -41,7 +41,7 @@ function Cart() {
 
   return (
     <div>
-      <ConfirmedOrders/>
+    
     </div>
   );
 }

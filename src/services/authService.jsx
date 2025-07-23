@@ -1,31 +1,47 @@
-import { API_URL } from "../config";
+//import { API_URL } from "../config";
 
 // Sends a POST request to /auth/login with JSON data
-const login = async (credentials) => {
-    const response = await fetch("http://localhost:5555/auth/login", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    });
+export const login = async (credentials) => {
+    const urls = [
+        { url: "https://farmart-y80m.onrender.com/auth/login", role: "user" },
+        { url: "https://farmart-y80m.onrender.com/api/farmers/farmers/login", role: "farmer" }
+    ];
 
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
+    for (const { url, role } of urls) {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            data.role = role;
+            return data; // includes token and role
+        }
     }
 
-    return await response.json();
+    throw new Error('Login failed for both user and farmer');
 };
+
 
 // Sends a POST request to /auth/register with new user data
 const register = async (userData) => {
-    const response = await fetch("http://localhost:5555/auth/register", {
+    const { role, ...rest } = userData;
+
+    // Choose URL based on role
+    const url = role === 'farmer'
+        ? "http://localhost:5555/farmerauth/register"
+        : "http://localhost:5555/auth/register";
+
+    const response = await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(rest)  // exclude role from the body if not needed by backend
     });
 
     if (!response.ok) {
@@ -35,6 +51,7 @@ const register = async (userData) => {
 
     return await response.json();
 };
+
 
 export const authService = {
     login,
