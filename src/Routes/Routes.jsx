@@ -11,6 +11,7 @@ import AnimalForm from '../pages/Farmers/AnimalForm';
 import FarmerFeedback from '../pages/Farmers/FarmerFeedback';
 import FarmerLogin from "../pages/Farmers/FarmerLogin";
 import FarmerRegister from "../pages/Farmers/FarmerRegister";
+import FarmerLogout from "../pages/Farmers/FarmerLogout";
 
 
 const appRoutes = [
@@ -27,6 +28,7 @@ const appRoutes = [
   {path: "/farmers/feedback",element: <FarmerFeedback />},
   {path: "/farmers/login",element: <FarmerLogin />},
   {path: "/farmers/register",element: <FarmerRegister />},
+  {path: "/farmers/logout", element: <FarmerLogout /> },
 ];
 
 export default appRoutes;
