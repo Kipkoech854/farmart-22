@@ -29,11 +29,8 @@ export const login = async (credentials) => {
 
 // Sends a POST request to /auth/register with new user data
 const register = async (userData) => {
-    const { role, ...rest } = userData;
-
-    // Choose URL based on role
-    const url = role === 'farmer'
-        ? "http://localhost:5555/farmerauth/register"
+    const url = userData.role === 'farmer'
+        ? "http://localhost:5555/api/farmers/farmers/register"
         : "http://localhost:5555/auth/register";
 
     const response = await fetch(url, {
@@ -41,15 +38,18 @@ const register = async (userData) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(rest)  // exclude role from the body if not needed by backend
+        body: JSON.stringify(userData),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Registration failed');
+        const error = new Error(data.message || 'Registration failed');
+        error.status = response.status;  
+        throw error;
     }
 
-    return await response.json();
+    return data;
 };
 
 

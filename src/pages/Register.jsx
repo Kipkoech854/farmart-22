@@ -8,11 +8,12 @@ const Register = () => {
         username: '',
         email: '',
         password: '',
-        role: 'user', // Default role
+        role: 'user',
     });
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { loading, error } = useSelector((state) => state.auth);
+    const authState = useSelector(state => state.auth);
 
     const handleChange = (e) => {
         setForm({
@@ -21,16 +22,23 @@ const Register = () => {
         });
     };
 
-   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-        await register(form); 
-        clearForm();
-        navigate('/');
-    } catch (error) {
-        console.error('Registration failed:', error);
+  const handleSubmit = async () => {
+  try {
+    const result = await dispatch(register(form)).unwrap();
+    toast.success("Registration successful!");
+    clearForm();
+    navigate('/');
+  } catch (err) {
+    if (err.status === 409) {
+      toast.error("Account already exists");
+    } else if (err.status === 400) {
+      toast.error("Invalid input. Please check your details.");
+    } else {
+      toast.error("Something went wrong. Try again later.");
     }
+  }
 };
+
 
 
     // clear form fields after submission
@@ -110,9 +118,12 @@ const Register = () => {
                     className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-green-500"
                 >
                     <option value="customer">User</option>
-                    <option value="admin">Farmer</option>
+                    <option value="farmer">Farmer</option>
                 </select>
             </div>
+             {authState.error?.status === 409 && (
+                <p className="text-red-600">User already exists.</p>
+               )}
 
             <button
                 type="submit"

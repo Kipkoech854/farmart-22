@@ -43,17 +43,21 @@ export const login = createAsyncThunk(
 // If the registration is successful, it stores the user data in localStorage and returns the response.
 // If it fails, it rejects with an error message.
 export const register = createAsyncThunk(
-    'auth/register',
-    async (userData, thunkAPI) => {
-        try {
-            const response = await authService.register(userData);
-            localStorage.setItem('user', JSON.stringify(response));
-            return response;
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error.message);
-        }
+  'auth/register',
+  async (userData, thunkAPI) => {
+    try {
+      const response = await authService.register(userData);
+      localStorage.setItem('user', JSON.stringify(response));
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({
+        message: error.message,
+        status: error.status || 500,
+      });
     }
+  }
 );
+
 
 
 // This creates a slice of the Redux store for authentication.
