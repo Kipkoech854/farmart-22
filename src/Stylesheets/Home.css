@@ -6,12 +6,8 @@
 }
 
 .welcome{
-    width: 80px;
     height: 40px;
     background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
 }
 
 .welcome h1{
@@ -19,11 +15,7 @@
     font-weight: bold;
     font-family: 'Quicksand', sans-serif;
     color: black;
-}
-.home-container p{
-    font-size: medium;
-    font-family: 'Quicksand', sans-serif;
-    color: black;
+    
 }
 
 .content{
@@ -34,6 +26,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 20px;
+    padding-top: 100px;
 }
 
 .bridge{
@@ -48,7 +41,8 @@
 .image-container{
     width: 50%;
     height: fit-content;
-    display:flex
+    display:flex;
+    padding-top: 10px;
 
 }
 
