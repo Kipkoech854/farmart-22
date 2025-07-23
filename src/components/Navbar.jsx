@@ -8,10 +8,9 @@ const Navbar = () => {
       <img src="/images/farmart-logo.jpg" alt="Farmart Logo" />
       <nav>
         <Link to="/">Home</Link>
-        <Link to ='shop'>Shop</Link>
-        <Link to ='Cart'>🛒</Link>
+        <Link to ='shop'>Shop</Link>       
         <Link to="/about">About</Link>
-        
+        <Link to ='Cart'>🛒</Link>
         <div className="auth-links">
               <Link to = 'Signin'>Sign in</Link>
               <Link to ='Signup'>Sign up</Link>
