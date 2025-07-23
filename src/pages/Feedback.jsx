@@ -11,7 +11,7 @@ const Feedback = () => {
     const token = getToken();
 
     try {
-      const res = await fetch('http://localhost:5555/api/feedback', {
+      const res = await fetch('http://localhost:10000/api/feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
