@@ -7,7 +7,6 @@ export const Home =() =>{
     <div className='home-container'>
       <div className='welcome'>
          <h1>Welcome to farmart</h1>
-         <p>your one stop shop for all the farming needs you need!</p>
       </div> 
 
     <div className='content'>
@@ -20,9 +19,9 @@ export const Home =() =>{
       </div>
 
       <div className='image-container'>
-        <img src='./images/landing-horse.jpg' alt='landing-horse' className=''/>
+        <img src='./images/Landing-horse.png' alt='landing-horse' className=''/>
       </div>
-  </div>
+    </div>
 
       <div className='nav-links'>
         
