@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../../Stylesheets/FarmerRegister.css";
 
 const FarmerRegister = () => {
   const [form, setForm] = useState({
@@ -7,8 +8,10 @@ const FarmerRegister = () => {
     email: "",
     phone: "",
     password: "",
-    profile_picture: ""
+    confirmPassword: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -18,11 +21,21 @@ const FarmerRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (form.password !== form.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     try {
       const res = await fetch("http://localhost:5555/api/farmers/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          username: form.username,
+          email: form.email,
+          phone: form.phone,
+          password: form.password,
+        }),
       });
 
       const data = await res.json();
@@ -40,9 +53,9 @@ const FarmerRegister = () => {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "auto" }}>
+    <div className="register-container">
       <h2>Register as a Farmer</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
         <input
           name="username"
@@ -50,7 +63,6 @@ const FarmerRegister = () => {
           value={form.username}
           onChange={handleChange}
           required
-          style={{ display: "block", width: "100%", marginBottom: "10px" }}
         />
         <input
           name="email"
@@ -59,7 +71,6 @@ const FarmerRegister = () => {
           value={form.email}
           onChange={handleChange}
           required
-          style={{ display: "block", width: "100%", marginBottom: "10px" }}
         />
         <input
           name="phone"
@@ -67,21 +78,37 @@ const FarmerRegister = () => {
           value={form.phone}
           onChange={handleChange}
           required
-          style={{ display: "block", width: "100%", marginBottom: "10px" }}
         />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-          style={{ display: "block", width: "100%", marginBottom: "10px" }}
-        />
-        <input name="profile_picture" placeholder="Profile Picture URL" onChange={handleChange} />
-        <button type="submit" style={{ width: "100%" }}>
-          Register
-        </button>
+
+        <div className="password-input">
+          <input
+            name="password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+          <span onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? "🙈" : "👁️"}
+          </span>
+        </div>
+
+        <div className="password-input">
+          <input
+            name="confirmPassword"
+            type={showConfirm ? "text" : "password"}
+            placeholder="Confirm Password"
+            value={form.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+          <span onClick={() => setShowConfirm(!showConfirm)}>
+            {showConfirm ? "🙈" : "👁️"}
+          </span>
+        </div>
+
+        <button type="submit">Register</button>
       </form>
     </div>
   );
