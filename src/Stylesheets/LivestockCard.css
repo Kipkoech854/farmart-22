@@ -1,13 +1,9 @@
-/* Base styles */
-body {
+/* livestock-marketplace.css */
+.livestock-marketplace {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f8faf7;
-  margin: 0;
   padding: 20px;
   color: #333;
-}
-
-.livestock-marketplace {
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -32,14 +28,12 @@ body {
   opacity: 0.9;
 }
 
-/* Grid layout */
 .livestock-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 25px;
 }
 
-/* Card styling */
 .livestock-card {
   background-color: white;
   border-radius: 10px;
@@ -47,6 +41,9 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .livestock-card:hover {
@@ -55,82 +52,137 @@ body {
 }
 
 .card-image {
+  width: 100%;
+  height: 160px;
   object-fit: cover;
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 .card-image:hover {
   transform: scale(1.03);
 }
 
+.card-content {
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .livestock-name {
   font-weight: 700;
   color: #2e7d32;
   font-size: 1.1rem;
+  margin-bottom: 10px;
 }
 
-/* Chip styling */
-.type-chip {
-  background-color: #e8f5e9 !important;
-  color: #2e7d32 !important;
+.chips-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 0.75rem;
   font-weight: 600;
+}
+
+.type-chip {
+  background-color: #e8f5e9;
+  color: #2e7d32;
 }
 
 .breed-chip {
-  border-color: #81c784 !important;
-  color: #388e3c !important;
+  border: 1px solid #81c784;
+  color: #388e3c;
 }
 
 .location-chip {
-  background-color: #f1f8e9 !important;
-  color: #33691e !important;
+  background-color: #f1f8e9;
+  color: #33691e;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.age-chip {
-  background-color: #c8e6c9 !important;
-  color: #1b5e20 !important;
-  font-weight: 600;
+.location-chip svg {
+  font-size: 0.9rem;
 }
 
 .livestock-description {
   color: #555;
   line-height: 1.5;
+  margin-bottom: 10px;
+  flex-grow: 1;
+}
+
+.price-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .price-tag {
   color: #2e7d32;
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
-/* Button styling */
+.age-chip {
+  background-color: #c8e6c9;
+  color: #1b5e20;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+}
+
 .card-actions {
   background-color: #f5f9f5;
   border-top: 1px solid #e8f5e9;
+  padding: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.action-button {
+  flex: 1;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .cart-button {
-  background-color: #2e7d32 !important;
-  color: white !important;
-  font-weight: 600;
-  border-radius: 5px !important;
-  transition: background-color 0.3s;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
 }
 
 .cart-button:hover {
-  background-color: #1b5e20 !important;
+  background-color: #1b5e20;
 }
 
 .buy-button {
-  color: #2e7d32 !important;
-  border-color: #2e7d32 !important;
-  font-weight: 600;
-  border-radius: 5px !important;
-  transition: all 0.3s;
+  background-color: transparent;
+  color: #2e7d32;
+  border: 1px solid #2e7d32;
 }
 
 .buy-button:hover {
-  background-color: #e8f5e9 !important;
-  border-color: #1b5e20 !important;
-  color: #1b5e20 !important;
+  background-color: #e8f5e9;
+  border-color: #1b5e20;
+  color: #1b5e20;
 }
 
 /* Responsive adjustments */
@@ -155,4 +207,3 @@ body {
     font-size: 2rem;
   }
 }
-`;

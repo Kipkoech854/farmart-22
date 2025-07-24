@@ -8,6 +8,7 @@ import Register from '../pages/Register'
 import { Checkout } from "../Utils/Checkout";
 import { ConfirmedOrders } from "../Orders/ConfirmedOrders";
 import { LivestockPage } from '../pages/LivestockPage'
+import { OverheadClassifiers}  from '../Orders/OverheadClassifiers'
 
 const appRoutes = [
   { path: "/", element: <Home /> },
@@ -17,6 +18,7 @@ const appRoutes = [
   {path:'/Signin', element:<Login/>},
   {path:'/Signup', element:<Register/>},
   {path:'/checkout', element:<Checkout/>},
+  {path: '/orders', element:<OverheadClassifiers/>},
   {path: '/ConfirmedOrders', element:<ConfirmedOrders/>}
 ];
 
