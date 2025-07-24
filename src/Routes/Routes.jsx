@@ -1,10 +1,6 @@
 
 import AuthForm from "../components/AuthForm";
-import Home from "../pages/Home";
-import Shop from "../pages/Shop";
-import Cart from "../pages/Cart";
-import About from "../pages/About";
-import Profile from "../pages/Profile";
+
 
 import { Route } from "react-router-dom";
 import { Home } from "../pages/Home";

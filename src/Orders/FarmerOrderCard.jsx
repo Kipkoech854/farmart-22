@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import '../Stylesheets/UserOrderCard.css';
 
-export const FarmerOrderCard = ({ orders, onDelete }) => {
+export const FarmerOrderCard = ({ orders, onDelete, renderActions }) => {
   // Improved normalization with flattening and key handling
   const normalizedOrders = Array.isArray(orders) 
     ? orders.flat().filter(order => order && order.id) 
@@ -14,7 +14,8 @@ export const FarmerOrderCard = ({ orders, onDelete }) => {
           <OrderItem 
             key={order.id} 
             order={order} 
-            onDelete={onDelete} 
+            onDelete={onDelete}
+            renderActions={renderActions} 
           />
         ))}
       </div>
@@ -22,7 +23,7 @@ export const FarmerOrderCard = ({ orders, onDelete }) => {
   );
 };
 
-const OrderItem = React.memo(({ order, onDelete }) => {
+const OrderItem = React.memo(({ order, onDelete, renderActions }) => {
   const [showImage, setShowImage] = useState(true);
   const [showEmail, setShowEmail] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
@@ -115,7 +116,9 @@ const OrderItem = React.memo(({ order, onDelete }) => {
           </div>
           
           {/* Action Buttons */}
+          
           <div className="order-actions">
+            {renderActions && renderActions(order)}
             <button 
               className="details-btn"
               onClick={toggleDetails}

@@ -1,16 +1,16 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { UserOrderCard } from "./UserOrderCard";
 import { FarmerOrderCard } from "./FarmerOrderCard";
-import { FarmerOrders } from "../Utils/FarmerFaker";
+import { FarmerOrders } from "../Utils/UnconstrainedFaker";
 import { UserOrders } from "../Utils/UserFaker";
 
-
-export const DeliveredOrders = ({role}) =>{
+export const AllOrders = ({role}) =>{
   
-    const [Orders, setOrders] = useState([])
-     const userOrders = UserOrders;
-    const farmerOrders = FarmerOrders;
-     
+  
+  //const [Orders, setOrders] = useState([])
+  
+  const userOrders = UserOrders;
+  const farmerOrders = FarmerOrders;
 
     if (role === 'customer') {
       return (
@@ -34,4 +34,5 @@ export const DeliveredOrders = ({role}) =>{
       console.error('Cannot determine your role!');
       return null;
     }
+    
 }

@@ -5,12 +5,13 @@ import { FarmerOrders } from "../Utils/FarmerFaker";
 import { UserOrders } from "../Utils/UserFaker";
 
 
-export const DeliveredOrders = ({role}) =>{
+
+export const RejectedOrders = ({role}) =>{
   
     const [Orders, setOrders] = useState([])
-     const userOrders = UserOrders;
+
+    const userOrders = UserOrders;
     const farmerOrders = FarmerOrders;
-     
 
     if (role === 'customer') {
       return (

@@ -4,6 +4,7 @@ import LivestockCard from '../components/LivestockCard';
 import LivestockModal from '../components/LivestockModal'; 
 import { useState, useEffect } from 'react';
 import { fetchLivestock } from '../services/livestockService';
+import SearchSortFilter from '../components/SearchSortFilter';
 
 export const LivestockPage = () => {
   const { addItem } = useCart();

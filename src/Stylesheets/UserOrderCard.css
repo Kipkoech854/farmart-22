@@ -108,7 +108,7 @@
 
     .username {
       font-weight: 600;
-      color: #2c5f2d;
+      color: black;
       margin: 0;
       font-size: 0.95rem;
     }
@@ -116,7 +116,7 @@
     .email {
       display: block;
       font-size: 0.8rem;
-      color: #4caf50;
+      color: black;
       text-decoration: none;
       margin-top: 3px;
       transition: all 0.2s;
@@ -139,13 +139,13 @@
     }
 
     .order-id {
-      color: #1b5e20;
+      color: black;
       font-size: 1.5rem;
       margin: 0 0 8px 0; /* Reduced margin */
     }
 
     .order-amount {
-      color: #2c5f2d;
+      color: black;
       font-size: 1.3rem;
       margin: 0 0 10px 0; /* Reduced margin */
       font-weight: 700;
@@ -184,7 +184,7 @@
       justify-content: center;
     }
 
-    .details-btn, .delete-btn {
+    .details-btn, .delete-btn, .confirm-btn, .reject-btn{
       padding: 10px 25px;
       border: none;
       border-radius: 30px;
@@ -195,13 +195,29 @@
       font-family: 'Quicksand', sans-serif;
     }
 
-    .details-btn {
+    .details-btn, .confirm-btn {
       background: linear-gradient(to right, #2c5f2d, #4caf50);
       color: white;
       box-shadow: 0 4px 10px rgba(44, 95, 45, 0.3);
     }
+     .details-btn:hover {
+      background: linear-gradient(to right, #1e3c1e, #3d8b40);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(44, 95, 45, 0.4);
+    }
+    .reject-btn{
+      background: linear-gradient(to right, #e11906, #e1b6ad);
+      color: white;
+      box-shadow: 0 4px 10px rgba(44, 95, 45, 0.3);
+    }
+    .reject-btn:hover {
+      background: #ffebee;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(211, 47, 47, 0.2);
+    }
 
-    .details-btn:hover {
+   
+    .confirm-btn:hover {
       background: linear-gradient(to right, #1e3c1e, #3d8b40);
       transform: translateY(-2px);
       box-shadow: 0 6px 15px rgba(44, 95, 45, 0.4);
@@ -212,6 +228,7 @@
       color: #d32f2f;
       border: 1px solid #ffcdd2;
     }
+    
 
     .delete-btn:hover {
       background: #ffebee;
@@ -308,13 +325,13 @@
     }
 
     .item-name {
-      color: #1b5e20;
+      color: black;
       font-size: 1.4rem;
       margin: 0 0 10px 0;
     }
 
     .item-description {
-      color: #555;
+      color: black;
       line-height: 1.5;
       margin-bottom: 15px;
     }
@@ -335,12 +352,12 @@
 
     .spec-label {
       font-weight: 600;
-      color: #2c5f2d;
+      color: black;
       font-size: 0.85rem;
     }
 
     .spec-value {
-      color: #333;
+      color: black;
       font-size: 1rem;
       margin-top: 4px;
     }

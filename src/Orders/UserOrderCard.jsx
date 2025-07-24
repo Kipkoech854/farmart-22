@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import '../Stylesheets/UserOrderCard.css'
 
-export const UserOrderCard = ({ orders, onDelete }) => {
+export const UserOrderCard = ({ orders, onDelete, renderActions }) => {
   const normalizedOrders = Array.isArray(orders) ? orders : orders ? [orders] : [];
 
   return (
@@ -11,7 +11,8 @@ export const UserOrderCard = ({ orders, onDelete }) => {
           <OrderItem 
             key={order.id} 
             order={order} 
-            onDelete={onDelete} 
+            onDelete={onDelete}
+            renderActions={renderActions} 
           />
         ))}
       </div>
@@ -19,11 +20,12 @@ export const UserOrderCard = ({ orders, onDelete }) => {
   );
 };
 
-const OrderItem = React.memo(({ order, onDelete }) => {
+const OrderItem = React.memo(({ order, onDelete, renderActions }) => {
   const [showImage, setShowImage] = useState(true);
   const [showEmail, setShowEmail] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [imageIndex, setImageIndex] = useState({});
+
 
   const toggleDetails = useCallback(() => {
     setShowDetails(prev => !prev);
@@ -101,7 +103,9 @@ const OrderItem = React.memo(({ order, onDelete }) => {
           </div>
           
           {/* Action Buttons - Mid Bottom */}
+          
           <div className="order-actions">
+            {renderActions && renderActions(order)}
             <button 
               className="details-btn"
               onClick={toggleDetails}
