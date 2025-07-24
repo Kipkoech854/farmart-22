@@ -10,7 +10,7 @@
   align-items: center;
   height: 80px;
   padding: 0 2rem;
-  background-color: #008000;
+  background-color: #064d06;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-family: 'Quicksand', sans-serif;
   width: 100%;
@@ -88,7 +88,7 @@
 }
 
 .center-nav nav a:hover {
-  color: #012b01;
+  color: #90ee90;
 }
 
 .hamburger {

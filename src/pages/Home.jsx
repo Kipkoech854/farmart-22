@@ -4,6 +4,15 @@ import { Link } from 'react-router-dom';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from 'react';
+import '/images/service1.jpeg';
+import '/images/service2.jpeg';
+import '/images/service3.jpeg';
+import '/images/service4.jpeg';
+import '/images/partner1.png';
+import '/images/partner2.webp';
+import '/images/partner3.png';
+import '/images/partner4.png';
+import '/images/partner5.png';
 
 export const Home = () => {
 
@@ -13,6 +22,7 @@ export const Home = () => {
 
 
   return (
+    <>
     <div className="landing-container">
       <div className="text-section" data-aos="fade-right">
         <p className="bridge-line">
@@ -36,5 +46,47 @@ export const Home = () => {
         <img src="./images/Landing-horse.png" alt="Horse" />
       </div>
     </div>
+
+    <section className="services-section">
+      <h2>Our Services</h2>
+      <div className="services-grid" data-aos="fade-up">
+        <div className="service-card">
+          <img src="/images/service1.jpeg" alt="Service 1" />
+          <h3>Livestock Trading</h3>
+          <p>Buy and sell farm animals with verified farmers and buyers.</p>
+        </div>
+        <div className="service-card">
+          <img src="/images/service2.jpeg" alt="Service 2" />
+          <h3>Farm Inputs</h3>
+          <p>Access seeds, feeds, and veterinary products directly from sellers.</p>
+        </div>
+        <div className="service-card">
+          <img src="/images/service3.jpeg" alt="Service 3" />
+          <h3>Expert Consultations</h3>
+          <p>Get advice and support from agricultural specialists.</p>
+        </div>
+        <div className="service-card">
+          <img src="/images/service4.jpeg" alt="Service 4" />
+          <h3>Farmer Profiles</h3>
+          <p>View verified farmer profiles and their livestock listings.</p>
+        </div>
+      </div>
+    </section>
+
+    <section className="partners-section" data-aos="fade-up">
+      <h2>Our Partners</h2>
+      <div className="partners-logos">
+        <img src="/images/partner1.png" alt="Partner 1" />
+        <img src="/images/partner2.webp" alt="Partner 2" />
+        <img src="/images/partner3.png" alt="Partner 3" />
+        <img src="/images/partner4.png" alt="Partner 4" />
+        <img src="/images/partner5.png" alt="Partner 5" />
+      </div>
+    </section>
+
+
+    </>
+
+    
   );
 };
