@@ -5,7 +5,7 @@ import Home from "../pages/Home";
 import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
 import About from "../pages/About";
-import Profile from "../pages/Profile";
+import Profile from "../pages/profileViewer";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 
@@ -42,6 +42,41 @@ const appRoutes = [
 ];
 
 export default appRoutes;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
