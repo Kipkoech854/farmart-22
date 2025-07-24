@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../Stylesheets/FarmerLogin.css";
+import { Link } from "react-router-dom";
 
 const FarmerLogin = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -84,9 +85,8 @@ const FarmerLogin = () => {
           </div>
 
           <div className="forgot-link">
-            <a href="#">Forgot Password?</a>
+            <Link to="/reset-password">Forgot Password?</Link>
           </div>
-
           <button type="submit" disabled={loading}>
             Login
           </button>

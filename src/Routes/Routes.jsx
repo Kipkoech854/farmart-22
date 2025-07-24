@@ -12,6 +12,7 @@ import FarmerFeedback from '../pages/Farmers/FarmerFeedback';
 import FarmerLogin from "../pages/Farmers/FarmerLogin";
 import FarmerRegister from "../pages/Farmers/FarmerRegister";
 import FarmerLogout from "../pages/Farmers/FarmerLogout";
+import ResetPassword from "../pages/Farmers/ResetPassword";
 
 
 const appRoutes = [
@@ -29,6 +30,7 @@ const appRoutes = [
   {path: "/farmers/login",element: <FarmerLogin />},
   {path: "/farmers/register",element: <FarmerRegister />},
   {path: "/farmers/logout", element: <FarmerLogout /> },
+  { path: "/reset-password", element: <ResetPassword /> }
 ];
 
 export default appRoutes;
