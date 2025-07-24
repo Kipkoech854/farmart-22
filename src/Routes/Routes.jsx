@@ -1,5 +1,6 @@
 import { Route } from "react-router-dom";
 import AuthForm from "../components/AuthForm";
+
 import Home from "../pages/Home";
 import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
@@ -10,13 +11,16 @@ import Register from "../pages/Register";
 
 
 import { Checkout } from "../Utils/Checkout";
+import { ConfirmedOrders } from "../Orders/ConfirmedOrders";
+import { LivestockPage } from '../pages/LivestockPage'
+import { OverheadClassifiers}  from '../Orders/OverheadClassifiers'
 
 
 const appRoutes = [
   { path: "/", element: <Home /> },
-  { path: "/shop", element: <Shop /> },
   { path: "/cart", element: <Cart /> },
   { path: "/about", element: <About /> },
+
 
   { path: "/signin", element: <AuthForm /> },
   { path: "/signup", element: <AuthForm /> },
@@ -25,9 +29,20 @@ const appRoutes = [
   { path: "/Signin", element: <Login /> },
   { path: "/Signup", element: <Register /> },
   { path: "/checkout", element: <Checkout /> },
+
+  {path: '/shop', element:<LivestockPage/>},
+  {path:'/cart', element:<Cart/>},
+  {path:'/Signin', element:<Login/>},
+  {path:'/Signup', element:<Register/>},
+  {path:'/checkout', element:<Checkout/>},
+  {path: '/orders', element:<OverheadClassifiers/>},
+  {path: '/ConfirmedOrders', element:<ConfirmedOrders/>}
+
+
 ];
 
 export default appRoutes;
+
 
 
 // import { Route } from "react-router-dom";
@@ -47,3 +62,4 @@ export default appRoutes;
 // ];
 
 // export default appRoutes;
+

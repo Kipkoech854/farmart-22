@@ -1,15 +1,30 @@
-/*import { Confirmed } from "../../public/Api/Ordersapi";
-import React, { useState, useEffect } from "react";
 
-export const ConfirmedOrders = () => {
-  const [Orders, setOrders] = useState([]);
+import React, { useState, useEffect } from "react";
+import { UserOrderCard } from "./UserOrderCard";
+import { FarmerOrderCard } from "./FarmerOrderCard";
+import { FarmerOrders } from "../Utils/FarmerFaker";
+import { UserOrders } from "../Utils/UserFaker";
+
+export const ConfirmedOrders = ({role}) => {
+  //const [Orders, setOrders] = useState([]);
   const [ID, setID] = useState('');
   const [loading, setLoading] = useState(true);
+  
+    const userOrders = UserOrders;
+    const farmerOrders = FarmerOrders;
+ 
+
+
+  
+ const handleDeleteOrder = (e) =>{
+  e.preventDefault()
+  console.alert('order deleted')
+ }
 
   
 
 
-  useEffect(() => {
+  /*useEffect(() => {
     Confirmed()
       .then((res) => {
         setOrders(res);
@@ -19,14 +34,37 @@ export const ConfirmedOrders = () => {
         console.error("Error fetching data:", err);
         setLoading(false);
       });
-  }, []);
+  }, []);*/
 
-  const handleDetails = (orderId) => {
-    setID(orderId);
-    console.log("Selected Order ID:", orderId);
-    alert('remember to write the method');
-  };
+  
 
+  if (role === 'customer') {
+  return (
+    <div>
+      <UserOrderCard orders={userOrders} onDelete={handleDeleteOrder} />
+    </div>
+  );
+} else if (role === 'farmer') {
+  return (
+    <div>
+      <FarmerOrderCard orders={farmerOrders} />
+    </div>
+  );
+} else if (role === 'admin') {
+  return (
+    <div>
+      <p>admin order card not ready at the moment</p>
+    </div>
+  );
+} else {
+  console.error('Cannot determine your role!');
+  return null;
+}
+
+
+
+
+/*
   return (
     <div>
       {loading ? (
@@ -44,6 +82,5 @@ export const ConfirmedOrders = () => {
         ))
       )}
     </div>
-  );
+  );*/
 };
-*/
