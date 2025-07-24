@@ -1,0 +1,48 @@
+/* Overhead Classifiers Container */
+.overheadclassifiers {
+    display: flex;
+    background-color: white;
+    border-bottom: 0.5px solid gray; 
+    width: 100vw;
+    height: 30px; 
+    align-items: center;
+}
+
+
+.overheadnav {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+
+.overheadnav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-family: 'Quicksand', sans-serif;
+    background-color: #6b8e23; 
+    border: 1px solid #556b2f;
+    border-radius: 15px; 
+    padding: 2px 12px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    white-space: nowrap; 
+}
+
+.overheadnav a:hover {
+    cursor: pointer;
+    background: linear-gradient(to right, #006400, #90ee90); /* Green gradient */
+    text-decoration: underline;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+
+}
+.overheadnav a.active {
+    background-color: #ffcc99 !important; 
+    border-color: #e6a57e;
+    font-weight: 600;
+}
