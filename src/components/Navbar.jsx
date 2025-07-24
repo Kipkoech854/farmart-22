@@ -1,7 +1,7 @@
-import { useCart } from "../context/CartContext";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 import "../Stylesheets/Navbar.css";
 
 const Navbar = () => {
@@ -21,7 +21,6 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
   const closeAll = () => {
     setIsMenuOpen(false);
@@ -54,13 +53,10 @@ const Navbar = () => {
                 <sup className="cart-count">{cart.length}</sup>
               )}
             </Link>
-            
+
             {user ? (
               <div className="profile-container">
-                <div 
-                  className="profile-icon" 
-                  onClick={toggleProfile}
-                >
+                <div className="profile-icon" onClick={toggleProfile}>
                   👤
                 </div>
                 {isProfileOpen && (
@@ -122,3 +118,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
