@@ -1,0 +1,158 @@
+/* Base styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8faf7;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+.livestock-marketplace {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.marketplace-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(to right, #2e7d32, #4caf50);
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.marketplace-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.marketplace-header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* Grid layout */
+.livestock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+/* Card styling */
+.livestock-card {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.livestock-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-image {
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card-image:hover {
+  transform: scale(1.03);
+}
+
+.livestock-name {
+  font-weight: 700;
+  color: #2e7d32;
+  font-size: 1.1rem;
+}
+
+/* Chip styling */
+.type-chip {
+  background-color: #e8f5e9 !important;
+  color: #2e7d32 !important;
+  font-weight: 600;
+}
+
+.breed-chip {
+  border-color: #81c784 !important;
+  color: #388e3c !important;
+}
+
+.location-chip {
+  background-color: #f1f8e9 !important;
+  color: #33691e !important;
+}
+
+.age-chip {
+  background-color: #c8e6c9 !important;
+  color: #1b5e20 !important;
+  font-weight: 600;
+}
+
+.livestock-description {
+  color: #555;
+  line-height: 1.5;
+}
+
+.price-tag {
+  color: #2e7d32;
+}
+
+/* Button styling */
+.card-actions {
+  background-color: #f5f9f5;
+  border-top: 1px solid #e8f5e9;
+}
+
+.cart-button {
+  background-color: #2e7d32 !important;
+  color: white !important;
+  font-weight: 600;
+  border-radius: 5px !important;
+  transition: background-color 0.3s;
+}
+
+.cart-button:hover {
+  background-color: #1b5e20 !important;
+}
+
+.buy-button {
+  color: #2e7d32 !important;
+  border-color: #2e7d32 !important;
+  font-weight: 600;
+  border-radius: 5px !important;
+  transition: all 0.3s;
+}
+
+.buy-button:hover {
+  background-color: #e8f5e9 !important;
+  border-color: #1b5e20 !important;
+  color: #1b5e20 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .livestock-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .livestock-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .livestock-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .marketplace-header h1 {
+    font-size: 2rem;
+  }
+}
+`;

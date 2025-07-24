@@ -7,11 +7,12 @@ import Login from '../pages/Login'
 import Register from '../pages/Register'
 import { Checkout } from "../Utils/Checkout";
 import { ConfirmedOrders } from "../Orders/ConfirmedOrders";
+import { LivestockPage } from '../pages/LivestockPage'
 
 const appRoutes = [
   { path: "/", element: <Home /> },
   { path: "/about", element: <About /> },
-  {path: '/shop', element:<Shop/>},
+  {path: '/shop', element:<LivestockPage/>},
   {path:'/cart', element:<Cart/>},
   {path:'/Signin', element:<Login/>},
   {path:'/Signup', element:<Register/>},
