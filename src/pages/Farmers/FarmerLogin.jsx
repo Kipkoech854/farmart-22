@@ -1,16 +1,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../../Stylesheets/FarmerLogin.css";
 
 const FarmerLogin = () => {
   const [form, setForm] = useState({ email: "", password: "" });
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
       const res = await fetch("http://localhost:5555/api/farmers/login", {
@@ -25,44 +30,69 @@ const FarmerLogin = () => {
 
       if (res.ok) {
         localStorage.setItem("token", data.access_token);
-        navigate("/farmers/profile"); 
+        navigate("/farmers/profile");
       } else {
         setError(data.message || "Invalid credentials");
       }
     } catch (err) {
       console.error(err);
       setError("Something went wrong.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "auto" }}>
-      <h2>Farmer Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-          style={{ display: "block", width: "100%", marginBottom: "10px" }}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-          style={{ display: "block", width: "100%", marginBottom: "10px" }}
-        />
-        <button type="submit" style={{ width: "100%" }}>
-          Login
-        </button>
-      </form>
-    </div>
+    <>
+      {loading && (
+        <div className="overlay">
+          <div className="overlay-spinner"></div>
+          <p>Logging in...</p>
+        </div>
+      )}
+
+      <div className="login-container">
+        <h2>Farmer Login</h2>
+        {error && <p className="error-message">{error}</p>}
+
+        <form onSubmit={handleSubmit}>
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+
+          <div className="password-input-wrapper">
+            <input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={form.password}
+              onChange={handleChange}
+              required
+            />
+            <span
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+              title={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </span>
+          </div>
+
+          <div className="forgot-link">
+            <a href="#">Forgot Password?</a>
+          </div>
+
+          <button type="submit" disabled={loading}>
+            Login
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 
