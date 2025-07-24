@@ -6,10 +6,10 @@ const FarmerLogout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Clear the token
+    
     localStorage.removeItem("token");
 
-    // Optional: redirect after 3 seconds
+    
     const timer = setTimeout(() => {
       navigate("/farmers/login");
     }, 3000);

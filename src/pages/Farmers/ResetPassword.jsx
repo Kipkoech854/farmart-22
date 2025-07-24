@@ -18,7 +18,7 @@ const ResetPassword = () => {
     }
 
     try {
-      // Example: make sure you have the reset token if required
+      
       const res = await fetch("http://localhost:5555/api/farmers/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
