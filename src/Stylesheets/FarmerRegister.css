@@ -6,7 +6,8 @@
   background: #fff;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
   font-family: sans-serif;
-  margin-top: 40px;
+  margin-top: 120px;
+  padding-right: 50px;
 }
 
 .register-container h2 {
@@ -22,12 +23,13 @@
   border-radius: 5px;
 }
 
-.password-input {
+.password-input-register {
   position: relative;
+  width: 100%; 
   
 }
 
-.password-input span {
+.password-input-register span {
   position: absolute;
   top: 50%;
   right: 10px;

@@ -80,7 +80,7 @@ const FarmerRegister = () => {
           required
         />
 
-        <div className="password-input">
+        <div className="password-input-register">
           <input
             name="password"
             type={showPassword ? "text" : "password"}
@@ -94,7 +94,7 @@ const FarmerRegister = () => {
           </span>
         </div>
 
-        <div className="password-input">
+        <div className="password-input-register">
           <input
             name="confirmPassword"
             type={showConfirm ? "text" : "password"}
