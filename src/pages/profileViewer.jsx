@@ -15,7 +15,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await fetch('http://localhost:5555/api/profile', {
+        const res = await fetch('http://localhost:10000/api/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -33,7 +33,7 @@ const Profile = () => {
   const handleEdit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5555/api/profile', {
+      const res = await fetch('http://localhost:10000/api/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const Profile = () => {
     if (!window.confirm('Are you sure you want to delete your account?')) return;
 
     try {
-      const res = await fetch('http://localhost:5555/api/profile', {
+      const res = await fetch('http://localhost:10000/api/profile', {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });

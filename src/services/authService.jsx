@@ -1,3 +1,78 @@
+
+const API_BASE = "http://localhost:10000"; // Update with your actual backend URL
+
+export const registerUser = async (credentials) => {
+  const response = await fetch(`${API_BASE}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
+
+  if (!response.ok) throw new Error("Registration failed");
+  return await response.json();
+};
+
+export const loginUser = async (credentials) => {
+  const response = await fetch(`${API_BASE}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
+
+  if (!response.ok) throw new Error("Login failed");
+  return await response.json();
+};
+
+
+
+
+// import { API_URL } from "../config";
+
+// Sends a POST request to /auth/login with JSON data
+// const login = async (credentials) => {
+//     const response = await fetch("http://localhost:5555/auth/login", {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(credentials)
+//     });
+
+//     if (!response.ok) {
+//         const errorData = await response.json();
+//         throw new Error(errorData.message || 'Login failed');
+//     }
+
+//     return await response.json();
+// };
+
+// // Sends a POST request to /auth/register with new user data
+// const register = async (userData) => {
+//     const response = await fetch("http://localhost:5555/auth/register", {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(userData)
+//     });
+
+//     if (!response.ok) {
+//         const errorData = await response.json();
+//         throw new Error(errorData.message || 'Registration failed');
+//     }
+
+//     return await response.json();
+// };
+
+// export const authService = {
+//     login,
+//     register
+// };
+
 //import { API_URL } from "../config";
 
 // Sends a POST request to /auth/login with JSON data
@@ -57,6 +132,7 @@ export const authService = {
     login,
     register
 };
+
 
 
 

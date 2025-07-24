@@ -1,3 +1,11 @@
+
+import AuthForm from "../components/AuthForm";
+import Home from "../pages/Home";
+import Shop from "../pages/Shop";
+import Cart from "../pages/Cart";
+import About from "../pages/About";
+import Profile from "../pages/Profile";
+
 import { Route } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { About } from "../pages/About";
@@ -9,8 +17,10 @@ import { Checkout } from "../Utils/Checkout";
 import { ConfirmedOrders } from "../Orders/ConfirmedOrders";
 import { LivestockPage } from '../pages/LivestockPage'
 
+
 const appRoutes = [
   { path: "/", element: <Home /> },
+  { path: "/cart", element: <Cart /> },
   { path: "/about", element: <About /> },
   {path: '/shop', element:<LivestockPage/>},
   {path:'/cart', element:<Cart/>},
@@ -18,6 +28,8 @@ const appRoutes = [
   {path:'/Signup', element:<Register/>},
   {path:'/checkout', element:<Checkout/>},
   {path: '/ConfirmedOrders', element:<ConfirmedOrders/>}
+
 ];
 
 export default appRoutes;
+
