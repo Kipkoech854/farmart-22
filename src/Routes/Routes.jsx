@@ -20,21 +20,25 @@ import ResetPassword from "../pages/Farmers/ResetPassword";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import { Checkout } from "../Utils/Checkout";
-
+import { ConfirmedOrders } from "../Orders/ConfirmedOrders";
+import { LivestockPage } from '../pages/LivestockPage';
+import { OverheadClassifiers } from '../Orders/OverheadClassifiers';
 
 
 const appRoutes = [
   { path: "/", element: <Home /> },
-  { path: "/shop", element: <Shop /> },
   { path: "/cart", element: <Cart /> },
   { path: "/about", element: <About /> },
+  { path: "/shop", element: <LivestockPage /> },
 
-  { path: "/signin", element: <AuthForm /> },
-  { path: "/signup", element: <AuthForm /> },
-  { path: "/profile", element: <Profile /> },
+  // General auth pages
+  { path: "/signin", element: <Login /> },
+  { path: "/signup", element: <Register /> },
+  { path: "/login", element: <Login /> },       // Alias route
+  { path: "/register", element: <Register /> }, // Alias route
+  { path: "/checkout", element: <Checkout /> },
 
   // Farmer-specific routes
-  { path: "/Signin", element: <Authmodal /> }, // Modal variant
   { path: "/farmers/profile", element: <ProfileView /> },
   { path: "/farmers/edit", element: <ProfileEdit /> },
   { path: "/farmers/animals", element: <AnimalList /> },
@@ -45,29 +49,17 @@ const appRoutes = [
   { path: "/farmers/logout", element: <FarmerLogout /> },
   { path: "/reset-password", element: <ResetPassword /> },
 
-  // General login/register/checkout
-  { path: "/login", element: <Login /> },
-  { path: "/register", element: <Register /> },
-  { path: "/checkout", element: <Checkout /> }
-];
+  // Modal variant (if needed)
+  { path: "/signin-modal", element: <Authmodal /> },
 
+  // Customer Profile
+  { path: "/profile", element: <Profile /> },
+
+  // Orders
+  { path: "/orders", element: <OverheadClassifiers /> },
+  { path: "/confirmed-orders", element: <ConfirmedOrders /> },
+];
 
 export default appRoutes;
 
-// import { Route } from "react-router-dom";
-// import { Home } from "../pages/Home";
-// import { About } from "../pages/About";
-// import Shop from '../pages/Shop';
-// import Cart from '../pages/Cart';
-// import Authmodal from '../components/Authmodal'
 
-// const appRoutes = [
-//   { path: "/", element: <Home /> },
-//   { path: "/about", element: <About /> },
-//   {path: '/shop', element:<Shop/>},
-//   {path:'/cart', element:<Cart/>},
-//   {path:'/Signin', element:<Authmodal/>},
-//   {path:'Signin', element:<Authmodal/>}
-// ];
-
-// export default appRoutes;

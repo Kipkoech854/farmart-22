@@ -1,0 +1,66 @@
+
+.phone-number-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 90%;
+  max-width: 400px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 100, 0, 0.15);
+  border: 1px solid #e0e0e0;
+}
+
+
+.phone-number-form label {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  color: #2c5f2d;
+  font-size: 1.2rem;
+}
+
+.phone-number-form input {
+  padding: 14px 20px;
+  border: 2px solid #e0f0e0;
+  border-radius: 10px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.phone-number-form input[type="number"] {
+  background-color: #f8fff8;
+}
+
+.phone-number-form input[type="number"]:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+.phone-number-form input[type="submit"] {
+  background: linear-gradient(to right, #2c5f2d, #4caf50);
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  padding: 15px;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.phone-number-form input[type="submit"]:hover {
+  background: linear-gradient(to right, #1e3c1e, #3d8b40);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 100, 0, 0.2);
+}
+
+.phone-number-form input[type="submit"]:active {
+  transform: translateY(1px);
+}

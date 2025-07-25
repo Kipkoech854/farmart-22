@@ -1,66 +1,109 @@
 import React, { useState } from 'react';
-import '../Stylesheets/OrderCard.css'; 
-import { Checkout } from '../Utils/Checkout';
-import { AddToCart } from './AddtoCart';
-import { useCart } from '../context/CartContext';
-import { RemovefromCart } from './RemovefromCart'
+import { RemovefromCart } from './RemovefromCart';
+import '../Stylesheets/OrderCard.css';
 
-
-const AnimalCard = ({ animal }) => {
+export const AnimalCard = ({ animal }) => {
   const [imageIndex, setImageIndex] = useState(0);
 
-  const handlePrev = () => {
-    if (imageIndex > 0) setImageIndex(imageIndex - 1);
+  const handlePrevImage = () => {
+    setImageIndex((prev) => (prev > 0 ? prev - 1 : animal.images.length - 1));
   };
 
-  const handleNext = () => {
-    if (imageIndex < animal.images.length - 1) setImageIndex(imageIndex + 1);
+  const handleNextImage = () => {
+    setImageIndex((prev) => (prev < animal.images.length - 1 ? prev + 1 : 0));
   };
+
+
+
 
   return (
     <div className="animal-card">
-      <div className="image-container">
+      <div className="animal-card-image-container">
         <img
-          className="animal-image"
-          src={animal.images?.[imageIndex]?.url || 'https://via.placeholder.com/300x200?text=No+Image'}
+          className="animal-card-image"
+          src={animal.images?.[imageIndex]?.url || 'https://via.placeholder.com/800x400?text=No+Image'}
           alt={animal.name}
         />
-        <button onClick={handlePrev} style={{ position: 'absolute', left: 10, top: '50%' }}><p>{'<'}</p></button>
-        <button onClick={handleNext} style={{ position: 'absolute', right: 10, top: '50%' }}><p>{'>'}</p></button>
+        
+
+        {animal.images?.length > 1 && (
+          <>
+            <button 
+              className="animal-card-arrow animal-card-arrow-left"
+              onClick={handlePrevImage}
+              aria-label="Previous image"
+            >
+              &lt;
+            </button>
+            
+            <button 
+              className="animal-card-arrow animal-card-arrow-right"
+              onClick={handleNextImage}
+              aria-label="Next image"
+            >
+              &gt;
+            </button>
+          </>
+        )}
       </div>
-      <div className="animal-details">
-        <h3 className="animal-name">{animal.name}</h3>
-        <p className="animal-price">Ksh {animal.price}</p>
-        <p className="animal-description">{animal.description}</p>
-        <p className="animal-type">{animal.type}</p>
-        <p className="animal-breed">{animal.breed}</p>
-        <p className="animal-age">{animal.age} years old</p>
-        <span
-          className="animal-availability"
-          available={animal.is_available ? "true" : ""}
+
+      <div className="animal-card-content">
+        <h2 className="animal-card-title">{animal.name}</h2>
+
+        <div className="animal-card-chips">
+          <span className="animal-card-chip animal-card-chip-primary">
+            <span role="img" aria-label="Type">🐾</span> {animal.type}
+          </span>
+          <span className="animal-card-chip">{animal.breed}</span>
+          {animal.county && (
+            <span className="animal-card-chip">
+              <span role="img" aria-label="Location">📍</span> {animal.county}
+            </span>
+          )}
+          <span className="animal-card-chip">{animal.age} years</span>
+        </div>
+
+        <div className="animal-card-price">
+          KSh {animal.price.toLocaleString('en-KE')}
+        </div>
+
+        <div className="animal-card-divider"></div>
+
+        <p className="animal-card-description">
+          {animal.description}
+        </p>
+
+        <h3 className="animal-card-status-title">Health Status:</h3>
+        <span 
+          className={`animal-card-status ${
+            animal.is_available 
+              ? 'animal-card-status-available' 
+              : 'animal-card-status-sold'
+          }`}
         >
-          {animal.is_available ? "Available" : "Unavailable"}
+          {animal.is_available ? 'Available - Vaccinated' : 'Sold'}
         </span>
-      </div>
-      <div>
-        <RemovefromCart item ={animal} />
+
+        <div className="animal-card-actions">
+          <RemovefromCart item={animal} />
+        </div>
       </div>
     </div>
   );
 };
 
 export const OrderCard = ({ animals }) => {
-  
   const normalizedAnimals = Array.isArray(animals)
     ? animals
     : animals && typeof animals === "object"
     ? [animals]
     : [];
-
+   
   return (
-    <div className="animal-list">
+    <div className="order-card-container">
       {normalizedAnimals.map((animal, index) => (
-        <AnimalCard key={index} animal={animal} />
+        
+        <AnimalCard key={`animal-${index}`} animal={animal} />
       ))}
     </div>
   );
