@@ -1,0 +1,59 @@
+.register-container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  font-family: sans-serif;
+  margin-top: 120px;
+  padding-right: 50px;
+}
+
+.register-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.register-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.password-input-register {
+  position: relative;
+  width: 100%; 
+  
+}
+
+.password-input-register span {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-80%);
+  cursor: pointer;
+}
+
+.register-container button {
+  width: 105%;
+  padding: 10px;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-container button:hover {
+  background-color: #218838;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+  text-align: center;
+}
