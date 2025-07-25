@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardMedia, Typography, Button, Chip, Box } from '@mui/material';
 import { ShoppingCart, FlashOn, LocationOn } from '@mui/icons-material';
+//import '../Stylesheets/LivestockCard'
 
 const LivestockCard = ({ livestock, onViewDetails, onAddToCart, onBuyNow }) => {
   return (
