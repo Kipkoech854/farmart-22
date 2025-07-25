@@ -1,94 +1,87 @@
 import React from 'react';
-import { Box, Card, CardContent, CardMedia, Typography, Button, Chip, Divider } from '@mui/material';
-import { LocationOn, Event, Pets, Close } from '@mui/icons-material';
+import {
+  Modal,
+  Box,
+  Typography,
+  Button,
+  Grid
+} from '@mui/material';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '90%',
+  maxWidth: 800,
+  bgcolor: 'background.paper',
+  borderRadius: 3,
+  boxShadow: 24,
+  p: 4,
+  maxHeight: '90vh',
+  overflowY: 'auto'
+};
 
 const LivestockModal = ({ livestock, onClose, onAddToCart, onBuyNow }) => {
   if (!livestock) return null;
 
+  const { name, breed, age, type, description, price, is_available, images = [] } = livestock;
+
   return (
-    <Box sx={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.7)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1300,
-      p: 2
-    }} onClick={onClose}>
-      <Card sx={{ 
-        maxWidth: 600, 
-        width: '100%',
-        maxHeight: '90vh',
-        overflow: 'auto'
-      }} onClick={(e) => e.stopPropagation()}>
-        <CardMedia
-          component="img"
-          height="300"
-          image={livestock.image}
-          alt={livestock.name}
-          sx={{ objectFit: 'cover' }}
-        />
-        <CardContent>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography variant="h4" component="div">
-              {livestock.name}
-            </Typography>
-            <Button onClick={onClose} startIcon={<Close />} color="error" />
-          </Box>
+    <Modal open={true} onClose={onClose}>
+      <Box sx={style}>
+        <Typography variant="h5" gutterBottom>{name}</Typography>
+        <Typography variant="subtitle1" color="text.secondary">{breed} · {type}</Typography>
+        <Typography variant="body2" sx={{ mt: 1 }}>{description}</Typography>
+        <Typography variant="h6" sx={{ mt: 2 }}>Age: {age} years</Typography>
+        <Typography variant="h6" color="primary">Price: Ksh {price}</Typography>
 
-          <Box sx={{ display: 'flex', gap: 1, my: 2, flexWrap: 'wrap' }}>
-            <Chip icon={<Pets />} label={livestock.type} color="primary" />
-            <Chip label={livestock.breed} variant="outlined" />
-            <Chip icon={<LocationOn />} label={livestock.county} />
-            <Chip label={`${livestock.age} years`} />
-          </Box>
+        <Grid container spacing={2} sx={{ mt: 2 }}>
+          {Array.isArray(images) && images.map((imgObj, idx) => (
+            <Grid item xs={12} sm={6} md={4} key={idx}>
+              <Box
+                component="img"
+                src={imgObj.url}
+                alt={`${name} - ${idx}`}
+                sx={{
+                  width: '100%',
+                  height: 200,
+                  objectFit: 'cover',
+                  borderRadius: 2,
+                  boxShadow: 1
+                }}
+                onError={(e) => e.target.style.display = 'none'}
+              />
+            </Grid>
+          ))}
+        </Grid>
 
-          <Typography variant="h5" sx={{ color: 'green', fontWeight: 'bold', my: 2 }}>
-            KSh {livestock.price.toLocaleString('en-KE')}
-          </Typography>
-
-          <Divider sx={{ my: 2 }} />
-
-          <Typography variant="body1" paragraph>
-            {livestock.description}
-          </Typography>
-
-          <Typography variant="h6" sx={{ mt: 2 }}>
-            Health Status:
-          </Typography>
-          <Chip 
-            label={livestock.is_available ? 'Available - Vaccinated' : 'Sold'} 
-            color={livestock.is_available ? 'success' : 'error'} 
-            sx={{ my: 1 }}
-          />
-
-          <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
-            <Button 
-              variant="contained" 
-              size="large" 
-              fullWidth
-              onClick={onAddToCart}
-              sx={{ bgcolor: 'green', '&:hover': { bgcolor: 'darkgreen' } }}
-            >
-              Add to Cart
-            </Button>
-            <Button 
-              variant="outlined" 
-              size="large" 
-              fullWidth
-              onClick={onBuyNow}
-              color="success"
-            >
-              Buy Now
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
-    </Box>
+        <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
+          <Button
+            variant="contained"
+            disabled={!is_available}
+            onClick={onAddToCart}
+            sx={{
+              backgroundColor: 'green',
+              '&:hover': {
+                backgroundColor: 'darkgreen'
+              }
+            }}
+          >
+            Add to Cart
+          </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+            disabled={!is_available}
+            onClick={onBuyNow}
+          >
+            Buy Now
+          </Button>
+          <Button variant="text" onClick={onClose}>Close</Button>
+        </Box>
+      </Box>
+    </Modal>
   );
 };
 

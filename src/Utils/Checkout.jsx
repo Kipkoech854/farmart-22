@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Dropdown } from "./Dropdown";
 import { kenyaLocations } from "./Kenyanlocations";
 import { Link } from "react-router-dom";
-import { PaymentFormsToogle } from "./PaymentFormsToogle";
+//import { PaymentFormsToogle } from "./PaymentFormsToogle";
 import { useCart } from '../context/CartContext';
 import Geocoding from "./Geocoding";
 import { getUserIdFromToken } from "../utils/jwt";
+import '../Stylesheets/Checkout.css'
+import { OrderConstructor } from "./OrderConstructor";
 
 export const Checkout = () => {
   const { cart } = useCart()
@@ -19,6 +21,39 @@ export const Checkout = () => {
   const [active, setactive] = useState(false)
   const [shippingCost, setShippingCost] = useState(0);
   
+  const total = totalPrice + shippingCost;
+
+
+  const handlePlaceOrder = async () => {
+  const payload = OrderConstructor({
+    cart: items,
+    totalprice: totalPrice,
+    pickupLocation,
+    deliveryMethod,
+    total,
+    paymentMethod,
+  });
+
+  try {
+    const response = await fetch('http://127.0.0.1:5555/api/Order/create', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) throw new Error('Order failed');
+    const data = await response.json();
+    alert('Order placed successfully!');
+    console.log('Order response:', data);
+  } catch (err) {
+    console.error('Order error:', err);
+    alert('Failed to place order.');
+  }
+};
+
    
 
 
@@ -29,23 +64,20 @@ export const Checkout = () => {
 
   return (
    <div className="checkout-container">
-  <nav>
-    <Link to="/cart">←</Link>
-  </nav>
-
-  <div className="checkout-header">
-    <h2>Checkout</h2>
-   <p>Total price: Ksh {totalPrice + shippingCost}</p>
-  </div>
-  {/*delivery method*/}
-  <div className="dropdown-section">
-    <Dropdown
-      label="Select Delivery Method"
-      options={["Standard Shipping", "Express Shipping"]}
-      onSelect={(option) => setDeliveryMethod(option)}
-    />
-    <p>Selected: {deliveryMethod}</p>
-  </div>
+    <div className="checkout" >
+    <div className="checkout-header">
+       <h2>Checkout</h2>
+    <p>Total price: Ksh {totalPrice + shippingCost}</p>
+    </div>
+   {/*delivery method*/}
+   <div className="dropdown-section">
+     <Dropdown
+       label="Select Delivery Method"
+       options={["Standard Shipping", "Express Shipping"]}
+       onSelect={(option) => setDeliveryMethod(option)}
+     />
+     <p>Selected: {deliveryMethod}</p>
+   </div>
 
   {/*pickup location*/}
   <div className="dropdown-section">
@@ -76,19 +108,12 @@ export const Checkout = () => {
       onSelect={(option) => setPaymentMethod(option)}
     />
     <p>Selected: {paymentMethod}</p>
-    <PaymentFormsToogle 
-        paymentMethod={paymentMethod} 
-        cart={cart} 
-        pickupLocation={pickupLocation} 
-        shippingCost={shippingCost} 
-        deliveryMethod={deliveryMethod} 
-        totalPrice={totalPrice}
-        userid={userId}
-    />
+   
 
   </div>
-
-  {/*is_active && <button onclick={() =>handlePlaceOrder(cart)}>Place Order</button>*/}
+  
+  </div>
+   <button className="checkout-btn" onClick={() =>handlePlaceOrder(cart)}>Place Order</button>
 </div>
 
   );

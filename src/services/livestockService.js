@@ -1,6 +1,18 @@
+
+import axios from 'axios';
+
 export const fetchLivestock = async () => {
+  try {
+    const response = await axios.get('https://farmart-y80m.onrender.com/api/animals');
+    return response.data;  // Axios already parses JSON
+  } catch (error) {
+    console.log('Error fetching animals:', error);
+    return null;
+  }
+};
+
   // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 500));
+  /*await new Promise(resolve => setTimeout(resolve, 500));
   
   return [
     {
@@ -43,4 +55,4 @@ export const fetchLivestock = async () => {
       recommendations: ['Salt lick', 'Dewormers', 'Goat housing']
     }
   ];
-};
+};*/

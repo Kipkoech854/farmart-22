@@ -2,6 +2,7 @@ import React from 'react';
 import { OrderCard } from '../components/OrderCard';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
+import { Checkout } from '../Utils/Checkout';
 
 
 
@@ -21,7 +22,7 @@ function Cart() {
   return (
     <div>
        <OrderCard animals={cart}/>
-       
+       <Checkout/>
     </div>
   );
 }

@@ -69,3 +69,14 @@ export const PaymentFormsToogle = ({paymentMethod, cart, pickupLocation,shipping
     );
   }
 };
+
+
+ <PaymentFormsToogle 
+        paymentMethod={paymentMethod} 
+        cart={cart} 
+        pickupLocation={pickupLocation} 
+        shippingCost={shippingCost} 
+        deliveryMethod={deliveryMethod} 
+        totalPrice={totalPrice}
+        userid={userId}
+    />
