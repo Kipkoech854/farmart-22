@@ -1,30 +1,25 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
 
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import appRoutes from "./Routes/Routes";
 
 import { CartProvider } from "./context/CartContext";
 
-import Footer from "./components/Footer";
-
-
 function App() {
   return (
-    <>
-      <CartProvider>
-        <Navbar />
-        <Routes>
-          {appRoutes.map(({ path, element }, index) => (
-            <Route key={index} path={path} element={element} />
-          ))}
-        </Routes>
-      </CartProvider>
-
+    <CartProvider>
+      <Navbar />
+      <Routes>
+        {appRoutes.map(({ path, element }, index) => (
+          <Route key={index} path={path} element={element} />
+        ))}
+      </Routes>
       <Footer />
-    </>
-
+    </CartProvider>
   );
 }
 
 export default App;
+

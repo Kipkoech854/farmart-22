@@ -13,7 +13,7 @@ import { NotPaid } from "./NotPaid";
 
 export const OverheadClassifiers = () => {
   const [selected, setSelected] = useState(null);
-  const role = 'farmer'
+  const role = 'customer'
   // Mapping dropdown values to components
   const componentMap = {
     'Pending': <PendingOrders />,

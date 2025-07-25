@@ -10,6 +10,12 @@ export const DeliveredOrders = ({role}) =>{
     const [Orders, setOrders] = useState([])
      const userOrders = UserOrders;
     const farmerOrders = FarmerOrders;
+    
+    const handleDeleteOrder = (e) =>{
+    e.preventDefault()
+    console.alert('deleting order')
+  }
+  
      
 
     if (role === 'customer') {
