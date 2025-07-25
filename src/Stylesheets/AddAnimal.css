@@ -1,0 +1,74 @@
+.add-animal-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f4f4f4;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.add-animal-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #006400;
+}
+
+.add-animal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-animal-form input[type="text"],
+.add-animal-form input[type="number"] {
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.checkbox-label input {
+  margin-right: 0.5rem;
+}
+
+.add-animal-form button {
+  padding: 0.8rem;
+  background-color: #228B22;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-animal-form button:hover {
+  background-color: #1e7a1e;
+}
+
+.success-msg {
+  color: green;
+  background: #e6ffe6;
+  padding: 0.5rem;
+  border: 1px solid green;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.error-msg {
+  color: red;
+  background: #ffe6e6;
+  padding: 0.5rem;
+  border: 1px solid red;
+  border-radius: 4px;
+  margin-top: 1rem;
+}

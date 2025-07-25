@@ -1,0 +1,58 @@
+.feedback-container {
+  padding: 2rem;
+  background-color: #fafafa;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.feedback-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2e7d32;
+}
+
+.no-feedback,
+.error-msg {
+  text-align: center;
+  color: #999;
+  font-size: 1.1rem;
+}
+
+.feedback-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.feedback-card {
+  background: white;
+  padding: 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.rating {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffa000;
+  margin-bottom: 0.5rem;
+}
+
+.comment {
+  font-style: italic;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.feedback-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
+.user-info {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
