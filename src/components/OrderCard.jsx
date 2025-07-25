@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { RemovefromCart } from './RemovefromCart';
 import '../Stylesheets/OrderCard.css';
+import { Link } from 'react-router-dom';
 
 export const AnimalCard = ({ animal }) => {
   const [imageIndex, setImageIndex] = useState(0);
@@ -104,7 +105,11 @@ export const OrderCard = ({ animals }) => {
       {normalizedAnimals.map((animal, index) => (
         
         <AnimalCard key={`animal-${index}`} animal={animal} />
+       
       ))}
+       <nav className='checkout-link'>
+          <Link to='/checkout'>Checkout</Link>
+        </nav>
     </div>
   );
 };

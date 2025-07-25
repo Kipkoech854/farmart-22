@@ -21,5 +21,6 @@ export const buildCartItemFromAnimal = (animal) => {
     age: animal.age,
     is_available: animal.is_available,
     images: imagesArray,
+    location: animal.location || animal.county, // <-- this line is key
   };
 };

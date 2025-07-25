@@ -1,11 +1,13 @@
   /* ===== MAIN CONTAINER ===== */
     .order-grid-container {
-      width: 100vw;
+      width: 80vw;
       min-height: 100vh;
       background-color: #f8fff8;
       padding: 20px;
       box-sizing: border-box;
       font-family: 'Quicksand', sans-serif;
+      justify-self: center;
+      align-self: center;
     }
 
     .order-grid {
@@ -40,7 +42,7 @@
     /* ===== ORDER IMAGE (45% width) ===== */
     .order-image {
       width: 45%;
-      height: 100%;
+      height:fit-content;
       overflow: hidden;
       border-top-left-radius: 15px;
       border-bottom-left-radius: 15px;

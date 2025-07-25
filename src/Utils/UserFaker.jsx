@@ -73,4 +73,4 @@ function generateOrder() {
 export const UserOrders = Array.from({ length: 10 }, generateOrder);
 
 // Optional: log example to console
-console.log(JSON.stringify(UserOrders, null, 2));
+

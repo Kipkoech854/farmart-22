@@ -30,13 +30,16 @@ export const OverheadClassifiers = () => {
 
   return (
     <div className="Order-menu">
-      <Dropdown
+      <div className="dropdown-container">
+        <Dropdown
         label="Filter"
         options={Object.keys(componentMap)}
-        onSelect={(option) => setSelected(option)}
+       onSelect={(option) => setSelected(option)}
       />
-      {React.cloneElement(RenderedComponent, { role })}
     </div>
+   {React.cloneElement(RenderedComponent, { role })}
+  </div>
+
   );
 };
 

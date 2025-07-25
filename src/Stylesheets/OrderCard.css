@@ -9,6 +9,33 @@
   background-color: #f9fff9;
   border: 1px solid #e0f0e0;
 }
+.checkout-link {
+  display: block;
+  width: 80vw; /* same as .animal-card */
+  max-width: 800px;
+  margin: 1rem auto;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  border-radius: 15px;
+  background-color: #006400;
+  box-shadow: 0 4px 20px rgba(0, 100, 0, 0.15);
+  transition: text-decoration 0.2s ease, background 0.2s ease;
+}
+
+.checkout-link:hover {
+  text-decoration: underline;
+}
+
+.checkout-link a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
 
 .animal-card-image-container {
   position: relative;
