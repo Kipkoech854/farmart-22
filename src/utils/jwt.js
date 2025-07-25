@@ -17,3 +17,19 @@ export const isTokenExpired = (token) => {
         return true; 
     }
 }
+
+
+
+export function getToken() {
+  const storedUser = localStorage.getItem('user');
+
+  if (!storedUser) return null;
+
+  try {
+    const parsedUser = JSON.parse(storedUser);
+    return parsedUser.token || null;
+  } catch (error) {
+    console.error('Failed to parse user from localStorage:', error);
+    return null;
+  }
+}

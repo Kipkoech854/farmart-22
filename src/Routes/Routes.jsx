@@ -1,11 +1,11 @@
 import AuthForm from "../components/AuthForm";
 import Authmodal from "../components/Authmodal";
 
-import Home from "../pages/Home";
+import {Home} from "../pages/Home";
 import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
-import About from "../pages/About";
-import Profile from "../pages/Profile";
+import {About} from "../pages/About";
+import Profile from "../pages/profileViewer";
 
 import ProfileView from "../pages/Farmers/ProfileView";
 import ProfileEdit from "../pages/Farmers/ProfileEdit";
