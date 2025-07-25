@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /* Base styles */
 .desktop-navbar, .mobile-navbar {
   font-family: 'Quicksand', sans-serif;
@@ -15,7 +15,7 @@
 }
 
 .desktop-nav-container {
-=======
+  
 .navbar {
   position: fixed;
   top: 0;
@@ -23,12 +23,12 @@
   right: 0;
   z-index: 1000;
 
->>>>>>> daf0b8a205dd01322067b6ba427879a126f3541a
+
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 80px;
-<<<<<<< HEAD
+
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
@@ -44,7 +44,7 @@
   height: 60px;
   width: auto;
   max-width: 100px;
-=======
+
   padding: 0 2rem;
   background-color: #064d06;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -62,7 +62,7 @@
   display: flex;
   align-items: center;
   margin-right: 60px;
->>>>>>> daf0b8a205dd01322067b6ba427879a126f3541a
+
 }
 
 .main-links {
@@ -72,7 +72,7 @@
 
 .main-links a {
   color: white;
-<<<<<<< HEAD
+
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: bold;
@@ -221,7 +221,7 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   text-decoration: none;
-=======
+
   margin-left: 1.2rem;
   text-decoration: none;
   font-size: 1.2rem;
@@ -373,7 +373,7 @@
   .side-drawer {
     display: none;
   }
->>>>>>> daf0b8a205dd01322067b6ba427879a126f3541a
+
 }
 
 /* Mobile Bottom Navigation */
@@ -431,4 +431,4 @@
   .mobile-navbar {
     display: none;
   }
-}
+}}
