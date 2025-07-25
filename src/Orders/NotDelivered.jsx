@@ -3,6 +3,7 @@ import { UserOrderCard } from "./UserOrderCard";
 import { FarmerOrderCard } from "./FarmerOrderCard";
 import { FarmerOrders } from "../Utils/FarmerFaker";
 import { UserOrders } from "../Utils/UserFaker";
+import '../Stylesheets/UserOrderCard.css'
 
 export const NotDelivered = ({role}) =>{
 
@@ -11,12 +12,18 @@ export const NotDelivered = ({role}) =>{
     const userOrders = UserOrders;
     const farmerOrders = FarmerOrders;
 
+    const handleDeleteOrder = (e) =>{
+    e.preventDefault()
+    console.alert('deleting order')
+  }
+  
+
       if (role === 'customer') {
           return (
             <div>
               <UserOrderCard orders={userOrders} onDelete={handleDeleteOrder} 
                 renderActions={(order) => (
-                    <button onClick={() =>handleConfirmDelivery(order.id)}>
+                    <button className="details-btn" onClick={() =>handleConfirmDelivery(order.id)}>
                         Confirm delivery
                     </button>
                 )}/>

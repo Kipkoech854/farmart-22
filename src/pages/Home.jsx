@@ -6,7 +6,7 @@ export const Home =() =>{
   return (
     <div className='home-container'>
       <div className='welcome'>
-         <h1>Welcome to farmart</h1>
+         <h1><span>Welcome</span> to farmart</h1>
          <p>your one stop shop for all the farming needs you need!</p>
       </div> 
 
@@ -20,7 +20,7 @@ export const Home =() =>{
       </div>
 
       <div className='image-container'>
-        <img src='./images/landing-horse.jpg' alt='landing-horse' className=''/>
+        <img src='./images/landing-dog.jpg' alt='landing-dog' className=''/>
       </div>
   </div>
 
@@ -31,7 +31,10 @@ export const Home =() =>{
           <Link to ='/shop'>Our Services</Link>
         </nav>  
       </div>
-
+    <div>
+      <h4>Our Patners</h4>
+      <p></p>
+    </div>
     </div>
 
   )

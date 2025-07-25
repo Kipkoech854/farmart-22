@@ -6,6 +6,10 @@ import { UserOrders } from "../Utils/UserFaker";
 
 export const AllOrders = ({role}) =>{
   
+  const handleDeleteOrder = (e) =>{
+    e.preventDefault()
+    console.alert('deleting order')
+  }
   
   //const [Orders, setOrders] = useState([])
   

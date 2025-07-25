@@ -11,6 +11,12 @@ export const NotPaid = ({role}) =>{
     const userOrders = UserOrders;
       const farmerOrders = FarmerOrders;
 
+    const handleDeleteOrder = (e) =>{
+    e.preventDefault()
+    console.alert('deleting order')
+  }
+  
+
       if (role === 'customer') {
           return (
             <div>
