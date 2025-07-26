@@ -1,3 +1,8 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { SuccessPopup } from '../Utils/SucessPopUp'; 
+import '../Stylesheets/Register.css';
+
 
 export const Register = () => {
   const navigate = useNavigate();

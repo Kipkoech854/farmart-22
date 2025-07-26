@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../Stylesheets/Login.css';
 import { SuccessPopup } from '../Utils/SucessPopUp';
 import { useNavigate } from 'react-router-dom';
-
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +16,7 @@ const Login = () => {
   const credentials = { email, password };
 
   try {
-    const farmerRes = await axios.post('http://127.0.0.1:5555/api/farmers/farmers/login', credentials);
+    const farmerRes = await axios.post('https://farmart-y80m.onrender.com', credentials);
     console.log('Farmer login response:', farmerRes.data);
 
     const token = farmerRes.data.token;
@@ -33,7 +31,7 @@ const Login = () => {
   }
 
   try {
-    const userRes = await axios.post('http://127.0.0.1:5555/auth/login', credentials);
+    const userRes = await axios.post('https://farmart-y80m.onrender.com', credentials);
     console.log('User login response:', userRes.data);
 
     const token = userRes.data.token;
