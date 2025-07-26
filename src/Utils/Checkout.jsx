@@ -8,9 +8,12 @@ import Geocoding from "./Geocoding";
 import { getUserIdFromToken } from "../utils/jwt";
 import '../Stylesheets/Checkout.css'
 import { OrderConstructor } from "./OrderConstructor";
+import { SuccessPopup} from  './SucessPopUp'
+import { useNavigate } from 'react-router-dom';
+
 
 export const Checkout = () => {
-  const { cart } = useCart()
+  const { cart, setCart } = useCart();
   const userId = getUserIdFromToken()
   const [items, setItems] = useState(cart || []);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -20,11 +23,16 @@ export const Checkout = () => {
   const [pickupLocation, setPickupLocation] = useState('');
   const [active, setactive] = useState(false)
   const [shippingCost, setShippingCost] = useState(0);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
   
   const total = totalPrice + shippingCost;
 
 
   const handlePlaceOrder = async () => {
+  setLoading(true); // start loading
+
   const payload = OrderConstructor({
     cart: items,
     totalprice: totalPrice,
@@ -45,25 +53,45 @@ export const Checkout = () => {
     });
 
     if (!response.ok) throw new Error('Order failed');
+
     const data = await response.json();
-    alert('Order placed successfully!');
-    console.log('Order response:', data);
+    setShowPopup(true);
+    
   } catch (err) {
     console.error('Order error:', err);
     alert('Failed to place order.');
+  } finally {
+    setLoading(false); // stop loading
   }
 };
-
-   
-
 
   useEffect(() => {
     const total = items.reduce((acc, item) => acc + item.price, 0);
     setTotalPrice(total);
   }, [items]);
 
+useEffect(() => {
+  if (showPopup) {
+    const timer = setTimeout(() => {
+      setShowPopup(false);
+      localStorage.removeItem('cart');
+      setCart([]);
+      setItems([]);
+      console.log('Order response:', data);
+      navigate('/shop');
+    }, 4000); // 4 seconds
+
+    return () => clearTimeout(timer);
+  }
+}, [showPopup]);
+
+
   return (
    <div className="checkout-container">
+    {showPopup && (
+  <SuccessPopup showPopup={showPopup} onClose={() => setShowPopup(false)} message="Payment Successful!"/>
+)}
+
     <div className="checkout" >
     <div className="checkout-header">
        <h2>Checkout</h2>
@@ -113,7 +141,10 @@ export const Checkout = () => {
   </div>
   
   </div>
-   <button className="checkout-btn" onClick={() =>handlePlaceOrder(cart)}>Place Order</button>
+   <button className="checkout-btn" onClick={() => handlePlaceOrder(cart)} disabled={loading}>
+     {loading ? 'Placing Order...' : 'Place Order'}
+   </button>
+ 
 </div>
 
   );
