@@ -1,16 +1,26 @@
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode'; // ✅ correct
+
+
 
 export const getUserRole = () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.warn("No token found.");
+    return null;
+  }
+
   try {
-    const token = localStorage.getItem('user');
-    if (!token) return null;
-    const decoded = jwtDecode(JSON.parse(token).token);
-    return decoded.role;
-  } catch {
+    const decoded = jwtDecode(token); // ✅ note camelCase
+    console.log("Decoded token:", decoded);
+    return decoded.role || decoded.user_type || decoded.identity || null;
+  } catch (error) {
+    console.error("Failed to decode token:", error);
     return null;
   }
 };
-    //     if (res.ok) {
+
+
+//     if (res.ok) {
     //         dispatch(logout());
     //         navigate('/login');
     //     } else {

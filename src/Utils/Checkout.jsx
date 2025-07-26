@@ -29,6 +29,8 @@ export const Checkout = () => {
   
   const total = totalPrice + shippingCost;
 
+  const navigate = useNavigate();
+
 
   const handlePlaceOrder = async () => {
   setLoading(true); // start loading

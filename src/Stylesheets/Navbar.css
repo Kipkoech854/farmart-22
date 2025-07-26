@@ -182,7 +182,8 @@
 .avatar-wrapper {
   position: relative;
   cursor: pointer;
-  z-index: 2000; /* Ensure it's above side-drawer and navbar */
+  z-index: 2000;
+   /* Ensure it's above side-drawer and navbar */
 }
 
 .avatar {
@@ -190,6 +191,7 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  border: 5px solid;
 }
 
 /* Dropdown menu */
@@ -226,4 +228,18 @@
 .dropdown-menu a:hover,
 .dropdown-menu button:hover {
   background-color: #f0f0f0;
+}
+.avatar-text {
+  width: 40px;
+  height: 40px;
+  background-color: #eb7107; 
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  cursor: pointer;
+  user-select: none;
+  font-family: Quicksand, sans-serif;
 }

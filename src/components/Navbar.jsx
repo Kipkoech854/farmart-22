@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useCart } from "../context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
-import { isTokenExpired } from "../utils/jwt";
 import "../Stylesheets/Navbar.css";
+import { useAuth } from "../context/AuthContext";
+import { getUserRole } from "../utils/decodeToken";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,22 +11,19 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const { cart } = useCart();
+  const { user, logout, isLoggedIn } = useAuth(); // ✅ use from context
 
-  const storedUser = localStorage.getItem("user");
-  const userData = storedUser ? JSON.parse(storedUser) : null;
-  const token = userData?.token;
-  const isLoggedIn = userData && !isTokenExpired(token);
-  const role = userData?.role || ""; // customer, farmer, admin
-
+  const role = getUserRole();
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    navigate("/signin");
+    logout();
+    setMenuOpen(false);
+    setDropdownOpen(false);
+    navigate("/");
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -37,45 +35,49 @@ const Navbar = () => {
   }, []);
 
   const renderRoleMenu = () => {
-    if (role === "customer") {
-      return (
-        <>
-          <Link to="/profile" onClick={toggleMenu}>My Profile</Link>
-          <Link to="/orders" onClick={toggleMenu}>My Orders</Link>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      );
-    } else if (role === "farmer") {
-      return (
-        <>
-          <Link to="/profile" onClick={toggleMenu}>My Profile</Link>
-          <Link to="/orders" onClick={toggleMenu}>My Orders</Link>
-          <Link to="/add-animal" onClick={toggleMenu}>Add Animal</Link>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      );
-    } else if (role === "admin") {
-      return (
-        <>
-          <Link to="/admin" onClick={toggleMenu}>Admin Dashboard</Link>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      );
+    switch (role) {
+      case "customer":
+        return (
+          <>
+            <Link to="/profile" onClick={toggleMenu}>My Profile</Link>
+            <Link to="/orders" onClick={toggleMenu}>My Orders</Link>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        );
+      case "farmer":
+        return (
+          <>
+            <Link to="/profile" onClick={toggleMenu}>My Profile</Link>
+            <Link to="/orders" onClick={toggleMenu}>My Orders</Link>
+            <Link to="/add-animal" onClick={toggleMenu}>Add Animal</Link>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        );
+      case "admin":
+        return (
+          <>
+            <Link to="/admin" onClick={toggleMenu}>Admin Dashboard</Link>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        );
+      default:
+        return null;
     }
-    return null;
   };
 
   return (
     <div className="navbar">
+      {/* Logo */}
       <div className="logo">
         <img src="/images/farmart-logo.jpg" alt="Farmart Logo" />
       </div>
 
-      <div className={`hamburger`} onClick={toggleMenu}>
+      {/* Hamburger icon for mobile */}
+      <div className="hamburger" onClick={toggleMenu}>
         ☰
       </div>
 
-      {/* Side Drawer for Mobile */}
+      {/* Mobile Side Drawer */}
       <div className={`side-drawer ${menuOpen ? "open" : ""}`}>
         <span className="close-btn" onClick={toggleMenu}>&times;</span>
         <nav>
@@ -98,7 +100,7 @@ const Navbar = () => {
         </nav>
       </div>
 
-      {/* Center Nav for Desktop */}
+      {/* Desktop Center Nav */}
       <div className="center-nav">
         <nav>
           <Link to="/">Home</Link>
@@ -110,7 +112,7 @@ const Navbar = () => {
         </nav>
       </div>
 
-      {/* Avatar for Desktop */}
+      {/* Avatar & Auth Links */}
       <div className="auth-links" ref={dropdownRef}>
         {!isLoggedIn ? (
           <>
@@ -119,7 +121,10 @@ const Navbar = () => {
           </>
         ) : (
           <div className="avatar-wrapper" onClick={toggleDropdown}>
-            <img src="/images/avatar.png" alt="Profile" className="avatar" />
+            <div className="avatar-text">
+              {user?.username?.[0]?.toUpperCase()}
+              
+            </div>
             {dropdownOpen && (
               <div className="dropdown-menu">
                 {renderRoleMenu()}

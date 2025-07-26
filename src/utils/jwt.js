@@ -1,20 +1,20 @@
 // This imports the jwtDecode function from the jwt-decode package.
 // jwtDecode(token) decodes the JWT payload (header and body) without verifying its signature.
-import {jwtDecode} from "jwt-decode";
+import {jwtDecode} from 'jwt-decode';
 
-export const isTokenExpired = (token) => {
+export function isTokenExpired(token) {
   try {
-    // Allow mock tokens during development
-    if (token === "mockToken") return false;
+    if (!token || typeof token !== 'string') return true; // 👈 prevent decoding non-strings
 
     const decoded = jwtDecode(token);
     const currentTime = Date.now() / 1000;
     return decoded.exp < currentTime;
   } catch (error) {
-    console.error("Error decoding token:", error);
-    return true;
+    console.error('Error decoding token:', error);
+    return true; // treat invalid tokens as expired
   }
-};
+}
+
 
 
 

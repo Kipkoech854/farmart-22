@@ -78,8 +78,8 @@ export const loginUser = async (credentials) => {
 // Sends a POST request to /auth/login with JSON data
 export const login = async (credentials) => {
     const urls = [
-        { url: "https://farmart-y80m.onrender.com/auth/login", role: "user" },
-        { url: "https://farmart-y80m.onrender.com/api/farmers/farmers/login", role: "farmer" }
+        { url: "http://localhost:5555/auth/login", role: "user" },
+        { url: "http://localhost:5555/api/farmers/farmers/login", role: "farmer" }
     ];
 
     for (const { url, role } of urls) {

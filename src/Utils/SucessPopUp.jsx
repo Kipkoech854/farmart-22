@@ -13,9 +13,7 @@ import "../Stylesheets/SuccessPopup.css";
         </div>
         <h2>{message}</h2>
         
-        <button onClick={onClose} className="close-btn">
-          Continue Shopping
-        </button>
+     
       </div>
     </div>
   );
