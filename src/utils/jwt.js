@@ -1,3 +1,4 @@
+
 // This imports the jwtDecode function from the jwt-decode package.
 // jwtDecode(token) decodes the JWT payload (header and body) without verifying its signature.
 import {jwtDecode} from 'jwt-decode';
