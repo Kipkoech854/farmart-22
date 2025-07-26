@@ -1,10 +1,9 @@
 import React from 'react';
 import { OrderCard } from '../components/OrderCard';
-import { Checkout } from '../Utils/Checkout';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
-//import { ConfirmedOrders } from '../Orders/ConfirmedOrders'; 
-//import { OverheadClassifiers } from '../Orders/OverheadClassifiers';
+import { Checkout } from '../Utils/Checkout';
+
 
 
 function Cart() {
@@ -23,7 +22,7 @@ function Cart() {
   return (
     <div>
        <OrderCard animals={cart}/>
-       <Checkout cart={cart}/>
+       <Checkout/>
     </div>
   );
 }

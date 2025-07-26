@@ -439,3 +439,68 @@
   }
 }}
 
+/* Dropdown container */
+.avatar-wrapper {
+  position: relative;
+  cursor: pointer;
+  z-index: 2000;
+   /* Ensure it's above side-drawer and navbar */
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 55px; /* Add slightly more spacing to prevent overlap */
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 8px 0;
+  min-width: 180px;
+  z-index: 3000; /* On top of everything else */
+  display: flex;
+  flex-direction: column;
+  overflow: visible; /* Prevent clipping */
+}
+
+.dropdown-menu a,
+.dropdown-menu button {
+  padding: 12px 18px;
+  text-align: left;
+  background: none;
+  border: none;
+  width: fit-content;
+  color: #333;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
+  background-color: #f0f0f0;
+}
+.avatar-text {
+  width: 40px;
+  height: 40px;
+  background-color: #eb7107; 
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  cursor: pointer;
+  user-select: none;
+  font-family: Quicksand, sans-serif;
+}

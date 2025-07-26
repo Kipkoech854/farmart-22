@@ -5,28 +5,28 @@ import '../Stylesheets/OrderCard.css';
 export const AnimalCard = ({ animal }) => {
   const [imageIndex, setImageIndex] = useState(0);
 
+  const images = Array.isArray(animal.images)
+    ? animal.images.map(img => img.url)
+    : [];
+
   const handlePrevImage = () => {
-    setImageIndex((prev) => (prev > 0 ? prev - 1 : animal.images.length - 1));
+    setImageIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
   };
 
   const handleNextImage = () => {
-    setImageIndex((prev) => (prev < animal.images.length - 1 ? prev + 1 : 0));
+    setImageIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
   };
-
-
-
 
   return (
     <div className="animal-card">
       <div className="animal-card-image-container">
         <img
           className="animal-card-image"
-          src={animal.images?.[imageIndex]?.url || 'https://via.placeholder.com/800x400?text=No+Image'}
+          src={images?.[imageIndex] || 'https://via.placeholder.com/800x400?text=No+Image'}
           alt={animal.name}
         />
-        
 
-        {animal.images?.length > 1 && (
+        {images.length > 1 && (
           <>
             <button 
               className="animal-card-arrow animal-card-arrow-left"
@@ -98,11 +98,10 @@ export const OrderCard = ({ animals }) => {
     : animals && typeof animals === "object"
     ? [animals]
     : [];
-   
+
   return (
     <div className="order-card-container">
       {normalizedAnimals.map((animal, index) => (
-        
         <AnimalCard key={`animal-${index}`} animal={animal} />
       ))}
     </div>

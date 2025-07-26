@@ -1,137 +1,134 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../redux/slices/authSlice';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { SuccessPopup } from '../Utils/SucessPopUp'; 
+import '../Stylesheets/Register.css';
 
-const Register = () => {
+export const Register = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
-
-  const [form, setForm] = useState({
+  const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
+    confirmPassword: '',
     role: 'customer',
   });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const [error, setError] = useState('');
+  const [showPopup, setShowPopup] = useState(false); 
 
-  const clearForm = () => {
-    setForm({
-      username: '',
-      email: '',
-      password: '',
-      role: 'customer',
-    });
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      return setError('Passwords do not match');
+    }
+
+    const url =
+      formData.role === 'farmer'
+        ? 'http://localhost:5555/api/farmers/farmers/register'
+        : 'http://localhost:5555/auth/register';
+
     try {
-      await dispatch(register(form)).unwrap();
-      toast.success('Registration successful!');
-      clearForm();
-      navigate('/');
-    } catch (err) {
-      if (err.status === 409) {
-        toast.error('Account already exists');
-      } else if (err.status === 400) {
-        toast.error('Invalid input. Please check your details.');
-      } else {
-        toast.error('Something went wrong. Try again later.');
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Registration failed');
       }
+
+      setShowPopup(true); // Show the popup
+    } catch (err) {
+      setError(err.message);
     }
   };
 
+  // Auto-redirect after showing popup
+  useEffect(() => {
+    if (showPopup) {
+      const timeout = setTimeout(() => {
+        navigate('/login');
+      }, 3000); // ⏳ 3 seconds
+
+      return () => clearTimeout(timeout); // Clean up on unmount
+    }
+  }, [showPopup, navigate]);
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-sm mx-auto mt-24 bg-white p-8 rounded shadow-md space-y-4"
-      autoComplete="off"
-    >
-      <div className="flex justify-center mb-6">
-        <div className="bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold">
-          R
+    <>
+      <div className="login-container">
+        <div className="login-box">
+          <h2 className="login-title">Register</h2>
+          {error && <p className="login-error">{error}</p>}
+          <form onSubmit={handleSubmit} className="login-form">
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="Username"
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email"
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Password"
+              required
+            />
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm Password"
+              required
+            />
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              required
+            >
+              <option value="customer">Customer</option>
+              <option value="farmer">Farmer</option>
+            </select>
+
+            <button type="submit" className="login-button">Sign Up</button>
+          </form>
         </div>
       </div>
 
-      <h2 className="text-center text-2xl font-semibold mb-6">Create an account</h2>
-
-      {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
-
-      <div className="mb-4">
-        <label className="block mb-1 text-sm font-medium text-gray-700">Username</label>
-        <input
-          name="username"
-          value={form.username}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-green-500"
-          placeholder="Username"
-          required
-          autoComplete="new-username"
+      {showPopup && (
+        <SuccessPopup
+          message="Check your email for the verification link."
+          showPopup={true}
         />
-      </div>
-
-      <div className="mb-4">
-        <label className="block mb-1 text-sm font-medium text-gray-700">Email address</label>
-        <input
-          name="email"
-          type="email"
-          value={form.email}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-green-500"
-          placeholder="Email"
-          required
-          autoComplete="new-email"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block mb-1 text-sm font-medium text-gray-700">Password</label>
-        <input
-          name="password"
-          type="password"
-          value={form.password}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-green-500"
-          placeholder="Password"
-          required
-          autoComplete="new-password"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block mb-1 text-sm font-medium text-gray-700">Role</label>
-        <select
-          name="role"
-          value={form.role}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-green-500"
-        >
-          <option value="customer">User</option>
-          <option value="farmer">Farmer</option>
-        </select>
-      </div>
-
-      {error?.status === 409 && (
-        <p className="text-red-600 text-sm text-center">User already exists.</p>
       )}
-
-      <button
-        type="submit"
-        className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded"
-        disabled={loading}
-      >
-        {loading ? 'Registering...' : 'Register'}
-      </button>
-
-      <p className="text-center text-xs text-gray-400 mt-6">© 2017–2025</p>
-    </form>
+    </>
   );
 };
-
-export default Register;

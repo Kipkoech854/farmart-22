@@ -1,11 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import appRoutes from "./Routes/Routes";
 
-import { CartProvider } from "./context/CartContext";
+import Footer from "./components/Footer";
+
+import { CartProvider } from "./context/CartContext"; 
+
 
 function App() {
   return (
@@ -16,10 +17,15 @@ function App() {
           <Route key={index} path={path} element={element} />
         ))}
       </Routes>
+
       <Footer />
+   
+
     </CartProvider>
+
   );
 }
 
 export default App;
+
 

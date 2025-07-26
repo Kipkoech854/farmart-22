@@ -1,64 +1,137 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Typography, Button, Chip, Box } from '@mui/material';
-import { ShoppingCart, FlashOn, LocationOn } from '@mui/icons-material';
-//import '../Stylesheets/LivestockCard'
+import Slider from 'react-slick';
+import {
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Chip,
+  Box,
+  CardMedia
+} from '@mui/material';
 
 const LivestockCard = ({ livestock, onViewDetails, onAddToCart, onBuyNow }) => {
+  const images = livestock?.images?.map(img => img.url) || [livestock.image || '/fallback.jpg'];
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 300,
+    arrows: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000
+  };
+
   return (
-    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <CardMedia
-        component="img"
-        height="160"
-        image={livestock.image}
-        alt={livestock.name}
-        onClick={onViewDetails}
-        sx={{ cursor: 'pointer' }}
-      />
+    <Card
+      sx={{
+        width: '100%',
+        maxWidth: 320,
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        borderRadius: 2,
+        boxShadow: 2,
+        margin: 'auto'
+      }}
+    >
+      <Box sx={{ height: 180, position: 'relative' }}>
+        {images.length > 1 ? (
+          <Slider {...sliderSettings}>
+            {images.map((url, idx) => (
+              <CardMedia
+                key={idx}
+                component="img"
+                image={url}
+                alt={livestock.name}
+                onClick={onViewDetails}
+                sx={{
+                  cursor: 'pointer',
+                  objectFit: 'cover',
+                  width: '100%',
+                  height: 180
+                }}
+              />
+            ))}
+          </Slider>
+        ) : (
+          <CardMedia
+            component="img"
+            image={images[0]}
+            alt={livestock.name}
+            onClick={onViewDetails}
+            sx={{
+              cursor: 'pointer',
+              objectFit: 'cover',
+              width: '100%',
+              height: 180
+            }}
+          />
+        )}
+      </Box>
+
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h6" component="div">
+        <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
           {livestock.name}
         </Typography>
-        <Box sx={{ display: 'flex', gap: 1, mb: 1, flexWrap: 'wrap' }}>
-          <Chip label={livestock.type} size="small" color="primary" />
+
+        <Box sx={{ display: 'flex', gap: 0.5, mb: 1, flexWrap: 'wrap' }}>
+          <Chip label={livestock.type} size="small" />
           <Chip label={livestock.breed} size="small" variant="outlined" />
-          <Chip 
-            icon={<LocationOn fontSize="small" />}
-            label={livestock.county} 
-            size="small" 
+          <Chip
+            icon={<span style={{ fontSize: '1rem' }}>📍</span>}
+            label={livestock.location || livestock.county}
+            size="small"
           />
         </Box>
+
         <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-          {livestock.description.substring(0, 60)}...
+          {livestock.description?.substring(0, 60)}...
         </Typography>
+
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            KSh {livestock.price.toLocaleString()}
+          <Typography variant="body1" fontWeight="bold">
+            KSh {livestock.price?.toLocaleString()}
           </Typography>
-          <Chip 
-            label={`${livestock.age} yrs`} 
-            size="small" 
-            color="info"
-          />
+          <Chip label={`${livestock.age} yrs`} size="small" color="info" />
         </Box>
       </CardContent>
-      <Box sx={{ p: 2, display: 'flex', gap: 1 }}>
-        <Button 
-          variant="contained" 
-          startIcon={<ShoppingCart />}
+
+      <Box sx={{ p: 1.5, display: 'flex', gap: 1 }}>
+        <Button
+          variant="contained"
+          startIcon={<span style={{ fontSize: '1rem' }}>🛒</span>}
           onClick={onAddToCart}
           size="small"
           fullWidth
+          sx={{
+            backgroundColor: 'green',
+            color: 'white',
+            '&:hover': {
+              backgroundColor: '#006400'
+            }
+          }}
         >
-          Add to Cart
+          Add
         </Button>
-        <Button 
-          variant="outlined" 
-          startIcon={<FlashOn />}
+        <Button
+          variant="outlined"
+          startIcon={<span style={{ fontSize: '1rem' }}>⚡</span>}
           onClick={onBuyNow}
           size="small"
           fullWidth
+          sx={{
+            borderColor: 'green',
+            color: 'green',
+            '&:hover': {
+              borderColor: '#006400',
+              backgroundColor: 'rgba(0,128,0,0.04)'
+            }
+          }}
         >
-          Buy Now
+          Buy
         </Button>
       </Box>
     </Card>
@@ -66,3 +139,4 @@ const LivestockCard = ({ livestock, onViewDetails, onAddToCart, onBuyNow }) => {
 };
 
 export default LivestockCard;
+

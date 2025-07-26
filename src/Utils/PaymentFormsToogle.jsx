@@ -2,7 +2,8 @@ import { useState } from 'react';
 import StripeContainer from '../Payment/StripeContainer';
 import '../Stylesheets/PaymentFormsToogle.css'
 
-export const PaymentFormsToogle = ({ paymentMethod }) => {
+export const PaymentFormsToogle = ({paymentMethod, cart, pickupLocation,shippingCost,deliveryMethod,totalPrice,userid}) => {
+
   const [phoneNumber, setPhoneNumber] = useState('');
 
   const handlePhoneSubmit = (e) => {
@@ -29,7 +30,14 @@ export const PaymentFormsToogle = ({ paymentMethod }) => {
   } else if (paymentMethod === 'Credit Card') {
     return (
       <div>
-        <StripeContainer />
+        <StripeContainer 
+    items={cart}
+    pickupLocation={pickupLocation}
+    shippingCost={shippingCost}
+    deliveryMethod={deliveryMethod}
+    total={totalPrice + shippingCost}
+    userId={userid}
+  />
       </div>
     );
   } else if (paymentMethod === "PayPal") {
@@ -61,3 +69,14 @@ export const PaymentFormsToogle = ({ paymentMethod }) => {
     );
   }
 };
+
+
+ <PaymentFormsToogle 
+        paymentMethod={paymentMethod} 
+        cart={cart} 
+        pickupLocation={pickupLocation} 
+        shippingCost={shippingCost} 
+        deliveryMethod={deliveryMethod} 
+        totalPrice={totalPrice}
+        userid={userId}
+    />
