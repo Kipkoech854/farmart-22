@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
-import logo from "../assets/logo.png";
+import logo from "../assets/default-profile.jpeg";
 import { isTokenExpired } from "../utils/jwt";
 // import useCart and useAuth if needed
 // import { useCart } from "../context/CartContext";

@@ -17,3 +17,7 @@ export const isTokenExpired = (token) => {
         return true; 
     }
 }
+
+export const getToken = () => {
+    return localStorage.getItem('token');
+};

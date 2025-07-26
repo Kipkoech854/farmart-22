@@ -1,9 +1,19 @@
 import { Route } from "react-router-dom";
-// import { Home } from "../pages/Home";
-// import { About } from "../pages/About";
-// import Shop from '../pages/Shop';
-// import Cart from '../pages/Cart';
-// import Authmodal from '../components/Authmodal'
+import { Home } from "../pages/Home";
+import { About } from "../pages/About";
+import Shop from '../pages/Shop';
+import Cart from '../pages/Cart';
+import Authmodal from '../components/Authmodal'
+import AuthForm from '../components/AuthForm'; // Adjust path if different
+import Login from '../pages/Login'; 
+import Profile from '../pages/profileViewer'; // or wherever the file is located
+import Register from '../pages/Register';
+import Checkout from '../pages/Checkout';
+import { LivestockPage } from '../pages/LivestockPage';
+
+
+
+
 
 const appRoutes = [
   { path: "/", element: <Home /> },
@@ -21,8 +31,8 @@ const appRoutes = [
 
   {path: '/shop', element:<LivestockPage/>},
   {path:'/cart', element:<Cart/>},
-  // {path:'/Signin', element:<Authmodal/>},
-  // {path:'Signin', element:<Authmodal/>}
+  {path:'/Signin', element:<Authmodal/>},
+  {path:'Signin', element:<Authmodal/>}
 ];
 
 export default appRoutes;
