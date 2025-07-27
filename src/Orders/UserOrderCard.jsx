@@ -112,9 +112,7 @@ const OrderItem = React.memo(({ order, onDelete, renderActions }) => {
             <button className="details-btn" onClick={toggleDetails}>
               {showDetails ? 'Hide Details' : 'More Details'}
             </button>
-            <button className="delete-btn" onClick={() => onDelete(order.id)}>
-              Delete
-            </button>
+         
           </div>
         </div>
       </div>

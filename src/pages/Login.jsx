@@ -20,7 +20,7 @@ const Login = () => {
 
   const credentials = { email, password };
 
- /* try {
+  try {
     // 1. Try FARMER login
     const farmerRes = await axios.post('http://127.0.0.1:5555/api/farmers/farmers/login', credentials);
     const token = farmerRes.data.token;
@@ -32,7 +32,7 @@ const Login = () => {
     return;
   } catch (farmerError) {
     console.warn("Farmer login failed:", farmerError.response?.data || farmerError.message);
-  }*/
+  }
 
   try {
     // 2. Try USER login if farmer login failed
