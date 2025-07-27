@@ -10,11 +10,12 @@ import { RejectedOrders } from './RejectedOrders';
 import { DeliveredOrders } from './DeliveredOrders';
 import { NotDelivered } from "./NotDelivered";
 import { NotPaid } from "./NotPaid"; 
+import { getUserRole } from "../utils/decodeToken";
 
 export const OverheadClassifiers = () => {
   const [selected, setSelected] = useState(null);
-  const role = 'customer'
-  // Mapping dropdown values to components
+  const role = getUserRole();
+ 
   const componentMap = {
     'Pending': <PendingOrders />,
     'Confirmed': <ConfirmedOrders />,

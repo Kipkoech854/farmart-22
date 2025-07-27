@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../Stylesheets/Login.css';
 import { SuccessPopup } from '../Utils/SucessPopUp';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -10,41 +11,43 @@ const Login = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
+
 
   const handleLogin = async () => {
   setErrorMsg('');
+  localStorage.removeItem("user");
+
   const credentials = { email, password };
 
-  try {
+  /*try {
     const farmerRes = await axios.post('http://127.0.0.1:5555/api/farmers/farmers/login', credentials);
-    console.log('Farmer login response:', farmerRes.data);
+    const token = farmerRes.data.token
+    console.log(token);
 
-    const token = farmerRes.data.token;
-    const farmer = farmerRes.data.farmer || farmerRes.data.user || farmerRes.data;
-
-    localStorage.setItem("user", JSON.stringify({ token, ...farmer })); // ✅ all in one
-
+    login(token); // ✅ notify AuthContext
     setShowPopup(true);
     return;
   } catch (farmerError) {
     console.warn("Farmer login failed:", farmerError.response?.data || farmerError.message);
-  }
+  }*/
 
-  try {
-    const userRes = await axios.post('http://127.0.0.1:5555/auth/login', credentials);
-    console.log('User login response:', userRes.data);
+ try {
+  const userRes = await axios.post('http://127.0.0.1:5555/auth/login', credentials);
+  const token = userRes.data.access_token;
 
-    const token = userRes.data.token;
-    const user = userRes.data.user;
-
-    localStorage.setItem("user", JSON.stringify({ token, ...user })); // ✅ all in one
-
+  if (typeof token === 'string' && token.length > 10) {
+    login(token); 
     setShowPopup(true);
-  } catch (userError) {
-    console.warn("User login failed:", userError.response?.data || userError.message);
-    setErrorMsg('Invalid credentials for both farmer and user.');
+  } else {
+    throw new Error('Token not found in response');
   }
-};
+} catch (userError) {
+  console.warn("User login failed:", userError.response?.data || userError.message);
+  setErrorMsg('Invalid credentials for both farmer and user.');
+}
+
+  }
 
 
 

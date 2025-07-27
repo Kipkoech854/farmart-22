@@ -55,12 +55,12 @@ export const allOrders = async () => {
       },
     };
 
-    const response = await axios.get('https://farmart-y80m.onrender.com/api/Orders/all', options);
+    const response = await axios.get('http://127.0.0.1:5555/api/Orders/all', options);
     return response.data;
 
   } catch (error) {
     console.error('Error fetching all orders:', error);
-    throw error; // optional: so caller can handle it too
+    throw error; 
   }
 };
 

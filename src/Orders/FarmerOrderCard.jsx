@@ -10,14 +10,16 @@ export const FarmerOrderCard = ({ orders, onDelete, renderActions }) => {
   return (
     <div className="order-grid-container">
       <div className="order-grid">
-        {normalizedOrders.map((order) => (
+        {normalizedOrders.map((order) => {
+          console.log("Rendering order:", order);
+          return(
           <OrderItem 
             key={order.id} 
             order={order} 
             onDelete={onDelete}
             renderActions={renderActions} 
           />
-        ))}
+         )})}
       </div>
     </div>
   );
@@ -64,11 +66,11 @@ const OrderItem = React.memo(({ order, onDelete, renderActions }) => {
     <div className="order-card">
       <div className="order-summary">
         {/* Safely handle first image */}
-        {showImage && order.items?.[0]?.images?.[0] && (
+        {showImage && order.animals?.[0]?.items?.[0]?.images?.[0] && (
           <div className="order-image">
             <img
-              src={order.items[0].images[0]}
-              alt={order.items[0].name || 'Order item'}
+              src={order.animals[0].items[0].images[0]}
+              alt={order.animals[0].items[0].name || 'Order item'}
             />
           </div>
         )}
@@ -77,18 +79,18 @@ const OrderItem = React.memo(({ order, onDelete, renderActions }) => {
           {/* Customer Profile Section */}
           <div className="seller-profile" onClick={handleProfileToggle}>
             <div className={`profile-image ${showEmail ? 'expanded' : ''}`}>
-              {order.customer_picture && (
+              {order.user_info.profile_picture && (
                 <img
-                  src={order.customer_picture}
-                  alt={order.customer_username || 'Customer'}
+                  src={order.user_info.profile_picture}
+                  alt={order.user_info.username || 'Customer'}
                 />
               )}
             </div>
             <div className="profile-info">
-              <p className="username">@{order.customer_username || 'customer'}</p>
-              {showEmail && order.customer_email && (
-                <a href={`mailto:${order.customer_email}`} className="email">
-                  {order.customer_email}
+              <p className="username">@{order.user_info.username || 'customer'}</p>
+              {showEmail && order.user_info.email && (
+                <a href={`mailto:${order.user_info.email}`} className="email">
+                  {order.user_info.email}
                 </a>
               )}
             </div>
@@ -139,7 +141,7 @@ const OrderItem = React.memo(({ order, onDelete, renderActions }) => {
 
       {showDetails && (
         <div className="order-expanded-details">
-          {order.items?.map((item) => {
+          {order.animals?.[0]?.items?.map((item) => {
             const images = item.images || [];
             const currentIndex = imageIndex[item.animal_id] || 0;
             

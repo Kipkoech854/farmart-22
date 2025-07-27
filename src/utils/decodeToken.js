@@ -11,7 +11,7 @@ export const getUserRole = () => {
 
   try {
     const decoded = jwtDecode(token); // ✅ note camelCase
-    console.log("Decoded token:", decoded);
+    
     return decoded.role || decoded.user_type || decoded.identity || null;
   } catch (error) {
     console.error("Failed to decode token:", error);

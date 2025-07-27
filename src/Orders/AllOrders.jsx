@@ -4,6 +4,7 @@ import { FarmerOrderCard } from "./FarmerOrderCard";
 import { FarmerOrders } from "../Utils/UnconstrainedFaker";
 import { UserOrders } from "../Utils/UserFaker";
 import { allOrders } from '../services/Ordersapi'
+import axios from 'axios';
 
 export const AllOrders = ({role}) =>{
   
@@ -14,38 +15,46 @@ export const AllOrders = ({role}) =>{
   
   const [Orders, setOrders] = useState([])
   
- useEffect(() => {
+useEffect(() => {
   const fetchOrders = async () => {
     try {
-      const data = await allOrders();
-      console.log(data)
-      // If allOrders throws or returns bad data, check that here
-      if (!data || data.error) {
-        console.log('Error fetching data from allOrders function');
-      } else {
-        setOrders(data);
-      }
+      const token = localStorage.getItem('token');
+      console.log('Token before request:', token);
+      
+ // Log the token here
+
+      const options = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      };
+      console.log('Axios headers:', options);
+
+      const response = await axios.get('http://127.0.0.1:5555/api/Order/all', options);
+      setOrders(response.data);
+      console.log('Fetched orders:', response.data);
     } catch (error) {
-      console.error('Fetch error:', error);
+      console.error('Error fetching all orders:', error);
     }
   };
 
   fetchOrders();
 }, []);
-  
+
+
   const userOrders = UserOrders;
   const farmerOrders = FarmerOrders;
 
     if (role === 'customer') {
       return (
         <div>
-          <UserOrderCard orders={userOrders} onDelete={handleDeleteOrder} />
+          <UserOrderCard orders={Orders} onDelete={handleDeleteOrder} />
         </div>
       );
     } else if (role === 'farmer') {
       return (
         <div>
-          <FarmerOrderCard orders={farmerOrders} />
+          <FarmerOrderCard orders={Orders} />
         </div>
       );
     } else if (role === 'admin') {
