@@ -446,7 +446,7 @@
   position: relative;
   cursor: pointer;
   z-index: 2000;
-   /* Ensure it's above side-drawer and navbar */
+  border-radius: 50%;
 }
 
 .avatar {
@@ -456,6 +456,14 @@
   object-fit: cover;
   border: 5px solid;
 }
+.avatar-img {
+  width: 70px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid;
+}
+
 
 /* Dropdown menu */
 .dropdown-menu {

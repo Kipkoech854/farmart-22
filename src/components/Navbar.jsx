@@ -11,7 +11,8 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const { cart } = useCart();
-  const { user, logout, isLoggedIn } = useAuth(); // ✅ use from context
+  const { user, logout, isLoggedIn } = useAuth(); 
+  console.log('user:',user)// ✅ use from context
 
   const role = getUserRole();
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -120,17 +121,26 @@ const Navbar = () => {
             <Link to="/signup">Sign up</Link>
           </>
         ) : (
-          <div className="avatar-wrapper" onClick={toggleDropdown}>
-            <div className="avatar-text">
-              {user?.username?.[0]?.toUpperCase()}
-              
-            </div>
-            {dropdownOpen && (
-              <div className="dropdown-menu">
-                {renderRoleMenu()}
-              </div>
-            )}
-          </div>
+         <div className="avatar-wrapper" onClick={toggleDropdown}>
+  {user?.profile_picture ? (
+    <img
+      src={`http://127.0.0.1:5555/static/${user.profile_picture}`}
+      alt="Profile"
+      className="avatar-img"
+    />
+  ) : (
+    <div className="avatar-text">
+      {user?.username?.[0]?.toUpperCase()}
+    </div>
+  )}
+
+  {dropdownOpen && (
+    <div className="dropdown-menu">
+      {renderRoleMenu()}
+    </div>
+  )}
+</div>
+
         )}
       </div>
     </div>

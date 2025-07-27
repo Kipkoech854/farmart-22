@@ -1,0 +1,226 @@
+/* Base Styles */
+.profile-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+  color: #2e7d32; /* Dark green */
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Avatar Styles */
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #81c784; /* Light green */
+}
+
+.avatar-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #4caf50; /* Medium green */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+/* Form Styles */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.form-group input {
+  padding: 0.8rem;
+  border: 1px solid #c8e6c9; /* Very light green */
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #4caf50;
+}
+
+/* Button Styles */
+.form-actions, .profile-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-btn, .edit-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.save-btn:hover, .edit-btn:hover {
+  background-color: #388e3c; /* Darker green */
+}
+
+.cancel-btn {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.delete-btn {
+  background-color: #f5f5f5;
+  color: #d32f2f; /* Red for delete */
+  border: 1px solid #d32f2f;
+}
+
+.delete-btn:hover {
+  background-color: #ffebee;
+}
+
+/* Info Display Styles */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.info-item {
+  display: flex;
+  gap: 1rem;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #2e7d32;
+  min-width: 80px;
+}
+
+.info-value {
+  color: #333;
+}
+
+/* Error Handling */
+.error-message {
+  color: #d32f2f;
+  background: #ffebee;
+  padding: 0.8rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.loader {
+  text-align: center;
+  color: #4caf50;
+  margin: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .profile-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .form-actions, .profile-actions {
+    flex-direction: column;
+  }
+  
+  button {
+    width: 100%;
+  }
+}
+/* Add these to your existing profileViewer.css */
+
+.profile-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.edit-profile-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.edit-profile-btn:hover {
+  background-color: #f0f0f0;
+}
+
+/* Make the delete button less prominent */
+.delete-btn {
+  margin-top: 2rem;
+  background-color: transparent;
+  color: #ff4444;
+  border: 1px solid #ff4444;
+  padding: 0.5rem 1rem;
+}
+
+.delete-btn:hover {
+  background-color: #ffebee;
+}
+
+/* Adjust form styles for better spacing */
+.profile-form {
+  margin-top: 1.5rem;
+}
+
+/* Make the info display more elegant */
+.info-item {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}

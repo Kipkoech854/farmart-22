@@ -1,144 +1,224 @@
-import React, { useEffect, useState } from 'react';
-import { getToken } from '../utils/jwt';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { getToken } from '../utils/jwt';
+import '../Stylesheets/profileViewer.css';
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [editing, setEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [preview, setPreview] = useState(null);
+
+  const BASE_URL = "http://127.0.0.1:5555";  // adjust if deployed
+  const profilePicUrl = preview || (profile?.profile_picture ? `${BASE_URL}/static/${profile.profile_picture}` : null);
+  console.log("Profile picture URL:", profilePicUrl);
+
+  
   const [form, setForm] = useState({
+    username: '',
     email: '',
-    name: '',
     profilePicture: '',
-    profilePictureFile: null,
+    profilePictureFile: null
   });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = getToken();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchProfile = async () => {
+      setIsLoading(true);
       try {
-        const res = await fetch('https://farmart-y80m.onrender.com', {
-          headers: { Authorization: `Bearer ${token}` },
+        const res = await fetch('http://127.0.0.1:5555/api/User/profile', {
+          headers: { Authorization: `Bearer ${token}` }
         });
+        if (!res.ok) throw new Error('Failed to load profile');
         const data = await res.json();
-        if (res.ok) {
-          setProfile(data);
-          setForm({
-            email: data.email,
-            name: data.name,
-            profilePicture: data.profilePicture || '',
-            profilePictureFile: null,
-          });
-        }
-      } catch {
-        console.error('Profile fetch error');
+        console.log(data)
+        setProfile(data);
+        setForm({
+          username: data.username || '',
+          email: data.email || '',
+          profilePicture: data.profilePicture || '',
+          profilePictureFile: null
+        });
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchProfile();
   }, [token]);
 
-  const handleEdit = async (e) => {
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setForm({ ...form, profilePictureFile: file });
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleEditSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    
     try {
       const formData = new FormData();
-      formData.append('name', form.name);
+      const token = localStorage.getItem('token');
+      console.log("token:",token)
+      formData.append('username', form.username);
       formData.append('email', form.email);
       if (form.profilePictureFile) {
         formData.append('profilePicture', form.profilePictureFile);
       }
 
-      const res = await fetch('https://farmart-y80m.onrender.com', {
-        method: 'PUT',
-        headers: {
-          
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
+      const res = await fetch('http://127.0.0.1:5555/api/User/user', {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData
       });
 
+      if (!res.ok) throw new Error('Update failed');
       const data = await res.json();
-      if (res.ok) {
-        setProfile(data);
-        setEditing(false);
-      }
-    } catch {
-      console.error('Profile update failed');
+      setProfile(data);
+      setPreview(null);
+      setEditing(false);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleDelete = async () => {
-    if (!window.confirm('Are you sure you want to delete your account?')) return;
-
+  const handleDeleteAccount = async () => {
+    if (!window.confirm('Are you sure? This cannot be undone.')) return;
+    
     try {
       const res = await fetch('https://farmart-y80m.onrender.com', {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` }
       });
-
+      
       if (res.ok) {
         dispatch(logout());
         navigate('/register');
+      } else {
+        throw new Error('Deletion failed');
       }
-    } catch {
-      console.error('Account deletion failed');
+    } catch (err) {
+      setError(err.message);
     }
   };
 
-  if (!profile) return <p>Loading profile....</p>;
+  if (isLoading && !profile) return <div className="loader">Loading...</div>;
+  if (error) return <div className="error-alert">{error}</div>;
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2>User Profile</h2>
+    <div className="profile-container">
+      <div className="profile-header-container">
+        <h2 className="profile-header">My Profile</h2>
+        {!editing && (
+          <button 
+            onClick={() => setEditing(true)}
+            className="edit-profile-btn"
+            title="Edit profile"
+          >
+            ✏️
+          </button>
+        )}
+      </div>
+      
+      <div className="avatar-container">
+  {profilePicUrl ? (
+    <img 
+      src={profilePicUrl}
+      alt="Profile"
+      className="profile-avatar"
+    />
+  ) : (
+    <div className="avatar-placeholder">
+      {profile?.username?.charAt(0).toUpperCase()}
+    </div>
+  )}
+</div>
 
-      {profile.profilePicture && (
-        <img
-          src={profile.profilePicture}
-          alt="Profile"
-          style={{ width: 120, height: 120, borderRadius: '50%', objectFit: 'cover', marginBottom: '1rem' }}
-        />
-      )}
+
 
       {editing ? (
-        <form onSubmit={handleEdit} encType="multipart/form-data">
-          <input
-            type="text"
-            value={form.name}
-            placeholder="Full Name"
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-          /><br />
-
-          <input
-            type="email"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-          /><br />
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) =>
-              setForm({ ...form, profilePictureFile: e.target.files[0] })
-            }
-          /><br />
-
-          <button type="submit">Save</button>
-          <button type="button" onClick={() => setEditing(false)}>Cancel</button>
+        <form onSubmit={handleEditSubmit} className="profile-form">
+          <div className="form-group">
+            <label>Username</label>
+            <input
+              type="text"
+              value={form.username || ''}
+              onChange={(e) => setForm({...form, username: e.target.value})}
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              value={form.email || ''}
+              onChange={(e) => setForm({...form, email: e.target.value})}
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Profile Picture</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </div>
+          
+          <div className="form-actions">
+            <button type="submit" className="save-btn" disabled={isLoading}>
+              {isLoading ? 'Saving...' : 'Save Changes'}
+            </button>
+            <button 
+              type="button" 
+              className="cancel-btn"
+              onClick={() => {
+                setEditing(false);
+                setPreview(null);
+              }}
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       ) : (
-        <>
-          <p><strong>Name:</strong> {profile.name}</p>
-          <p><strong>Email:</strong> {profile.email}</p>
-          <button onClick={() => setEditing(true)}>Edit Profile</button>
-          <button onClick={handleDelete} style={{ color: 'red' }}>Delete Account</button>
-        </>
+        <div className="profile-info">
+          <div className="info-item">
+            <span className="info-label">Username:</span>
+            <span className="info-value">{profile?.username || 'Not available'}</span>
+          </div>
+          
+          <div className="info-item">
+            <span className="info-label">Email:</span>
+            <span className="info-value">{profile?.email || 'Not available'}</span>
+          </div>
+          
+          <button 
+            onClick={handleDeleteAccount}
+            className="delete-btn"
+          >
+            Delete Account
+          </button>
+        </div>
       )}
+      
+      {error && <div className="error-message">{error}</div>}
     </div>
   );
 };
 
 export default Profile;
-
