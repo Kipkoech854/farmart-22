@@ -9,11 +9,17 @@
 
 /* Desktop Navigation */
 .desktop-navbar {
-  background-color: #006400;
+  background-color: #006400 !important;
   padding: 0 1rem;
 }
 
 .desktop-nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
   
 
 .navbar {
@@ -22,8 +28,8 @@
   left: 0;
   right: 0;
   z-index: 1000;
-
-
+  background-color: #006400;
+  width: 100vw;
 
 
   display: flex;
@@ -31,8 +37,6 @@
   align-items: center;
   height: 80px;
 
-
-  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -435,7 +439,7 @@
   .mobile-navbar {
     display: none;
   }
-}}
+}
 
 /* Dropdown container */
 .avatar-wrapper {

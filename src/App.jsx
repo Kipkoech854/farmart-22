@@ -1,4 +1,7 @@
 import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import appRoutes from './Routes/Routes'
+import { Routes, Route } from "react-router-dom";
 
 import { CartProvider } from "./context/CartContext"; 
 

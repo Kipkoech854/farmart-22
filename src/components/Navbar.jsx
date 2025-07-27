@@ -11,11 +11,9 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const { cart } = useCart();
-  const { user, logout, isLoggedIn } = useAuth();
-  
+  const { user, logout, isLoggedIn } = useAuth(); // ✅ use from context
 
   const role = getUserRole();
-
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
@@ -75,7 +73,9 @@ const Navbar = () => {
       </div>
 
       {/* Hamburger icon for mobile */}
-      <div className="hamburger" onClick={toggleMenu}>☰</div>
+      <div className="hamburger" onClick={toggleMenu}>
+        ☰
+      </div>
 
       {/* Mobile Side Drawer */}
       <div className={`side-drawer ${menuOpen ? "open" : ""}`}>
@@ -93,7 +93,9 @@ const Navbar = () => {
               <Link to="/signup" onClick={toggleMenu}>Sign up</Link>
             </>
           ) : (
-            <div className="mobile-dropdown">{renderRoleMenu()}</div>
+            <div className="mobile-dropdown">
+              {renderRoleMenu()}
+            </div>
           )}
         </nav>
       </div>
@@ -119,19 +121,14 @@ const Navbar = () => {
           </>
         ) : (
           <div className="avatar-wrapper" onClick={toggleDropdown}>
-            {user?.profile_picture ? (
-              <img
-                src={user.profile_picture}
-                alt="Profile"
-                className="avatar-image"
-              />
-            ) : (
-              <div className="avatar-text">
-                {user?.username?.[0]?.toUpperCase()}
-              </div>
-            )}
+            <div className="avatar-text">
+              {user?.username?.[0]?.toUpperCase()}
+              
+            </div>
             {dropdownOpen && (
-              <div className="dropdown-menu">{renderRoleMenu()}</div>
+              <div className="dropdown-menu">
+                {renderRoleMenu()}
+              </div>
             )}
           </div>
         )}

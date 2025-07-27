@@ -19,7 +19,7 @@ useEffect(() => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('token');
-      console.log('Token before request:', token);
+    
       
  // Log the token here
 
@@ -28,11 +28,10 @@ useEffect(() => {
           'Authorization': `Bearer ${token}`,
         },
       };
-      console.log('Axios headers:', options);
-
+      
       const response = await axios.get('http://127.0.0.1:5555/api/Order/all', options);
       setOrders(response.data);
-      console.log('Fetched orders:', response.data);
+      
     } catch (error) {
       console.error('Error fetching all orders:', error);
     }
@@ -42,8 +41,8 @@ useEffect(() => {
 }, []);
 
 
-  const userOrders = UserOrders;
-  const farmerOrders = FarmerOrders;
+  //const userOrders = UserOrders;
+  //const farmerOrders = FarmerOrders;
 
     if (role === 'customer') {
       return (
