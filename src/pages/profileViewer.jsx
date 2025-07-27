@@ -7,7 +7,13 @@ import { useNavigate } from 'react-router-dom';
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState({ email: '', name: '' });
+  const [form, setForm] = useState({
+    email: '',
+    name: '',
+    profilePicture: '',
+    profilePictureFile: null,
+  });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = getToken();
@@ -21,7 +27,12 @@ const Profile = () => {
         const data = await res.json();
         if (res.ok) {
           setProfile(data);
-          setForm({ email: data.email, name: data.name });
+          setForm({
+            email: data.email,
+            name: data.name,
+            profilePicture: data.profilePicture || '',
+            profilePictureFile: null,
+          });
         }
       } catch {
         console.error('Profile fetch error');
@@ -33,14 +44,22 @@ const Profile = () => {
   const handleEdit = async (e) => {
     e.preventDefault();
     try {
+      const formData = new FormData();
+      formData.append('name', form.name);
+      formData.append('email', form.email);
+      if (form.profilePictureFile) {
+        formData.append('profilePicture', form.profilePictureFile);
+      }
+
       const res = await fetch('https://farmart-y80m.onrender.com', {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
+          
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(form),
+        body: formData,
       });
+
       const data = await res.json();
       if (res.ok) {
         setProfile(data);
@@ -72,21 +91,40 @@ const Profile = () => {
   if (!profile) return <p>Loading profile....</p>;
 
   return (
-    <div>
+    <div style={{ padding: '1rem' }}>
       <h2>User Profile</h2>
+
+      {profile.profilePicture && (
+        <img
+          src={profile.profilePicture}
+          alt="Profile"
+          style={{ width: 120, height: 120, borderRadius: '50%', objectFit: 'cover', marginBottom: '1rem' }}
+        />
+      )}
+
       {editing ? (
-        <form onSubmit={handleEdit}>
+        <form onSubmit={handleEdit} encType="multipart/form-data">
           <input
             type="text"
             value={form.name}
             placeholder="Full Name"
             onChange={(e) => setForm({ ...form, name: e.target.value })}
           /><br />
+
           <input
             type="email"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
           /><br />
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) =>
+              setForm({ ...form, profilePictureFile: e.target.files[0] })
+            }
+          /><br />
+
           <button type="submit">Save</button>
           <button type="button" onClick={() => setEditing(false)}>Cancel</button>
         </form>
@@ -103,3 +141,4 @@ const Profile = () => {
 };
 
 export default Profile;
+
