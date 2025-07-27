@@ -8,6 +8,7 @@
   overflow: hidden;
   background-color: #f9fff9;
   border: 1px solid #e0f0e0;
+  height: fit-content;
 }
 .checkout-link {
   display: block;
@@ -38,15 +39,19 @@
 
 
 .animal-card-image-container {
-  position: relative;
+   position: relative;
   height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
 }
 
 .animal-card-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Fill container while maintaining aspect ratio */
+  object-position: center;
   transition: transform 0.3s ease;
 }
 

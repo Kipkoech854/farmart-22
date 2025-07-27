@@ -5,38 +5,47 @@ import '../Stylesheets/OrderCard.css';
 export const AnimalCard = ({ animal }) => {
   const [imageIndex, setImageIndex] = useState(0);
 
+  // ✅ Corrected image URL extraction logic
   const images = Array.isArray(animal.images)
-    ? animal.images.map(img => img.url)
+    ? animal.images
+        .map(img =>
+          img && typeof img === 'object' && img.url && typeof img.url === 'object'
+            ? img.url.url
+            : null
+        )
+        .filter(Boolean)
     : [];
 
   const handlePrevImage = () => {
-    setImageIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+    setImageIndex(prev => (prev > 0 ? prev - 1 : images.length - 1));
   };
 
   const handleNextImage = () => {
-    setImageIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+    setImageIndex(prev => (prev < images.length - 1 ? prev + 1 : 0));
   };
+
+  console.log("animal:", animal);
 
   return (
     <div className="animal-card">
       <div className="animal-card-image-container">
         <img
           className="animal-card-image"
-          src={images?.[imageIndex] || 'https://via.placeholder.com/800x400?text=No+Image'}
+          src={images[imageIndex] || 'https://via.placeholder.com/800x400?text=No+Image'}
           alt={animal.name}
         />
 
         {images.length > 1 && (
           <>
-            <button 
+            <button
               className="animal-card-arrow animal-card-arrow-left"
               onClick={handlePrevImage}
               aria-label="Previous image"
             >
               &lt;
             </button>
-            
-            <button 
+
+            <button
               className="animal-card-arrow animal-card-arrow-right"
               onClick={handleNextImage}
               aria-label="Next image"
@@ -74,10 +83,10 @@ export const AnimalCard = ({ animal }) => {
         </p>
 
         <h3 className="animal-card-status-title">Health Status:</h3>
-        <span 
+        <span
           className={`animal-card-status ${
-            animal.is_available 
-              ? 'animal-card-status-available' 
+            animal.is_available
+              ? 'animal-card-status-available'
               : 'animal-card-status-sold'
           }`}
         >
@@ -95,7 +104,7 @@ export const AnimalCard = ({ animal }) => {
 export const OrderCard = ({ animals }) => {
   const normalizedAnimals = Array.isArray(animals)
     ? animals
-    : animals && typeof animals === "object"
+    : animals && typeof animals === 'object'
     ? [animals]
     : [];
 

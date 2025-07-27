@@ -68,10 +68,11 @@ const OrderItem = React.memo(({ order, onDelete, renderActions }) => {
         {/* Safely handle first image */}
         {showImage && order.animals?.[0]?.items?.[0]?.images?.[0] && (
           <div className="order-image">
-            <img
-              src={order.animals[0].items[0].images[0]}
-              alt={order.animals[0].items[0].name || 'Order item'}
+           <img
+             src={`http://localhost:5555/${order.animals[0].items[0].images[0]}`}
+             alt={order.animals[0].items[0].name || 'Order item'}
             />
+
           </div>
         )}
 

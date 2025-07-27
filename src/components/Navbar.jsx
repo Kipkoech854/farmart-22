@@ -12,7 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { cart } = useCart();
   const { user, logout, isLoggedIn } = useAuth(); 
-  console.log('user:',user)// ✅ use from context
+  
 
   const role = getUserRole();
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -48,9 +48,9 @@ const Navbar = () => {
       case "farmer":
         return (
           <>
-            <Link to="/profile" onClick={toggleMenu}>My Profile</Link>
+            <Link to="/farmers/profile" onClick={toggleMenu}>My Profile</Link>
             <Link to="/orders" onClick={toggleMenu}>My Orders</Link>
-            <Link to="/add-animal" onClick={toggleMenu}>Add Animal</Link>
+            <Link to="/add-animal" onClick={toggleMenu}>Add Animal</Link> 
             <button onClick={handleLogout}>Logout</button>
           </>
         );
