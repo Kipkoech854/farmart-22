@@ -8,7 +8,7 @@ const FeedbackList = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch("http://localhost:5555/api/farmers/feedback", {
+    fetch("https://farmart-y80m.onrender.com/api/farmers/feedback", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

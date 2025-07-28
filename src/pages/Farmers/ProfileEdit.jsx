@@ -17,7 +17,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch("http://localhost:5555/api/farmers", {
+    fetch("https://farmart-y80m.onrender.com/api/farmers", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -58,7 +58,7 @@ const EditProfile = () => {
       form.append("profile_picture", formData.profile_picture);
     }
 
-    fetch("http://localhost:5555/api/farmers/farmers", {
+    fetch("https://farmart-y80m.onrender.com/api/farmers/farmers", {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,

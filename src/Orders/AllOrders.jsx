@@ -29,7 +29,7 @@ useEffect(() => {
         },
       };
       
-      const response = await axios.get('http://127.0.0.1:5555/api/Order/all', options);
+      const response = await axios.get('https://farmart-y80m.onrender.com/api/Order/all', options);
       setOrders(response.data);
       
     } catch (error) {

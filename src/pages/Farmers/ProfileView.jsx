@@ -8,7 +8,7 @@ const ProfileView = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch("http://localhost:5555/api/farmers/farmers", {
+    fetch("https://farmart-y80m.onrender.com/api/farmers/farmers", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -25,7 +25,7 @@ const ProfileView = () => {
         <h2 className="profile-title">My Profile</h2>
         {farmer ? (
           <div className="profile-card">
-            <img className="profile-pic"src={farmer.profile_picture? `http://localhost:5555/${farmer.profile_picture}` : defaultPic}
+            <img className="profile-pic"src={farmer.profile_picture? `https://farmart-y80m.onrender.com/${farmer.profile_picture}` : defaultPic}
                alt="Profile"
              />
 

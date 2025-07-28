@@ -8,7 +8,7 @@ const AnimalList = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch("http://localhost:5555/api/farmers/animals", {
+    fetch("https://farmart-y80m.onrender.com/api/farmers/animals", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

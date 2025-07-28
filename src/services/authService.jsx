@@ -1,5 +1,5 @@
 
-const API_BASE = "http://localhost:10000"; // Update with your actual backend URL
+const API_BASE = "https://farmart-y80m.onrender.com"; // Update with your actual backend URL
 
 export const registerUser = async (credentials) => {
   const response = await fetch(`${API_BASE}/register`, {

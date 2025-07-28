@@ -63,7 +63,7 @@ const OrderItem = React.memo(({ order, onDelete, renderActions }) => {
       <div className="order-summary">
         {showImage && firstItem?.images?.[0] && (
           <div className="order-image">
-           <img src={`http://localhost:5555/${firstItem.images[0]}`} 
+           <img src={`https://farmart-y80m.onrender.com/${firstItem.images[0]}`} 
            alt={firstItem.name || "Animal"}onError={(e) => {e.target.onerror = null;
              e.target.src = defaultPic;}}/>
 
