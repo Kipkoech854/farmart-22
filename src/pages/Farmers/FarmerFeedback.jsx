@@ -45,7 +45,7 @@ const FeedbackList = () => {
     setFeedback(mockFeedback);
 
     // Uncomment this for live data
-    /*
+    // Fetch feedback from the server
     const token = localStorage.getItem("token");
     fetch("https://farmart-y80m.onrender.com/api/farmers/feedback", {
       headers: {
@@ -58,7 +58,7 @@ const FeedbackList = () => {
       })
       .then((data) => setFeedback(data.feedback || []))
       .catch((err) => setError(err.message));
-    */
+    
   }, []);
 
   return (
