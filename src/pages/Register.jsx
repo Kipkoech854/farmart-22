@@ -33,8 +33,8 @@ export const Register = () => {
 
     const url =
       formData.role === 'farmer'
-        ? 'http://localhost:5555/api/farmers/farmers/register'
-        : 'http://localhost:5555/auth/register';
+        ? 'https://farmart-y80m.onrender.com/api/farmers/farmers/register'
+        : 'https://farmart-y80m.onrender.com/auth/register';
 
     try {
       const res = await fetch(url, {
