@@ -45,7 +45,7 @@ const AddAnimal = () => {
 
     images.forEach((img) => formData.append("images", img));
 
-    fetch("http://localhost:5555/api/animals/create", {
+    fetch("https://farmart-y80m.onrender.com/api/animals/create", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
