@@ -22,7 +22,7 @@ const Login = () => {
 
   try {
     // 1. Try FARMER login
-    const farmerRes = await axios.post('http://127.0.0.1:5555/api/farmers/farmers/login', credentials);
+    const farmerRes = await axios.post('https://farmart-y80m.onrender.com//api/farmers/farmers/login', credentials);
     const token = farmerRes.data.token;
     const farmer = farmerRes.data.farmer || farmerRes.data.user || farmerRes.data;
 
@@ -34,9 +34,9 @@ const Login = () => {
     console.warn("Farmer login failed:", farmerError.response?.data || farmerError.message);
   }
 
-  /*try {
+  try {
     // 2. Try USER login if farmer login failed
-    const userRes = await axios.post('http://127.0.0.1:5555/auth/login', credentials);
+    const userRes = await axios.post('https://farmart-y80m.onrender.com/auth/login', credentials);
     const token = userRes.data.access_token || userRes.data.token;
     const user = userRes.data.user || {};
 
@@ -50,7 +50,7 @@ const Login = () => {
   } catch (userError) {
     console.warn("User login failed:", userError.response?.data || userError.message);
     setErrorMsg('Invalid credentials for both farmer and user.');
-  }*/
+  }
 };
 
 
