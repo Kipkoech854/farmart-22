@@ -15,43 +15,43 @@ const Login = () => {
 
 
   const handleLogin = async () => {
-  setErrorMsg('');
-  localStorage.removeItem("user");
+    setErrorMsg('');
+    localStorage.removeItem("user");
 
-  const credentials = { email, password };
+    const credentials = { email, password };
 
-  try {
-    // 1. Try FARMER login
-    const farmerRes = await axios.post('https://farmart-y80m.onrender.com//api/farmers/farmers/login', credentials);
-    const token = farmerRes.data.token;
-    const farmer = farmerRes.data.farmer || farmerRes.data.user || farmerRes.data;
+    try {
+      // 1. Try FARMER login
+      const farmerRes = await axios.post('https://farmart-y80m.onrender.com//api/farmers/farmers/login', credentials);
+      const token = farmerRes.data.token;
+      const farmer = farmerRes.data.farmer || farmerRes.data.user || farmerRes.data;
 
-    localStorage.setItem("user", JSON.stringify({ token, ...farmer }));
-    login(token);
-    setShowPopup(true);
-    return;
-  } catch (farmerError) {
-    console.warn("Farmer login failed:", farmerError.response?.data || farmerError.message);
-  }
-
-  try {
-    // 2. Try USER login if farmer login failed
-    const userRes = await axios.post('https://farmart-y80m.onrender.com/auth/login', credentials);
-    const token = userRes.data.access_token || userRes.data.token;
-    const user = userRes.data.user || {};
-
-    if (typeof token === 'string' && token.length > 10) {
-      localStorage.setItem("user", JSON.stringify({ token, ...user }));
+      localStorage.setItem("user", JSON.stringify({ token, ...farmer }));
       login(token);
       setShowPopup(true);
-    } else {
-      throw new Error('Token not found in user login response');
+      return;
+    } catch (farmerError) {
+      console.warn("Farmer login failed:", farmerError.response?.data || farmerError.message);
     }
-  } catch (userError) {
-    console.warn("User login failed:", userError.response?.data || userError.message);
-    setErrorMsg('Invalid credentials for both farmer and user.');
-  }
-};
+
+    try {
+      // 2. Try USER login if farmer login failed
+      const userRes = await axios.post('https://farmart-y80m.onrender.com/auth/login', credentials);
+      const token = userRes.data.access_token || userRes.data.token;
+      const user = userRes.data.user || {};
+
+      if (typeof token === 'string' && token.length > 10) {
+        localStorage.setItem("user", JSON.stringify({ token, ...user }));
+        login(token);
+        setShowPopup(true);
+      } else {
+        throw new Error('Token not found in user login response');
+      }
+    } catch (userError) {
+      console.warn("User login failed:", userError.response?.data || userError.message);
+      setErrorMsg('Invalid credentials for both farmer and user.');
+    }
+  };
 
 
 

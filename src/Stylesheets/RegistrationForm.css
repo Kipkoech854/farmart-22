@@ -1,77 +1,58 @@
 /* RegistrationForm.css */
-.registration-form-container {
-  max-width: 80vw;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: white;
+
+form {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+label {
+  font-weight: 600;
+  color: #333;
+}
+
+input {
+  padding: 0.75rem 1rem;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(46, 125, 50, 0.1);
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
 }
 
-.registration-form-container form {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 15px;
-  align-items: center;
-}
-
-.registration-form-container label {
-  color: #2e7d32;
-  font-weight: 500;
-  text-align: right;
-  padding-right: 10px;
-}
-
-.registration-form-container input {
-  padding: 8px 12px;
-  border: 1px solid #c8e6c9;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.registration-form-container input:focus {
+input:focus {
+  border-color: green;
   outline: none;
-  border-color: #2e7d32;
-  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
 }
 
-.registration-form-container button {
-  grid-column: 2;
-  background-color: #4caf50;
+button[type="submit"] {
+  background-color: green;
   color: white;
+  padding: 0.75rem;
   border: none;
-  padding: 10px;
-  border-radius: 4px;
+  border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
-.registration-form-container button:hover {
-  background-color: #388e3c;
+button[type="submit"]:hover {
+  background-color: green;
 }
 
 .error-message {
-  grid-column: 1 / -1;
-  color: #d32f2f;
-  background-color: #ffebee;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 15px;
+  max-width: 400px;
+  margin: 0 auto 1rem;
+  color: #b91c1c;
+  background-color: #fee2e2;
+  padding: 0.75rem;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
   text-align: center;
-}
-
-/* Responsive adjustment */
-@media (max-width: 768px) {
-  .registration-form-container form {
-    grid-template-columns: 1fr;
-  }
-  
-  .registration-form-container label {
-    text-align: left;
-  }
-  
-  .registration-form-container button {
-    grid-column: 1;
-  }
+  font-weight: 500;
 }

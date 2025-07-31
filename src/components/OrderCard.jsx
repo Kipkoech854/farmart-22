@@ -15,6 +15,7 @@ export const AnimalCard = ({ animal }) => {
         )
         .filter(Boolean)
     : [];
+    console.log('images:',images)
 
   const handlePrevImage = () => {
     setImageIndex(prev => (prev > 0 ? prev - 1 : images.length - 1));

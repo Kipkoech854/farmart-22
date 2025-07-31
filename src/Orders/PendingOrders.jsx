@@ -31,50 +31,59 @@ export const PendingOrders = ({ role, order, setOrders }) => {
   };
 
   const handleConfirmOrder = async (id) => {
-    const token = localStorage.getItem('token');
-    try {
-      const response = await axios.put(
-        `http://127.0.0.1:5555/api/Order/status/${id}?status=confirmed`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        }
-      );
-      if (response.status === 200) {
-        alert("Order confirmed successfully");
-        setOrders(prev => prev.filter(order => order.id !== id));
-      } else {
-        alert("Unable to confirm order");
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.put(
+      `http://127.0.0.1:5555/api/Order/status/${id}?status=confirmed`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
       }
-    } catch (error) {
-      console.error("Error confirming order:", error);
-      alert("An error occurred while confirming the order");
+    );
+    if (response.status === 200) {
+      alert("Order confirmed successfully");
+      setOrders(prev =>
+        prev.map(order =>
+          order.id === id ? { ...order, status: 'confirmed' } : order
+        )
+      );
+    } else {
+      alert("Unable to confirm order");
     }
-  };
+  } catch (error) {
+    console.error("Error confirming order:", error);
+    alert("An error occurred while confirming the order");
+  }
+};
 
-  const handleRejectOrder = async (id) => {
-    const token = localStorage.getItem('token');
-    try {
-      const response = await axios.put(
-        `http://127.0.0.1:5555/api/Order/status/${id}?status=rejected`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        }
-      );
-      if (response.status === 200) {
-        alert("Order rejected successfully");
-        setOrders(prev => prev.filter(order => order.id !== id));
-      } else {
-        alert("Unable to reject order");
+const handleRejectOrder = async (id) => {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.put(
+      `http://127.0.0.1:5555/api/Order/status/${id}?status=rejected`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
       }
-    } catch (error) {
-      console.error("Error rejecting order:", error);
-      alert("An error occurred while rejecting the order");
+    );
+    if (response.status === 200) {
+      alert("Order rejected successfully");
+      setOrders(prev =>
+        prev.map(order =>
+          order.id === id ? { ...order, status: 'rejected' } : order
+        )
+      );
+    } else {
+      alert("Unable to reject order");
     }
-  };
+  } catch (error) {
+    console.error("Error rejecting order:", error);
+    alert("An error occurred while rejecting the order");
+  }
+};
+
 
   if (filteredOrders.length === 0) return <NotFound />;
 

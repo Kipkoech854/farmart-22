@@ -1,0 +1,30 @@
+.admin-panel{
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    margin-top: 90px;
+}
+
+.vertical-nav{
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    background-color: white;
+    border: none;
+}
+
+.vertical-nav button{
+    border: none;
+    background-color: white;
+    color: black;
+    font-family: Quicksand, sans-serif;
+    font-weight: bold;
+}
+
+.Tables-section{
+    display: flex;
+    align-self: flex-end;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}

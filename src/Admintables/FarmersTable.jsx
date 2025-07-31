@@ -61,53 +61,96 @@ const FarmersTableContent = ({ farmers, onShowRegistration, showRegistration }) 
         // Implement delete functionality
     };
 
-     return (
-        <div className="farmers-table">
-            {/* Move the button outside the table */}
+    return (
+        <div className="farmers-container">
             <div className="table-controls">
-                <button onClick={handleCreateFarmer}>
-                    {Registration ? 'Cancel' : '+ New Farmer'}
+                <button
+                    className="toggle-registration"
+                    onClick={onShowRegistration}
+                >
+                    {showRegistration ? 'Hide Registration' : '+ New Farmer'}
                 </button>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>email</th>
-                        <th>Phone</th>
-                        <th>Verified</th>
-                        <th>actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {normalizedFarmers.map((farmer) => (
-                        <tr key={farmer.id}>
-                            {/* ... keep your existing table rows ... */}
-                        </tr>
-                    ))}
-                    {isOpen && (
+            <div className="table-wrapper">
+                <table className="farmers-table">
+                    <thead>
                         <tr>
-                            <td colSpan={5}>
-                                <button onClick={() => setisOpen(false)}>Hide animals</button>
-                                {Animals.length > 0 ? (
-                                    Animals.map((animal, index) => (
-                                        <AnimalCard key={animal.id || index} animal={animal} />
-                                    ))
-                                ) : (
-                                    <p>No animals found</p>
-                                )}
-                            </td>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Verified</th>
+                            <th>Actions</th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {farmers.map((farmer) => (
+                            <React.Fragment key={farmer.id}>
+                                <tr>
+                                    <td>
+                                        <button
+                                            className="view-animals"
+                                            onClick={() => fetchAnimals(farmer.id)}
+                                        >
+                                            {farmer.username}
+                                        </button>
+                                    </td>
+                                    <td>{farmer.email}</td>
+                                    <td>{farmer.phone}</td>
+                                    <td>
+                                        {farmer.verified ? (
+                                            <CheckCheck size={20} color="green" strokeWidth={1.5} />
+                                        ) : (
+                                            <XCircle size={20} color="gray" strokeWidth={1.5} />
+                                        )}
+                                    </td>
+                                    <td className="actions">
+                                        <button
+                                            className="verify-toggle"
+                                            onClick={() => toggleVerification(farmer.id)}
+                                        >
+                                            {farmer.verified === 'verified' ? 'Disable' : 'Verify'}
+                                        </button>
+                                        <button
+                                            className="delete"
+                                            onClick={() => handleDelete(farmer.id)}
+                                        >
+                                            <Trash2 size={20} color="red" strokeWidth={1.5} />
+                                        </button>
+                                    </td>
+                                </tr>
+                                {expandedFarmer === farmer.id && (
+                                    <tr className="animal-details">
+                                        <td colSpan={5}>
+                                            <div className="animals-container">
+                                                <button
+                                                    className="hide-animals"
+                                                    onClick={() => setExpandedFarmer(null)}
+                                                >
+                                                    Hide Animals
+                                                </button>
+                                                {animals.length > 0 ? (
+                                                    animals.map((animal) => (
+                                                        <AnimalCard key={animal.id} animal={animal} />
+                                                    ))
+                                                ) : (
+                                                    <p className="no-animals">No animals found</p>
+                                                )}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )}
+                            </React.Fragment>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
-            {Registration && (
-                <div className="registration-form-container">
-                    <RegistrationForm newrole={Role} />
+            {showRegistration && (
+                <div className="registration-section">
+                    <RegistrationForm newrole={role} />
                 </div>
             )}
         </div>
-    )
+    );
 };

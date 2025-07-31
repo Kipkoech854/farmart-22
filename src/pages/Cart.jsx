@@ -3,6 +3,7 @@ import { OrderCard } from '../components/OrderCard';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 import { Checkout } from '../Utils/Checkout';
+import '../Stylesheets/Cart.css'
 
 
 
@@ -20,7 +21,7 @@ function Cart() {
   }
 
   return (
-    <div>
+    <div className='cart-page'>
        <OrderCard animals={cart}/>
        <Checkout/>
     </div>

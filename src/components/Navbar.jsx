@@ -12,6 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { cart } = useCart();
   const { user, logout, isLoggedIn } = useAuth(); 
+  console.log("user:", user)
   
 
   const role = getUserRole();
