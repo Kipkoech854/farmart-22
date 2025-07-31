@@ -6,6 +6,7 @@ import LivestockCard from '../components/LivestockCard';
 import LivestockModal from '../components/LivestockModal';
 import { Grid, Box, Typography, Paper, CircularProgress } from '@mui/material';
 import AnimalSearch from '../components/AnimalSearch';
+import Livestock from './Livestock';
 
 export const LivestockPage = () => {
   const { animals, loading, error } = useLivestock(); // Make sure your context provides error state

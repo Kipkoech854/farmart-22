@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../Stylesheets/AnimalSearch.css';
+import '../Stylesheets/AnimalSearch.css'
 
 const AnimalSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');

@@ -27,7 +27,7 @@ const FarmerRegister = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5555/api/farmers/register", {
+      const res = await fetch("http://localhost:10000/api/farmers/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

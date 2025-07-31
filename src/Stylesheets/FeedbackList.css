@@ -9,6 +9,8 @@
   text-align: center;
   margin-bottom: 2rem;
   color: #2e7d32;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .no-feedback,
@@ -16,20 +18,35 @@
   text-align: center;
   color: #999;
   font-size: 1.1rem;
+  margin-top: 1rem;
 }
 
 .feedback-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
 .feedback-card {
   background: white;
-  padding: 1.2rem;
+  padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   text-align: center;
+  transition: transform 0.2s;
+}
+
+.feedback-card:hover {
+  transform: translateY(-5px);
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.8rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
 }
 
 .rating {
@@ -42,17 +59,20 @@
 .comment {
   font-style: italic;
   color: #333;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
 
-.feedback-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-  margin-top: 0.5rem;
-}
 .user-info {
   font-size: 0.85rem;
   color: #555;
   margin-top: 0.5rem;
+}
+
+.feedback-image {
+  width: 100%;
+  margin-top: 1rem;
+  border-radius: 8px;
+  object-fit: cover;
 }
