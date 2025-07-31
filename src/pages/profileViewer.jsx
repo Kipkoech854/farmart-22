@@ -12,7 +12,7 @@ const Profile = () => {
   const [error, setError] = useState(null);
   const [preview, setPreview] = useState(null);
 
-  const BASE_URL = "http://127.0.0.1:5555";  // adjust if deployed
+  const BASE_URL = "https://farmart-y80m.onrender.com";  // adjust if deployed
   const profilePicUrl = preview || (profile?.profile_picture ? `${BASE_URL}/static/${profile.profile_picture}` : null);
   console.log("Profile picture URL:", profilePicUrl);
 
@@ -32,7 +32,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch('http://127.0.0.1:5555/api/User/profile', {
+        const res = await fetch('https://farmart-y80m.onrender.com/api/User/profile', {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (!res.ok) throw new Error('Failed to load profile');
@@ -76,7 +76,7 @@ const Profile = () => {
         formData.append('profilePicture', form.profilePictureFile);
       }
 
-      const res = await fetch('http://127.0.0.1:5555/api/User/user', {
+      const res = await fetch('https://farmart-y80m.onrender.com/api/User/user', {
         method: 'PATCH',
         headers: { Authorization: `Bearer ${token}` },
         body: formData

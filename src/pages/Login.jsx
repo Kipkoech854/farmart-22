@@ -13,29 +13,30 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-
   const handleLogin = async () => {
     setErrorMsg('');
     localStorage.removeItem("user");
 
     const credentials = { email, password };
 
-   /* try {
-      // 1. Try FARMER login
-      const farmerRes = await axios.post('https://farmart-y80m.onrender.com//api/farmers/farmers/login', credentials);
+    try {
+      // Attempt FARMER login
+      const farmerRes = await axios.post('https://farmart-y80m.onrender.com/api/farmers/farmers/login', credentials);
       const token = farmerRes.data.token;
       const farmer = farmerRes.data.farmer || farmerRes.data.user || farmerRes.data;
 
-      localStorage.setItem("user", JSON.stringify({ token, ...farmer }));
-      login(token);
-      setShowPopup(true);
-      return;
+      if (token) {
+        localStorage.setItem("user", JSON.stringify({ token, ...farmer }));
+        login(token);
+        setShowPopup(true);
+        return;
+      }
     } catch (farmerError) {
       console.warn("Farmer login failed:", farmerError.response?.data || farmerError.message);
     }
-*/
+
     try {
-      // 2. Try USER login if farmer login failed
+      // Attempt USER login
       const userRes = await axios.post('https://farmart-y80m.onrender.com/auth/login', credentials);
       const token = userRes.data.access_token || userRes.data.token;
       const user = userRes.data.user || {};
@@ -44,6 +45,7 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify({ token, ...user }));
         login(token);
         setShowPopup(true);
+        return;
       } else {
         throw new Error('Token not found in user login response');
       }
@@ -53,19 +55,13 @@ const Login = () => {
     }
   };
 
-
-
-
-
-  // Auto-close popup and navigate after 2 seconds
   useEffect(() => {
     if (showPopup) {
       const timer = setTimeout(() => {
         setShowPopup(false);
         navigate('/shop');
       }, 2000);
-
-      return () => clearTimeout(timer); // cleanup
+      return () => clearTimeout(timer);
     }
   }, [showPopup, navigate]);
 

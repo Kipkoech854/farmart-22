@@ -10,18 +10,9 @@ const AnimalList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Use mock data for development or when backend is unavailable
+    const token = localStorage.getItem("token");
+
     const mockAnimals = [
-      {
-        id: 1,
-        name: "Brown Cow",
-        type: "Cow",
-        breed: "Jersey",
-        age: 4,
-        price: 450,
-        is_available: true,
-        images: ["https://via.placeholder.com/200?text=Cow+1"],
-      },
       {
         id: 2,
         name: "Spotted Goat",
@@ -54,7 +45,29 @@ const AnimalList = () => {
       },
     ];
 
-    setAnimals(mockAnimals);
+    fetch("https://farmart-y80m.onrender.com/api/farmers/animals", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Error: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setAnimals(data);
+        } else {
+          console.warn("Unexpected data structure from API");
+          setAnimals(mockAnimals);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to fetch animals. Using mock data.", err);
+        setAnimals(mockAnimals);
+      });
   }, []);
 
   const handleDelete = (id) => {

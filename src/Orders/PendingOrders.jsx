@@ -31,16 +31,25 @@ export const PendingOrders = ({ role, order, setOrders }) => {
   };
 
   const handleConfirmOrder = async (id) => {
-  const token = localStorage.getItem('token');
-  try {
-    const response = await axios.put(
-      `https://farmart-y80m.onrender.com/api/Order/status/${id}?status=confirmed`,
-      {},
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
+
+    const token = localStorage.getItem('token');
+    try {
+      const response = await axios.put(
+        `https://farmart-y80m.onrender.com/api/Order/status/${id}?status=confirmed`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+      if (response.status === 200) {
+        alert("Order confirmed successfully");
+        setOrders(prev => prev.filter(order => order.id !== id));
+      } else {
+        alert("Unable to confirm order");
+
       }
-    );
+    
     if (response.status === 200) {
       alert("Order confirmed successfully");
       setOrders(prev =>
@@ -57,17 +66,26 @@ export const PendingOrders = ({ role, order, setOrders }) => {
   }
 };
 
-const handleRejectOrder = async (id) => {
-  const token = localStorage.getItem('token');
-  try {
-    const response = await axios.put(
-      `https://farmart-y80m.onrender.com/api/Order/status/${id}?status=rejected`,
-      {},
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
+
+  const handleRejectOrder = async (id) => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await axios.put(
+        `https://farmart-y80m.onrender.com/api/Order/status/${id}?status=rejected`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+      if (response.status === 200) {
+        alert("Order rejected successfully");
+        setOrders(prev => prev.filter(order => order.id !== id));
+      } else {
+        alert("Unable to reject order");
+
       }
-    );
+   
     if (response.status === 200) {
       alert("Order rejected successfully");
       setOrders(prev =>

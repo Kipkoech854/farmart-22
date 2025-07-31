@@ -125,7 +125,7 @@ const Navbar = () => {
          <div className="avatar-wrapper" onClick={toggleDropdown}>
   {user?.profile_picture ? (
     <img
-      src={`http://127.0.0.1:5555/static/${user.profile_picture}`}
+      src={`https://farmart-y80m.onrender.com/static/${user.profile_picture}`}
       alt="Profile"
       className="avatar-img"
     />

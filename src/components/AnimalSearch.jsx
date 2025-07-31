@@ -27,7 +27,7 @@ const AnimalSearch = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:5555/api/search?query=${encodeURIComponent(searchTerm)}`
+        `https://farmart-y80m.onrender.com/api/search?query=${encodeURIComponent(searchTerm)}`
       );
       const data = await response.json();
       setSuggestions(data.animals || []);

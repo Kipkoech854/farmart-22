@@ -59,22 +59,24 @@ const OrderItem = React.memo(({ order, onDelete, renderActions }) => {
   const email = farmer.email || 'Not Provided';
 
   const hasImages = firstItem?.images?.length > 0;
-const fallback = "/images/default-animal.jpg";
+  const fallback = "/images/default-animal.jpg";
 
 
   return (
     <div className="order-card">
       <div className="order-summary">
         {showImage && firstItem?.images?.[0] && (
+
           <div className="order-image">
             <img
-  src={hasImages ? `http://localhost:5555/${firstItem.images[0]}` : fallback}
-  alt={firstItem?.name || "animal"}
-  onError={(e) => {
-    e.target.onerror = null;
-    e.target.src = fallback;
-  }}
-/>
+              src={hasImages ? `http://localhost:5555/${firstItem.images[0]}` : fallback}
+              alt={firstItem?.name || "animal"}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = fallback;
+              }}
+            />
+
 
 
           </div>

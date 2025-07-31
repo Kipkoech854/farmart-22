@@ -19,7 +19,7 @@ const ResetPassword = () => {
 
     try {
       
-      const res = await fetch("http://localhost:5555/api/farmers/reset-password", {
+      const res = await fetch("https://farmart-y80m.onrender.com/api/farmers/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: form.password }),

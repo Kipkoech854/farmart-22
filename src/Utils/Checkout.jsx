@@ -45,7 +45,7 @@ export const Checkout = () => {
   });
 
   try {
-    const response = await fetch('http://127.0.0.1:5555/api/Order/create', {
+    const response = await fetch('https://farmart-y80m.onrender.com/api/Order/create', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
