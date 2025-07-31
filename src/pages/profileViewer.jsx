@@ -1,41 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { getToken } from '../utils/jwt';
-import { useDispatch } from 'react-redux';
-import { logout } from '../redux/slices/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Profile = () => {
+  const { token } = useAuth();
   const [profile, setProfile] = useState(null);
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({
-    email: '',
     name: '',
+    email: '',
     profilePicture: '',
     profilePictureFile: null,
   });
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const token = getToken();
-
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await fetch('https://farmart-y80m.onrender.com', {
+        const res = await fetch('https://farmart-y80m.onrender.com/api/User/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
+
         const data = await res.json();
         if (res.ok) {
           setProfile(data);
           setForm({
             email: data.email,
             name: data.name,
-            profilePicture: data.profilePicture || '',
+            profilePicture: data.profile_picture || '',
             profilePictureFile: null,
           });
         }
-      } catch {
-        console.error('Profile fetch error');
+      } catch (error) {
+        console.error('Profile fetch error:', error);
       }
     };
     fetchProfile();
@@ -51,10 +46,9 @@ const Profile = () => {
         formData.append('profilePicture', form.profilePictureFile);
       }
 
-      const res = await fetch('https://farmart-y80m.onrender.com', {
-        method: 'PUT',
+      const res = await fetch('https://farmart-y80m.onrender.com/api/User/user', {
+        method: 'PATCH',
         headers: {
-          
           Authorization: `Bearer ${token}`,
         },
         body: formData,
@@ -65,80 +59,253 @@ const Profile = () => {
         setProfile(data);
         setEditing(false);
       }
-    } catch {
-      console.error('Profile update failed');
+    } catch (error) {
+      console.error('Profile update failed:', error);
     }
   };
 
-  const handleDelete = async () => {
-    if (!window.confirm('Are you sure you want to delete your account?')) return;
-
-    try {
-      const res = await fetch('https://farmart-y80m.onrender.com', {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (res.ok) {
-        dispatch(logout());
-        navigate('/register');
-      }
-    } catch {
-      console.error('Account deletion failed');
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === 'profilePicture') {
+      setForm((prev) => ({
+        ...prev,
+        profilePictureFile: files[0],
+        profilePicture: URL.createObjectURL(files[0]),
+      }));
+    } else {
+      setForm((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  if (!profile) return <p>Loading profile....</p>;
+  const profilePicUrl = form.profilePicture || profile?.profile_picture;
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2>User Profile</h2>
+    <div style={{ padding: '2rem' }}>
+      <h2>Profile</h2>
+      {profile ? (
+        <form onSubmit={handleEdit}>
+          {profilePicUrl && (
+            <img
+              src={profilePicUrl}
+              alt="Profile"
+              style={{
+                width: 120,
+                height: 120,
+                borderRadius: '50%',
+                objectFit: 'cover',
+                marginBottom: '1rem',
+              }}
+            />
+          )}
 
-      {profile.profilePicture && (
-        <img
-          src={profile.profilePicture}
-          alt="Profile"
-          style={{ width: 120, height: 120, borderRadius: '50%', objectFit: 'cover', marginBottom: '1rem' }}
-        />
-      )}
-
-      {editing ? (
-        <form onSubmit={handleEdit} encType="multipart/form-data">
-          <input
-            type="text"
-            value={form.name}
-            placeholder="Full Name"
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-          /><br />
-
-          <input
-            type="email"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-          /><br />
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) =>
-              setForm({ ...form, profilePictureFile: e.target.files[0] })
-            }
-          /><br />
-
-          <button type="submit">Save</button>
-          <button type="button" onClick={() => setEditing(false)}>Cancel</button>
+          {editing ? (
+            <>
+              <div>
+                <label>Name: </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div>
+                <label>Email: </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div>
+                <label>Profile Picture: </label>
+                <input
+                  type="file"
+                  name="profilePicture"
+                  accept="image/*"
+                  onChange={handleChange}
+                />
+              </div>
+              <button type="submit">Save Changes</button>
+            </>
+          ) : (
+            <>
+              <p><strong>Name:</strong> {profile.name}</p>
+              <p><strong>Email:</strong> {profile.email}</p>
+              <button type="button" onClick={() => setEditing(true)}>
+                Edit Profile
+              </button>
+            </>
+          )}
         </form>
       ) : (
-        <>
-          <p><strong>Name:</strong> {profile.name}</p>
-          <p><strong>Email:</strong> {profile.email}</p>
-          <button onClick={() => setEditing(true)}>Edit Profile</button>
-          <button onClick={handleDelete} style={{ color: 'red' }}>Delete Account</button>
-        </>
+        <p>Loading profile...</p>
       )}
     </div>
   );
 };
 
 export default Profile;
+
+
+
+
+// import React, { useEffect, useState } from 'react';
+// import { useAuth } from '../context/AuthContext';
+// import { useNavigate } from 'react-router-dom';
+
+// const Profile = () => {
+//   const { token } = useAuth();
+//   const [profile, setProfile] = useState(null);
+//   const [editing, setEditing] = useState(false);
+//   const [form, setForm] = useState({
+//     name: '',
+//     email: '',
+//     profilePicture: '',
+//     profilePictureFile: null,
+//   });
+
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const fetchProfile = async () => {
+//       try {
+//         const res = await fetch('https://farmart-y80m.onrender.com/api/User/profile', {
+//           headers: { Authorization: `Bearer ${token}` },
+//         });
+
+//         const data = await res.json();
+//         if (res.ok) {
+//           setProfile(data);
+//           setForm({
+//             email: data.email,
+//             name: data.name,
+//             profilePicture: data.profile_picture || '',
+//             profilePictureFile: null,
+//           });
+//         }
+//       } catch (error) {
+//         console.error('Profile fetch error:', error);
+//       }
+//     };
+//     fetchProfile();
+//   }, [token]);
+
+//   const handleEdit = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const formData = new FormData();
+//       formData.append('name', form.name);
+//       formData.append('email', form.email);
+//       if (form.profilePictureFile) {
+//         formData.append('profilePicture', form.profilePictureFile);
+//       }
+
+//       const res = await fetch('https://farmart-y80m.onrender.com/api/User/user', {
+//         method: 'PATCH',
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//         body: formData,
+//       });
+
+//       const data = await res.json();
+//       if (res.ok) {
+//         setProfile(data);
+//         setEditing(false);
+//       }
+//     } catch (error) {
+//       console.error('Profile update failed:', error);
+//     }
+//   };
+
+//   const handleChange = (e) => {
+//     const { name, value, files } = e.target;
+//     if (name === 'profilePicture') {
+//       setForm((prev) => ({
+//         ...prev,
+//         profilePictureFile: files[0],
+//         profilePicture: URL.createObjectURL(files[0]),
+//       }));
+//     } else {
+//       setForm((prev) => ({ ...prev, [name]: value }));
+//     }
+//   };
+
+//   const profilePicUrl = form.profilePicture || profile?.profile_picture;
+
+//   return (
+//     <div style={{ padding: '2rem' }}>
+//       <h2>Profile</h2>
+//       {profile ? (
+//         <form onSubmit={handleEdit}>
+//           {profilePicUrl && (
+//             <img
+//               src={profilePicUrl}
+//               alt="Profile"
+//               style={{
+//                 width: 120,
+//                 height: 120,
+//                 borderRadius: '50%',
+//                 objectFit: 'cover',
+//                 marginBottom: '1rem',
+//               }}
+//             />
+//           )}
+
+//           {editing ? (
+//             <>
+//               <div>
+//                 <label>Name: </label>
+//                 <input
+//                   type="text"
+//                   name="name"
+//                   value={form.name}
+//                   onChange={handleChange}
+//                   required
+//                 />
+//               </div>
+//               <div>
+//                 <label>Email: </label>
+//                 <input
+//                   type="email"
+//                   name="email"
+//                   value={form.email}
+//                   onChange={handleChange}
+//                   required
+//                 />
+//               </div>
+//               <div>
+//                 <label>Profile Picture: </label>
+//                 <input
+//                   type="file"
+//                   name="profilePicture"
+//                   accept="image/*"
+//                   onChange={handleChange}
+//                 />
+//               </div>
+//               <button type="submit">Save Changes</button>
+//             </>
+//           ) : (
+//             <>
+//               <p><strong>Name:</strong> {profile.name}</p>
+//               <p><strong>Email:</strong> {profile.email}</p>
+//               <button type="button" onClick={() => setEditing(true)}>
+//                 Edit Profile
+//               </button>
+//             </>
+//           )}
+//         </form>
+//       ) : (
+//         <p>Loading profile...</p>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Profile;
+
 
