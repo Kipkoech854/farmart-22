@@ -34,7 +34,7 @@ const Login = () => {
     console.warn("Farmer login failed:", farmerError.response?.data || farmerError.message);
   }
 
-  /*try {
+  try {
     // 2. Try USER login if farmer login failed
     const userRes = await axios.post('http://127.0.0.1:5555/auth/login', credentials);
     const token = userRes.data.access_token || userRes.data.token;
@@ -50,7 +50,7 @@ const Login = () => {
   } catch (userError) {
     console.warn("User login failed:", userError.response?.data || userError.message);
     setErrorMsg('Invalid credentials for both farmer and user.');
-  }*/
+  }
 };
 
 

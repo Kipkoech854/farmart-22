@@ -24,11 +24,14 @@ import { ConfirmedOrders } from "../Orders/ConfirmedOrders";
 import { LivestockPage } from '../pages/LivestockPage';
 import { OverheadClassifiers } from '../Orders/OverheadClassifiers';
 
+import {UsersTable} from '../Admintables/UsersTable'
+import { FarmersTable } from "../Admintables/FarmersTable";
+
 
 const appRoutes = [
   { path: "/", element: <Home /> },
   { path: "/cart", element: <Cart /> },
-  { path: "/about", element: <About /> },
+  { path: "/about", element: <FarmersTable /> },
   { path: "/shop", element: <LivestockPage /> },
 
   // General auth pages

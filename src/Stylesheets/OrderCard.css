@@ -1,4 +1,61 @@
-/* AnimalCard.css */
+.animal-card{
+  display: flex;
+  align-self: flex-start;
+  justify-self: flex-start;
+  max-width: 75vw;
+  background-color: white;
+  flex-direction: row;
+  align-items: center;
+}
+
+.animal-card-image-container{
+  display: flex;
+  justify-self: flex-start;
+  justify-self: flex-start;
+  max-width: 40%;
+  height: 100%;
+}
+.animal-card-image{
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
+  overflow: hidden;
+  border-radius: 5px;
+}
+.animal-card-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 100, 0, 0.6);
+  color: white;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.animal-card-arrow-left {
+  left: 15px;
+}
+
+.animal-card-arrow-right {
+  right: 15px;
+}
+
+
+
+
+
+
+
+
+/* AnimalCard.css 
 .animal-card {
   width: 80vw;
   max-width: 800px;
@@ -12,7 +69,7 @@
 }
 .checkout-link {
   display: block;
-  width: 80vw; /* same as .animal-card */
+  width: 80vw; 
   max-width: 800px;
   margin: 1rem auto;
   padding: 1rem 2rem;
@@ -50,7 +107,7 @@
 .animal-card-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Fill container while maintaining aspect ratio */
+  object-fit: cover; 
   object-position: center;
   transition: transform 0.3s ease;
 }
@@ -179,4 +236,4 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem 0;
-}
+}*/
