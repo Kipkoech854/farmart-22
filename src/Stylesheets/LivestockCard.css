@@ -34,33 +34,51 @@
   gap: 25px;
 }
 
+
 .livestock-card {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 16px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
+  transition: 
+    transform 0.28s cubic-bezier(.4,2,.6,1),
+    box-shadow 0.28s cubic-bezier(.4,2,.6,1),
+    border-color 0.28s cubic-bezier(.4,2,.6,1);
+  box-shadow: 0 4px 16px rgba(44, 62, 80, 0.08), 0 1.5px 4px rgba(44, 62, 80, 0.06);
+  border: 1.5px solid #e0e0e0;
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+  will-change: transform, box-shadow, border-color;
 }
 
 .livestock-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-10px) scale(1.025);
+  box-shadow: 0 12px 32px 0 rgba(44, 62, 80, 0.18), 0 2px 8px rgba(44, 62, 80, 0.10);
+  border-color: #4caf50;
+  z-index: 2;
+}
+
+/* Floating action bar effect on hover */
+.livestock-card:hover .card-actions {
+  box-shadow: 0 4px 16px 0 rgba(76, 175, 80, 0.10);
+  background: linear-gradient(90deg, #e8f5e9 0%, #f5f9f5 100%);
+  border-top: 1.5px solid #c8e6c9;
 }
 
 .card-image {
   width: 100%;
-  height: 160px;
+  height: 180px;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.32s cubic-bezier(.4,2,.6,1), filter 0.28s;
   cursor: pointer;
+  filter: brightness(0.98) saturate(1.05);
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.card-image:hover {
-  transform: scale(1.03);
+.livestock-card:hover .card-image {
+  transform: scale(1.045) rotate(-0.5deg);
+  filter: brightness(1.04) saturate(1.12) drop-shadow(0 2px 8px #4caf5022);
 }
 
 .card-content {
@@ -147,42 +165,51 @@
   padding: 16px;
   display: flex;
   gap: 8px;
+  transition: box-shadow 0.28s, background 0.28s, border-color 0.28s;
 }
 
 .action-button {
   flex: 1;
-  padding: 8px 16px;
-  border-radius: 5px;
+  padding: 10px 18px;
+  border-radius: 6px;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: background 0.22s, color 0.22s, box-shadow 0.22s, border 0.22s;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
+  box-shadow: 0 1px 2px rgba(44, 62, 80, 0.04);
 }
+
 
 .cart-button {
   background-color: #2e7d32;
   color: white;
   border: none;
+  box-shadow: 0 2px 8px 0 #4caf5022;
 }
 
-.cart-button:hover {
+.cart-button:hover, .cart-button:focus {
   background-color: #1b5e20;
+  color: #fff;
+  box-shadow: 0 4px 16px 0 #388e3c33;
 }
+
 
 .buy-button {
   background-color: transparent;
   color: #2e7d32;
-  border: 1px solid #2e7d32;
+  border: 1.5px solid #2e7d32;
+  box-shadow: 0 1px 4px 0 #4caf5011;
 }
 
-.buy-button:hover {
+.buy-button:hover, .buy-button:focus {
   background-color: #e8f5e9;
   border-color: #1b5e20;
   color: #1b5e20;
+  box-shadow: 0 4px 16px 0 #388e3c22;
 }
 
 /* Responsive adjustments */
