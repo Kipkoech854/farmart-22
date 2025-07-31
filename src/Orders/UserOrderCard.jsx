@@ -8,11 +8,11 @@ export const UserOrderCard = ({ orders, onDelete, renderActions }) => {
     <div className="order-grid-container">
       <div className="order-grid">
         {normalizedOrders.map((order) => (
-          <OrderItem 
-            key={order.id} 
-            order={order} 
+          <OrderItem
+            key={order.id}
+            order={order}
             onDelete={onDelete}
-            renderActions={renderActions} 
+            renderActions={renderActions}
           />
         ))}
       </div>
@@ -58,14 +58,24 @@ const OrderItem = React.memo(({ order, onDelete, renderActions }) => {
   const username = farmer.username || 'Unknown';
   const email = farmer.email || 'Not Provided';
 
+  const hasImages = firstItem?.images?.length > 0;
+const fallback = "/images/default-animal.jpg";
+
+
   return (
     <div className="order-card">
       <div className="order-summary">
         {showImage && firstItem?.images?.[0] && (
           <div className="order-image">
-           <img src={`http://localhost:5555/${firstItem.images[0]}`} 
-           alt={firstItem.name || "Animal"}onError={(e) => {e.target.onerror = null;
-             e.target.src = defaultPic;}}/>
+            <img
+  src={hasImages ? `http://localhost:5555/${firstItem.images[0]}` : fallback}
+  alt={firstItem?.name || "animal"}
+  onError={(e) => {
+    e.target.onerror = null;
+    e.target.src = fallback;
+  }}
+/>
+
 
           </div>
         )}
@@ -112,7 +122,7 @@ const OrderItem = React.memo(({ order, onDelete, renderActions }) => {
             <button className="details-btn" onClick={toggleDetails}>
               {showDetails ? 'Hide Details' : 'More Details'}
             </button>
-         
+
           </div>
         </div>
       </div>

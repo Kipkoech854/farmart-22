@@ -16,7 +16,7 @@ export const DeliveredOrders = ({ role, order }) => {
     const token = localStorage.getItem('token');
     try {
       const response = await axios.delete(
-        `http://127.0.0.1:5555/api/Order/delete/${id}`,
+        `https://farmart-y80m.onrender.com/api/Order/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

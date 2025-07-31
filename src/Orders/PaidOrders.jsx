@@ -2,6 +2,7 @@ import React from "react";
 import { UserOrderCard } from "./UserOrderCard";
 import { FarmerOrderCard } from "./FarmerOrderCard";
 import NotFound from "../Utils/NotFound";
+import axios from "axios";
 
 export const PaidOrders = ({ role, order }) => {
   const handleConfirmDelivery = async (id) => {
@@ -15,7 +16,7 @@ export const PaidOrders = ({ role, order }) => {
       };
 
       const response = await axios.put(
-        `http://127.0.0.1:5555/api/Order/DeliveryStatus/${id}?delivered=true`,
+        `https://farmart-y80m.onrender.com/api/Order/DeliveryStatus/${id}?delivered=true`,
         {},
         config
       );

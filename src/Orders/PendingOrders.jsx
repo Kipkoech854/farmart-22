@@ -12,7 +12,7 @@ export const PendingOrders = ({ role, order, setOrders }) => {
     const token = localStorage.getItem('token');
     try {
       const response = await axios.delete(
-        `http://127.0.0.1:5555/api/Order/delete/${id}`,
+        `https://farmart-y80m.onrender.com/api/Order/delete/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
@@ -34,7 +34,7 @@ export const PendingOrders = ({ role, order, setOrders }) => {
   const token = localStorage.getItem('token');
   try {
     const response = await axios.put(
-      `http://127.0.0.1:5555/api/Order/status/${id}?status=confirmed`,
+      `https://farmart-y80m.onrender.com/api/Order/status/${id}?status=confirmed`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -61,7 +61,7 @@ const handleRejectOrder = async (id) => {
   const token = localStorage.getItem('token');
   try {
     const response = await axios.put(
-      `http://127.0.0.1:5555/api/Order/status/${id}?status=rejected`,
+      `https://farmart-y80m.onrender.com/api/Order/status/${id}?status=rejected`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },

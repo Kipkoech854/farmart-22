@@ -23,7 +23,7 @@ export const NotPaid = ({ role, order }) => {
       };
 
       const response = await axios.put(
-        `http://127.0.0.1:5555/api/Order/PaymentStatus/${id}?paid=true`,
+        `https://farmart-y80m.onrender.com/api/Order/PaymentStatus/${id}?paid=true`,
         {},
         config
       );

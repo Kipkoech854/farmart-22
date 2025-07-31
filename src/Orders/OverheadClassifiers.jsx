@@ -23,7 +23,7 @@ export const OverheadClassifiers = () => {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem('token');
-        const { data } = await axios.get("http://127.0.0.1:5555/api/Order/all", {
+        const { data } = await axios.get("https://farmart-y80m.onrender.com/api/Order/all", {
           headers: {
             Authorization: `Bearer ${token}`
           }
