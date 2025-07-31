@@ -3,7 +3,7 @@ import { UserOrderCard } from "./UserOrderCard";
 import { FarmerOrderCard } from "./FarmerOrderCard";
 import { FarmerOrders } from "../Utils/UnconstrainedFaker";
 import { UserOrders } from "../Utils/UserFaker";
-import { allOrders } from '../services/Ordersapi'
+// import { allOrders } from '../services/Ordersapi'
 import axios from 'axios';
 
 export const AllOrders = ({role}) =>{
