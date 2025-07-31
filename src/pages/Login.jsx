@@ -1,10 +1,17 @@
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import '../Stylesheets/Login.css';
+// import { SuccessPopup } from '../Utils/SucessPopUp';
+// import { useNavigate } from 'react-router-dom';
+// import { useAuth } from '../context/AuthContext';
 import React, { useState, useEffect } from 'react';
+
 import '../Stylesheets/Login.css';
 import { SuccessPopup } from '../Utils/SucessPopUp';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-// import { loginUser } from '../services/authService';
+import { login as loginUser } from '../services/authService'; // <- New
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -16,35 +23,19 @@ const Login = () => {
 
   const handleLogin = async () => {
     setErrorMsg('');
-    const credentials = { email, password };
+    localStorage.removeItem("user");
 
-    // Try Farmer Login
     try {
-      const farmerRes = await axios.post('https://farmart-y80m.onrender.com/api/farmers/login', credentials);
-      const token = farmerRes.data.token;
-      const farmer = farmerRes.data.farmer || farmerRes.data.user || farmerRes.data;
-      localStorage.setItem("user", JSON.stringify({ token, ...farmer }));
-      login(token);
-      setShowPopup(true);
-      return;
-    } catch (farmerError) {
-      console.warn("Farmer login failed:", farmerError.response?.data || farmerError.message);
-    }
-
-    // Try Customer Login
-    try {
-      const userRes = await axios.post('https://farmart-y80m.onrender.com/auth/login', credentials);
-      const token = userRes.data.token;
-      const user = userRes.data.user;
+      const { token, user } = await loginUser(email, password);
       localStorage.setItem("user", JSON.stringify({ token, ...user }));
       login(token);
       setShowPopup(true);
-    } catch (userError) {
-      console.warn("User login failed:", userError.response?.data || userError.message);
-      setErrorMsg('Invalid credentials for both farmer and customer.');
+    } catch (err) {
+      setErrorMsg(err.message || 'Login failed.');
     }
   };
 
+  // Auto-close popup and navigate after 2 seconds
   useEffect(() => {
     if (showPopup) {
       const timer = setTimeout(() => {
@@ -65,6 +56,7 @@ const Login = () => {
 
         <div className="login-right">
           <h2>Welcome</h2>
+
           {errorMsg && <div className="login-error">{errorMsg}</div>}
 
           <form className="login-form" onSubmit={(e) => e.preventDefault()}>
@@ -113,7 +105,6 @@ const Login = () => {
 };
 
 export default Login;
-
 
 
 
