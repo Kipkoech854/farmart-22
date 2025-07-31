@@ -5,18 +5,23 @@ import LivestockCard from '../components/LivestockCard';
 import LivestockModal from '../components/LivestockModal';
 import SearchSortFilter from '../components/SearchSortFilter';
 import Recommendations from '../components/Recommendations';
+import { useCart } from '../context/CartContext';
+
 
 const Livestock = () => {
   const [animals, setAnimals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedLivestock, setSelectedLivestock] = useState(null);
-  const [sortBy, setSortBy] = useState('price-asc'); // default sort
+  const [sortBy, setSortBy] = useState('price-asc');
+  const [filteredAnimals, setFilteredAnimals] = useState([]);
+  const { addItem } = useCart();
 
   useEffect(() => {
     const loadLivestock = async () => {
       try {
         const data = await fetchLivestock();
         setAnimals(data);
+        setFilteredAnimals(data);
       } catch (error) {
         console.error('Error loading livestock:', error);
       } finally {
@@ -26,8 +31,27 @@ const Livestock = () => {
     loadLivestock();
   }, []);
 
+  // Search/filter handler
+  const handleSearchFilter = (searchTerm, countyFilter, typeFilter, breedFilter) => {
+    let filtered = [...animals];
+    if (searchTerm) {
+      filtered = filtered.filter(a => a.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+    if (countyFilter && countyFilter !== 'all') {
+      filtered = filtered.filter(a => a.county === countyFilter);
+    }
+    if (typeFilter && typeFilter !== 'all') {
+      filtered = filtered.filter(a => a.type === typeFilter);
+    }
+    if (breedFilter && breedFilter !== 'all') {
+      filtered = filtered.filter(a => a.breed === breedFilter);
+    }
+    setFilteredAnimals(filtered);
+  };
+
+  // Sorting
   const getSortedAnimals = () => {
-    const sorted = [...animals];
+    const sorted = [...filteredAnimals];
     switch (sortBy) {
       case 'price-asc':
         sorted.sort((a, b) => a.price - b.price);
@@ -57,11 +81,16 @@ const Livestock = () => {
     setSortBy(event.target.value);
   };
 
+  // Add to cart using context
   const handleAddToCart = (livestockId) => {
-    console.log('Added to cart:', livestockId);
+    const animal = animals.find(a => a.id === livestockId);
+    if (animal) {
+      addItem(animal);
+    }
   };
 
   const handleBuyNow = (livestockId) => {
+    // You can implement buy now logic here
     console.log('Buy now:', livestockId);
   };
 
@@ -72,6 +101,10 @@ const Livestock = () => {
       </Typography>
 
       
+      <SearchSortFilter 
+        onSearchFilter={handleSearchFilter}
+        onSort={handleSortChange}
+      />
       <Box sx={{ my: 2, display: 'flex', alignItems: 'center' }}>
         <FormControl variant="outlined" size="small" sx={{ minWidth: 200 }}>
           <InputLabel id="sort-label">Sort by</InputLabel>
