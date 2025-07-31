@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { getToken } from '../utils/jwt';
+// import { getToken } from '../utils/jwt';
 import '../Stylesheets/profileViewer.css';
 
 const Profile = () => {
