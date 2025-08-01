@@ -1,4 +1,360 @@
-/* AnimalCard.css */
+/* Landscape layout styles - existing layout kept intact */
+.order-card-container-landscape {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 90px;
+  justify-self: flex-start;
+  align-self: flex-start;
+}
+
+.animal-card-landscape {
+  display: flex;
+  width: 60vw;
+  max-height: 250px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.animal-card-image-container-landscape {
+  position: relative;
+  width: 50%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.animal-card-image-landscape {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Enhanced content styling */
+.animal-card-content-landscape {
+  width: 50%;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to right, #f8f8f8, #ffffff);
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.animal-card-title {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.animal-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.animal-card-chip {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  background: #ecf0f1;
+  color: #7f8c8d;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.animal-card-chip-primary {
+  background: #e8f5e9;
+  color: #27ae60;
+  font-weight: 500;
+}
+
+.animal-card-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #e74c3c;
+  margin: 0.5rem 0;
+}
+
+.animal-card-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #bdc3c7, transparent);
+  margin: 0.75rem 0;
+}
+
+.animal-card-description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #34495e;
+  margin: 0.5rem 0;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.animal-card-status-title {
+  font-size: 0.875rem;
+  color: #7f8c8d;
+  margin: 0.5rem 0 0.25rem 0;
+  font-weight: 500;
+}
+
+.animal-card-status {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.animal-card-status-available {
+  background: #e8f5e9;
+  color: #27ae60;
+}
+
+.animal-card-status-sold {
+  background: #ffebee;
+  color: #e74c3c;
+}
+
+.animal-card-actions {
+  margin-top: 1rem;
+}
+
+/* Arrow buttons (kept your existing colors) */
+.animal-card-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 10;
+  color: white;
+  transition: transform 0.2s;
+}
+
+.animal-card-arrow:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.animal-card-arrow-left {
+  left: 10px;
+  background-color: rgb(16, 59, 16);
+}
+
+.animal-card-arrow-right {
+  right: 10px;
+  background-color: rgb(16, 59, 16);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .animal-card-landscape {
+    flex-direction: column;
+    width: 90vw;
+    max-height: none;
+  }
+  
+  .animal-card-image-container-landscape,
+  .animal-card-content-landscape {
+    width: 100%;
+  }
+  
+  .animal-card-image-container-landscape {
+    height: 300px;
+  }
+
+  .animal-card-content-landscape {
+    padding: 1rem;
+  }
+}
+/* OrderCard.css 
+.order-card-container {
+  max-width: 60vw;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.animal-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.animal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.animal-card-image-container {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+.animal-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.animal-card:hover .animal-card-image {
+  transform: scale(1.03);
+}
+
+.animal-card-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(46, 125, 50, 0.7);
+  color: white;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.animal-card-arrow:hover {
+  background-color: rgba(46, 125, 50, 0.9);
+}
+
+.animal-card-arrow-left {
+  left: 15px;
+}
+
+.animal-card-arrow-right {
+  right: 15px;
+}
+
+.animal-card-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.animal-card-title {
+  margin: 0 0 10px;
+  color: #2e7d32;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.animal-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.animal-card-chip {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.animal-card-chip-primary {
+  background-color: #c8e6c9;
+  font-weight: 600;
+}
+
+.animal-card-price {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2e7d32;
+  margin: 10px 0;
+}
+
+.animal-card-divider {
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 15px 0;
+}
+
+.animal-card-description {
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  flex: 1;
+}
+
+.animal-card-status-title {
+  font-size: 16px;
+  margin: 0 0 8px;
+  color: #2e7d32;
+}
+
+.animal-card-status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.animal-card-status-available {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.animal-card-status-sold {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.animal-card-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
+
+
+
+
+
+/* AnimalCard.css 
 .animal-card {
   width: 80vw;
   max-width: 800px;
@@ -8,10 +364,11 @@
   overflow: hidden;
   background-color: #f9fff9;
   border: 1px solid #e0f0e0;
+  height: fit-content;
 }
 .checkout-link {
   display: block;
-  width: 80vw; /* same as .animal-card */
+  width: 80vw; 
   max-width: 800px;
   margin: 1rem auto;
   padding: 1rem 2rem;
@@ -38,15 +395,19 @@
 
 
 .animal-card-image-container {
-  position: relative;
+   position: relative;
   height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
 }
 
 .animal-card-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; 
+  object-position: center;
   transition: transform 0.3s ease;
 }
 
@@ -174,4 +535,4 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem 0;
-}
+}*/

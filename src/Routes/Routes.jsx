@@ -4,7 +4,7 @@ import Authmodal from "../components/Authmodal";
 import {Home} from "../pages/Home";
 import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
-import {About} from "../pages/About";
+import About from "../pages/About";
 import Profile from "../pages/profileViewer";
 
 import ProfileView from "../pages/Farmers/ProfileView";
@@ -23,13 +23,18 @@ import { Checkout } from "../Utils/Checkout";
 import { ConfirmedOrders } from "../Orders/ConfirmedOrders";
 import { LivestockPage } from '../pages/LivestockPage';
 import { OverheadClassifiers } from '../Orders/OverheadClassifiers';
+import Livestock from '../pages/Livestock'
+
+import {UsersTable} from '../Admintables/UsersTable'
+import { FarmersTable } from "../Admintables/FarmersTable";
+import { AdminPanel } from "../pages/AdminPanel";
 
 
 const appRoutes = [
   { path: "/", element: <Home /> },
   { path: "/cart", element: <Cart /> },
-  { path: "/about", element: <About /> },
-  { path: "/shop", element: <LivestockPage /> },
+  { path: "/about", element: <About/> },
+  { path: "/shop", element: <LivestockPage/> },
 
   // General auth pages
   { path: "/signin", element: <Login /> },
@@ -58,6 +63,8 @@ const appRoutes = [
   // Orders
   { path: "/orders", element: <OverheadClassifiers /> },
   { path: "/confirmed-orders", element: <ConfirmedOrders /> },
+
+  {path: '/admin', element: <AdminPanel/>}
 ];
 
 export default appRoutes;

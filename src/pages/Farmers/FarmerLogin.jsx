@@ -19,7 +19,7 @@ const FarmerLogin = () => {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:5555/api/farmers/login", {
+      const res = await fetch("https://farmart-y80m.onrender.com/api/farmers/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,64 +2,75 @@ import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import '../Stylesheets/PaymentForm.css';
 
-const PaymentForm = ({ items, pickupLocation, shippingCost, deliveryMethod, total, userId }) => {
+const PaymentForm = ({order}) => {
   const stripe = useStripe();
   const elements = useElements();
 
   const [paymentStatus, setPaymentStatus] = useState(null); // null | 'success' | 'error'
   const [errorMsg, setErrorMsg] = useState('');
-  const [isLoading, setIsLoading] = useState(false); // NEW loading state
+  const [isLoading, setIsLoading] = useState(false); 
+  const[Paid, setPaid] = useState(false)// NEW loading state
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!stripe || !elements) return;
+  const handleSubmit = async (event) => {
+  event.preventDefault();
+  if (!stripe || !elements) return;
 
-    setIsLoading(true);
-    setPaymentStatus(null);
-    setErrorMsg('');
+  const cardElement = elements.getElement(CardElement);
 
-    const card = elements.getElement(CardElement);
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+  try {
+    const { paymentMethod, error } = await stripe.createPaymentMethod({
       type: 'card',
-      card,
+      card: cardElement,
     });
 
     if (error) {
-      console.error(error.message);
-      setErrorMsg(error.message);
-      setPaymentStatus('error');
-      setIsLoading(false);
-    } else {
-      console.log('PaymentMethod:', paymentMethod);
-
-      const response = await fetch('http://127.0.0.1:5555/api/Payment/create-checkout-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          payment_method_id: paymentMethod.id,
-          amount: total * 100,
-          items,
-          user_id: userId,
-          delivery_method: deliveryMethod,
-          pickup_location: pickupLocation?.name,
-          shipping_cost: shippingCost,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok || data.error) {
-        console.error('Payment failed:', data.error);
-        setErrorMsg(data.error || 'Payment failed');
-        setPaymentStatus('error');
-      } else {
-        console.log('Payment successful:', data);
-        setPaymentStatus('success');
-      }
-
-      setIsLoading(false);
+      console.error(error);
+      setPaymentError(error.message);
+      return;
     }
-  };
+    const shippingCost = parseFloat(order?.total || 0) - (order?.amount || 0);
+    const pickupLocation=order.pickup_station
+    const deliveryMethod=order.delivery_method?order.delivery_method:'Standard shipping'
+
+    const rawItems = order?.animals?.flatMap(animal => animal.items) || [];
+
+    const formattedItems = rawItems.map(item => ({
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity || 1,
+      id: item.animal_id,
+    }));
+    const token = localStorage.getItem('token');
+
+    const response = await fetch('https://farmart-y80m.onrender.com/api/Payment/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        items: formattedItems,
+        shipping_cost: shippingCost,
+        pickup_location: pickupLocation,
+        shipping_method: deliveryMethod || '',
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.url) {
+      window.location.href = data.url;
+      setPaid(true)
+    } else {
+      setPaymentError(data.error || 'Payment failed');
+    }
+  } catch (err) {
+    console.error(err);
+    setPaymentError('An error occurred during payment.');
+  }
+};
+
+
 
   const cardElementOptions = {
     style: {

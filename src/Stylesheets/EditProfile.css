@@ -1,6 +1,6 @@
 .edit-container {
-  max-width: 400px;
-  margin: 2rem auto;
+  max-width: 600px;
+  margin: 130px auto 2rem auto;
   background: #fff;
   padding: 2rem;
   border-radius: 10px;
@@ -69,3 +69,17 @@ button:hover {
   margin: 1rem auto;
   border: 2px solid #ccc;
 }
+.avatar-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.avatar-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+

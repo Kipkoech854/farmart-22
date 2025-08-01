@@ -1,176 +1,117 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import '../../src/Stylesheets/Register.css';
+import { register } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
-import { SuccessPopup } from '../Utils/SucessPopUp';
-import '../Stylesheets/Register.css';
 
-
-export const Register = () => {
+const Register = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'customer',
+    role: 'user',
   });
-
-  const [error, setError] = useState('');
-  const [showPopup, setShowPopup] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(prev => !prev);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
-    setError(''); // Clear previous errors
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setError('');
 
     if (formData.password !== formData.confirmPassword) {
-      return setError('Passwords do not match');
+      setError('Passwords do not match.');
+      return;
     }
-
-    const API_BASE = import.meta.env.VITE_API_URL;
-
-    if (!API_BASE) {
-      console.error('❌ VITE_API_URL is not defined. Please check your .env file.');
-      return setError('Internal error. Please try again later.');
-    }
-
-    const url =
-      formData.role === 'farmer'
-        ? `${API_BASE}/api/farmers/farmers/register`
-        : `${API_BASE}/auth/register`;
 
     try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-          role: formData.role,
-        }),
-      });
+      const submitData = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+       };
+      await register(submitData);
 
-      const data = await res.json();
-
-      if (!res.ok) {
-
-        throw new Error(data.error || 'Registration failed');
-      }
-
-      setShowPopup(true);
+      navigate('/login');
     } catch (err) {
-      setError(err.message);
+      console.error('Registration error:', err);
+      setError(err?.response?.data?.message || 'Registration failed.');
     }
   };
 
-
-  useEffect(() => {
-    if (showPopup) {
-      const timeout = setTimeout(() => {
-        navigate('/login');
-      }, 3000);
-      return () => clearTimeout(timeout);
-    }
-  }, [showPopup, navigate]);
-
   return (
-    <>
-      <div className="register-container">
-        <div className="register-left">
-          <h1>Welcome!</h1>
-          <p>Create an account to get started managing your farm and shopping easily.</p>
-        </div>
+    <div className="register-container">
+      <form onSubmit={handleSubmit} className="register-form">
+        <h2>Register</h2>
 
-        <div className="register-right">
-          <h2 className="register-title">Register</h2>
-          {error && <p className="register-error">{error}</p>}
+        {error && <p className="error">{error}</p>}
 
-          <form onSubmit={handleSubmit} className="register-form">
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              placeholder="Username"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Email"
-              required
-            />
-            <input
-              type={showPassword ? 'text' : 'password'}
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Password"
-              required
-            />
-            <input
-              type={showPassword ? 'text' : 'password'}
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Confirm Password"
-              required
-            />
-
-            <div className="show-password-toggle">
-              <label htmlFor="showPassword" className="toggle-label">
-                <input
-                  type="checkbox"
-                  id="showPassword"
-                  checked={showPassword}
-                  onChange={togglePasswordVisibility}
-                  className="toggle-checkbox"
-                />
-                <span className="toggle-text">Show Password</span>
-              </label>
-            </div>
-
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              required
-            >
-              <option value="customer">Customer</option>
-              <option value="farmer">Farmer</option>
-            </select>
-
-            <button type="submit">Sign Up</button>
-          </form>
-        </div>
-      </div>
-
-      {showPopup && (
-        <SuccessPopup
-          message="Registration successful! Redirecting to login..."
-          showPopup={true}
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+          placeholder="Username"
+          required
         />
-      )}
-    </>
+
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Email"
+          required
+        />
+
+        <input
+          type={showPassword ? 'text' : 'password'}
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Password"
+          required
+        />
+
+        <input
+          type={showPassword ? 'text' : 'password'}
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          placeholder="Confirm Password"
+          required
+        />
+
+        <select
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
+        >
+          <option value="user">User</option>
+          <option value="farmer">Farmer</option>
+        </select>
+
+        <button type="button" onClick={togglePasswordVisibility} className="toggle-password-btn">
+          {showPassword ? 'Hide Passwords' : 'Show Passwords'}
+        </button>
+
+        <button type="submit">Register</button>
+      </form>
+    </div>
   );
 };
 
-
-
+export default Register;
 
 
 
@@ -179,7 +120,6 @@ export const Register = () => {
 // import { useNavigate } from 'react-router-dom';
 // import { SuccessPopup } from '../Utils/SucessPopUp';
 // import '../Stylesheets/Register.css';
-// // import { registerUser } from '../Services/RegisterService';
 
 // export const Register = () => {
 //   const navigate = useNavigate();
@@ -193,7 +133,6 @@ export const Register = () => {
 
 //   const [error, setError] = useState('');
 //   const [showPopup, setShowPopup] = useState(false);
-//   const [showPassword, setShowPassword] = useState(false);
 
 //   const handleChange = (e) => {
 //     setFormData(prev => ({
@@ -209,20 +148,23 @@ export const Register = () => {
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 
+//     setError(''); // Clear previous errors
+
 //     if (formData.password !== formData.confirmPassword) {
 //       return setError('Passwords do not match');
 //     }
-    
-//     const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
+//     const API_BASE = import.meta.env.VITE_API_URL;
+
+//     if (!API_BASE) {
+//       console.error('❌ VITE_API_URL is not defined. Please check your .env file.');
+//       return setError('Internal error. Please try again later.');
+//     }
+
 //     const url =
 //       formData.role === 'farmer'
-//         ? `${API_BASE}/api/farmers/farmers/register`
-//         : `${API_BASE}/auth/register`;
-
-//     // const url =
-//     //   formData.role === 'farmer'
-//     //     ? 'https://farmart-y80m.onrender.com/api/farmers/farmers/register'
-//     //     : 'https://farmart-y80m.onrender.com/auth/register';
+//         ? 'https://farmart-y80m.onrender.com/api/farmers/farmers/register'
+//         : 'https://farmart-y80m.onrender.com/auth/register';
 
 //     try {
 //       const res = await fetch(url, {
@@ -236,8 +178,10 @@ export const Register = () => {
 //         }),
 //       });
 
+//       const data = await res.json();
+
 //       if (!res.ok) {
-//         const data = await res.json();
+
 //         throw new Error(data.error || 'Registration failed');
 //       }
 
@@ -247,409 +191,70 @@ export const Register = () => {
 //     }
 //   };
 
-
-
 //   useEffect(() => {
 //     if (showPopup) {
 //       const timeout = setTimeout(() => {
 //         navigate('/login');
 //       }, 3000);
-
 //       return () => clearTimeout(timeout);
 //     }
 //   }, [showPopup, navigate]);
 
 //   return (
-//     <>
-//       <div className="register-container">
-//         <div className="register-left">
-//           <h1>Welcome!</h1>
-//           <p>Create an account to get started managing your farm and shopping easily.</p>
-//         </div>
-
-//         <div className="register-right">
-//           <h2 className="register-title">Register</h2>
-//           {error && <p className="register-error">{error}</p>}
-
-//           <form onSubmit={handleSubmit} className="register-form">
-//             <input
-//               type="text"
-//               name="username"
-//               value={formData.username}
-//               onChange={handleChange}
-//               placeholder="Username"
-//               required
-//             />
-//             <input
-//               type="email"
-//               name="email"
-//               value={formData.email}
-//               onChange={handleChange}
-//               placeholder="Email"
-//               required
-//             />
-//             <input
-//               type={showPassword ? 'text' : 'password'}
-//               name="password"
-//               value={formData.password}
-//               onChange={handleChange}
-//               placeholder="Password"
-//               required
-//             />
-//             <input
-//               type={showPassword ? 'text' : 'password'}
-//               name="confirmPassword"
-//               value={formData.confirmPassword}
-//               onChange={handleChange}
-//               placeholder="Confirm Password"
-//               required
-//             />
-
-//             <div className="show-password-toggle">
-//               <label htmlFor="showPassword" className="toggle-label">
-//                 <input
-//                   type="checkbox"
-//                   id="showPassword"
-//                   checked={showPassword}
-//                   onChange={togglePasswordVisibility}
-//                   className="toggle-checkbox"
-//                 />
-//                 <span className="toggle-text">Show Password</span>
-//               </label>
+//     <div className="register-video-container">
+//       <video
+//         autoPlay
+//         loop
+//         muted
+//         playsInline
+//         className="background-video"
+//         src="/videos/Farmart-video-compressed.mp4"
+//         type="video/mp4"
+//       />
+//       <div className="form-overlay">
+//         <div className="form-box">
+//           <h2 className="form-title">Create an</h2>
+//           {error && <p className="form-error">{error}</p>}
+//           <form onSubmit={handleSubmit} className="form-fields">
+//             <div className="form-group">
+//               <label htmlFor="username">Username</label>
+//               <input id="username" type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Username" required />
 //             </div>
 
-//             <select
-//               name="role"
-//               value={formData.role}
-//               onChange={handleChange}
-//               required
-//             >
-//               <option value="customer">Customer</option>
-//               <option value="farmer">Farmer</option>
-//             </select>
+//             <div className="form-group">
+//               <label htmlFor="email">Email</label>
+//               <input id="email" type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
+//             </div>
 
-//             <button type="submit">Sign Up</button>
+//             <div className="form-group">
+//               <label htmlFor="password">Password</label>
+//               <input id="password" type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" required />
+//             </div>
+
+//             <div className="form-group">
+//               <label htmlFor="confirmPassword">Confirm</label>
+//               <input id="confirmPassword" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="Confirm Password" required />
+//             </div>
+
+//             <div className="form-group">
+//               <label htmlFor="role">Role</label>
+//               <select id="role" name="role" value={formData.role} onChange={handleChange} required>
+//                 <option value="customer">Customer</option>
+//                 <option value="farmer">Farmer</option>
+//               </select>
+//             </div>
+
+//             <button type="submit" className="form-button">Sign Up</button>
 //           </form>
+
 //         </div>
 //       </div>
-
 //       {showPopup && (
 //         <SuccessPopup
-//           message="succesfully logged in."
+//           message="Registration successful! Redirecting to login..."
 //           showPopup={true}
 //         />
 //       )}
-//     </>
-//   );
-// };
-
-
-
-
-
-
-
-
-
-
-// import React, { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { SuccessPopup } from '../Utils/SucessPopUp';
-// import '../Stylesheets/Register.css';
-
-
-// export const Register = () => {
-//   const navigate = useNavigate();
-//   const [formData, setFormData] = useState({
-//     username: '',
-//     email: '',
-//     password: '',
-//     confirmPassword: '',
-//     role: 'customer',
-//   });
-
-//   const [error, setError] = useState('');
-//   const [showPopup, setShowPopup] = useState(false);
-//   const [showPassword, setShowPassword] = useState(false);
-
-
-//   const handleChange = (e) => {
-//     setFormData(prev => ({
-//       ...prev,
-//       [e.target.name]: e.target.value,
-//     }));
-//   };
-
-//   const togglePasswordVisibility = () => {
-//     setShowPassword(prev => !prev);
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     if (formData.password !== formData.confirmPassword) {
-//       return setError('Passwords do not match');
-//     }
-
-//     const url =
-//       formData.role === 'farmer'
-//         ? 'https://farmart-y80m.onrender.com/api/farmers/farmers/register'
-//         : 'https://farmart-y80m.onrender.com/auth/register';
-
-//     try {
-//       const res = await fetch(url, {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({
-//           username: formData.username,
-//           email: formData.email,
-//           password: formData.password,
-//           role: formData.role,
-//         }),
-//       });
-
-//       if (!res.ok) {
-//         const data = await res.json();
-//         throw new Error(data.error || 'Registration failed');
-//       }
-
-//       setShowPopup(true);
-//     } catch (err) {
-//       setError(err.message);
-//     }
-//   };
-
-
-
-//   useEffect(() => {
-//     if (showPopup) {
-//       const timeout = setTimeout(() => {
-//         navigate('/login');
-//       }, 3000);
-
-//       return () => clearTimeout(timeout);
-//     }
-//   }, [showPopup, navigate]);
-
-//   return (
-//     <>
-//       <div className="login-container">
-//         <div className="login-box">
-//           <h2 className="login-title">Register</h2>
-//           {error && <p className="login-error">{error}</p>}
-
-//           <form onSubmit={handleSubmit} className="login-form">
-//             <input
-//               type="text"
-//               name="username"
-//               value={formData.username}
-//               onChange={handleChange}
-//               placeholder="Username"
-//               required
-//             />
-//             <input
-//               type="email"
-//               name="email"
-//               value={formData.email}
-//               onChange={handleChange}
-//               placeholder="Email"
-//               required
-//             />
-//             <input
-//               type={showPassword ? 'text' : 'password'}
-//               name="password"
-//               value={formData.password}
-//               onChange={handleChange}
-//               placeholder="Password"
-//               required
-//             />
-//             <input
-//               type={showPassword ? 'text' : 'password'}
-//               name="confirmPassword"
-//               value={formData.confirmPassword}
-//               onChange={handleChange}
-//               placeholder="Confirm Password"
-//               required
-//             />
-
-//         <div className="show-password-toggle">
-//          <label htmlFor="showPassword" className="toggle-label">
-//            <input
-//               type="checkbox"
-//               id="showPassword"
-//               checked={showPassword}
-//               onChange={togglePasswordVisibility}
-//               className="toggle-checkbox"
-//                 />
-//                 <span className="toggle-text">Show Password</span>
-//           </label>
-//        </div>
-
-
-//             <select
-//               name="role"
-//               value={formData.role}
-//               onChange={handleChange}
-//               required
-//             >
-//               <option value="customer">Customer</option>
-//               <option value="farmer">Farmer</option>
-//             </select>
-
-//             <button type="submit" className="login-button">
-//               Sign Up
-//             </button>
-//           </form>
-//         </div>
-//       </div>
-
-//       {showPopup && (
-//         <SuccessPopup
-//           message="Check your email for the verification link."
-//           showPopup={true}
-//         />
-//       )}
-//     </>
-//   );
-// };
-
-
-
-
-// gggg
-
-// import React, { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { SuccessPopup } from '../Utils/SucessPopUp'; 
-// import '../Stylesheets/Register.css';
-
-
-// export const Register = () => {
-//   const navigate = useNavigate();
-//   const [formData, setFormData] = useState({
-//     username: '',
-//     email: '',
-//     password: '',
-//     confirmPassword: '',
-//     role: 'customer',
-//   });
-
-//   const [error, setError] = useState('');
-//   const [showPopup, setShowPopup] = useState(false); 
-
-//   const handleChange = (e) => {
-//     setFormData(prev => ({
-//       ...prev,
-//       [e.target.name]: e.target.value,
-//     }));
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     if (formData.password !== formData.confirmPassword) {
-//       return setError('Passwords do not match');
-//     }
-
-//     const url =
-//       formData.role === 'farmer'
-//         ? 'https://farmart-y80m.onrender.com/api/farmers/farmers/register'
-//         : 'https://farmart-y80m.onrender.com/auth/register';
-
-//     try {
-//       const res = await fetch(url, {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({
-//           username: formData.username,
-//           email: formData.email,
-//           password: formData.password,
-//           role: formData.role,
-//         }),
-//       });
-
-//       if (!res.ok) {
-//         const data = await res.json();
-//         throw new Error(data.error || 'Registration failed');
-//       }
-
-//       setShowPopup(true); // Show the popup
-//     } catch (err) {
-//       setError(err.message);
-//     }
-//   };
-
-//   // Auto-redirect after showing popup
-//   useEffect(() => {
-//     if (showPopup) {
-//       const timeout = setTimeout(() => {
-//         navigate('/login');
-//       }, 3000); // ⏳ 3 seconds
-
-//       return () => clearTimeout(timeout); // Clean up on unmount
-//     }
-//   }, [showPopup, navigate]);
-
-//   return (
-//     <>
-//       <div className="login-container">
-//         <div className="login-box">
-//           <h2 className="login-title">Register</h2>
-//           {error && <p className="login-error">{error}</p>}
-//           <form onSubmit={handleSubmit} className="login-form">
-//             <input
-//               type="text"
-//               name="username"
-//               value={formData.username}
-//               onChange={handleChange}
-//               placeholder="Username"
-//               required
-//             />
-//             <input
-//               type="email"
-//               name="email"
-//               value={formData.email}
-//               onChange={handleChange}
-//               placeholder="Email"
-//               required
-//             />
-//             <input
-//               type="password"
-//               name="password"
-//               value={formData.password}
-//               onChange={handleChange}
-//               placeholder="Password"
-//               required
-//             />
-//             <input
-//               type="password"
-//               name="confirmPassword"
-//               value={formData.confirmPassword}
-//               onChange={handleChange}
-//               placeholder="Confirm Password"
-//               required
-//             />
-//             <select
-//               name="role"
-//               value={formData.role}
-//               onChange={handleChange}
-//               required
-//             >
-//               <option value="customer">Customer</option>
-//               <option value="farmer">Farmer</option>
-//             </select>
-
-//             <button type="submit" className="login-button">Sign Up</button>
-//           </form>
-//         </div>
-//       </div>
-
-//       {showPopup && (
-//         <SuccessPopup
-//           message="Check your email for the verification link."
-//           showPopup={true}
-//         />
-//       )}
-//     </>
+//     </div>
 //   );
 // };

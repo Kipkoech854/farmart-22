@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import '../Stylesheets/OverheadClassifiers.css';
 import { Dropdown } from "../Utils/Dropdown";
+import axios from "axios";
 
 import { AllOrders } from "./AllOrders";
 import { PaidOrders } from "./PaidOrders";
@@ -10,19 +11,42 @@ import { RejectedOrders } from './RejectedOrders';
 import { DeliveredOrders } from './DeliveredOrders';
 import { NotDelivered } from "./NotDelivered";
 import { NotPaid } from "./NotPaid"; 
+import { getUserRole } from "../utils/decodeToken";
 
 export const OverheadClassifiers = () => {
   const [selected, setSelected] = useState(null);
-  const role = 'customer'
-  // Mapping dropdown values to components
+  const [orders, setOrders] = useState([]);
+  const role = getUserRole();
+
+
+   useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const { data } = await axios.get("https://farmart-y80m.onrender.com/api/Order/all", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setOrders(data);
+      } catch (error) {
+        console.error("Failed to fetch orders", error);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  
+ 
   const componentMap = {
-    'Pending': <PendingOrders />,
-    'Confirmed': <ConfirmedOrders />,
-    'Rejected': <RejectedOrders />,
-    'Delivered': <DeliveredOrders />,
-    'Not delivered': <NotDelivered />,
-    'Paid': <PaidOrders />,
-    'Not paid': <NotPaid />
+    'Pending': <PendingOrders order={orders} setOrders={setOrders}/>,
+    'Confirmed': <ConfirmedOrders order={orders} />,
+    'Rejected': <RejectedOrders order={orders} setOrders={setOrders}/>,
+    'Delivered': <DeliveredOrders order={orders}/>,
+    'Not delivered': <NotDelivered order={orders}/>,
+    'Paid': <PaidOrders order={orders}/>,
+    'Not paid': <NotPaid order={orders}/>
   };
 
   // Determine which component to render

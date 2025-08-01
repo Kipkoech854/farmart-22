@@ -17,7 +17,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch("http://localhost:5555/api/farmers", {
+    fetch("https://farmart-y80m.onrender.com/api/farmers", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -45,35 +45,54 @@ const EditProfile = () => {
   };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  if (!validateForm()) return;
+    e.preventDefault();
+    if (!validateForm()) return;
 
-  const token = localStorage.getItem("token");
-  fetch("http://localhost:5555/api/farmers", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(formData),
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error("Update failed");
-      return res.json();
-    })
-    .then(() => {
-      setMessage("Profile updated successfully!");
-      setTimeout(() => navigate("/farmers/profile"), 1000);
-    })
-    .catch(() => {
-      setMessage("");
-      setError("Something went wrong.");
-    });
-};
+    const token = localStorage.getItem("token");
+    const form = new FormData();
+    form.append("username", formData.username);
+    form.append("email", formData.email);
+    form.append("phone", formData.phone);
+    form.append("password", formData.password);
+    if (formData.profile_picture instanceof File) {
+      form.append("profile_picture", formData.profile_picture);
+    }
 
+    fetch("https://farmart-y80m.onrender.com/api/farmers/farmers", {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: form,
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Update failed");
+        return res.json();
+      })
+      .then(() => {
+        setMessage("Profile updated successfully!");
+        setTimeout(() => navigate("/farmers/profile"), 1000);
+      })
+      .catch(() => {
+        setMessage("");
+        setError("Something went wrong.");
+      });
+  };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, files } = e.target;
+    if (name === "profile_picture") {
+      setFormData({ ...formData, profile_picture: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const getAvatarPreview = () => {
+    if (formData.profile_picture instanceof File) {
+      return URL.createObjectURL(formData.profile_picture);
+    }
+    return formData.profile_picture || "https://via.placeholder.com/120?text=Avatar";
   };
 
   return (
@@ -84,6 +103,15 @@ const EditProfile = () => {
 
         {error && <div className="error-msg">{error}</div>}
         {message && <div className="success-msg">{message}</div>}
+
+        {/* Avatar preview */}
+        <div className="avatar-preview">
+          <img
+            src={getAvatarPreview()}
+            alt="Avatar Preview"
+            className="avatar-img"
+          />
+        </div>
 
         <form onSubmit={handleSubmit}>
           <label>Username:</label>
@@ -107,21 +135,13 @@ const EditProfile = () => {
             onChange={handleChange}
           />
 
-          <label>Profile Picture URL:</label>
+          <label>Profile Picture:</label>
           <input
             name="profile_picture"
-            value={formData.profile_picture}
+            type="file"
+            accept="image/*"
             onChange={handleChange}
           />
-
-         
-          {formData.profile_picture && (
-            <img
-              src={formData.profile_picture}
-              alt="Preview"
-              className="profile-preview"
-            />
-          )}
 
           <label>New Password (optional):</label>
           <input
@@ -139,3 +159,4 @@ const EditProfile = () => {
 };
 
 export default EditProfile;
+

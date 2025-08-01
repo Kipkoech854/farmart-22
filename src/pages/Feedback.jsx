@@ -19,7 +19,7 @@ const Feedback = () => {
     setSubmitting(true);
 
     try {
-      const res = await fetch('http://localhost:10000/api/feedback', {
+      const res = await fetch('https://farmart-y80m.onrender.com/api/feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

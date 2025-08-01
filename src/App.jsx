@@ -2,10 +2,15 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+
+
+import appRoutes from './Routes/Routes'
+
+
 import { CartProvider } from "./context/CartContext";
 
-// ✅ Import your route definitions
-import appRoutes from "./Routes/Routes";
+
+
 
 function App() {
   return (

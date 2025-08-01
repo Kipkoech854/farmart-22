@@ -94,11 +94,12 @@ const SearchSortFilter = ({ counties, breeds, onSearchFilter, onSort }) => {
       <FormControl size="small" sx={{ minWidth: 120, ml: 'auto' }}>
         <InputLabel>Sort By</InputLabel>
         <Select
-          defaultValue="price"
+          defaultValue="all"
           label="Sort By"
           onChange={(e) => onSort(e.target.value)}
           startAdornment={<Sort />}
         >
+          <MenuItem value="all">All</MenuItem>
           <MenuItem value="price">Price (Low-High)</MenuItem>
           <MenuItem value="name">Name (A-Z)</MenuItem>
           <MenuItem value="age">Age (Youngest)</MenuItem>

@@ -60,7 +60,7 @@ export const allOrders = async () => {
 
   } catch (error) {
     console.error('Error fetching all orders:', error);
-    throw error; // optional: so caller can handle it too
+    throw error; 
   }
 };
 

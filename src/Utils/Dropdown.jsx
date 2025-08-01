@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../Stylesheets/Dropdown.css';
 
- export const Dropdown = ({ label, options, onSelect }) => {
+export const Dropdown = ({ label, options, onSelect }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(label);
 
@@ -18,15 +18,15 @@ import '../Stylesheets/Dropdown.css';
       </button>
       {open && (
         <ul className="dropdown-menu">
-          {options.map((option, idx) => (
-            <li key={idx} onClick={() => handleSelect(option)}>
-              {option}
-            </li>
-          ))}
+          <div className="dropdown-menu-scroll">
+            {options.map((option, idx) => (
+              <li key={idx} onClick={() => handleSelect(option)}>
+                {option}
+              </li>
+            ))}
+          </div>
         </ul>
       )}
     </div>
   );
 };
-
-

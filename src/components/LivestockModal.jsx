@@ -1,26 +1,5 @@
 import React from 'react';
-import {
-  Modal,
-  Box,
-  Typography,
-  Button,
-  Grid
-} from '@mui/material';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '90%',
-  maxWidth: 800,
-  bgcolor: 'background.paper',
-  borderRadius: 3,
-  boxShadow: 24,
-  p: 4,
-  maxHeight: '90vh',
-  overflowY: 'auto'
-};
+import '../Stylesheets/LivestockModal.css';
 
 const LivestockModal = ({ livestock, onClose, onAddToCart, onBuyNow }) => {
   if (!livestock) return null;
@@ -28,60 +7,48 @@ const LivestockModal = ({ livestock, onClose, onAddToCart, onBuyNow }) => {
   const { name, breed, age, type, description, price, is_available, images = [] } = livestock;
 
   return (
-    <Modal open={true} onClose={onClose}>
-      <Box sx={style}>
-        <Typography variant="h5" gutterBottom>{name}</Typography>
-        <Typography variant="subtitle1" color="text.secondary">{breed} · {type}</Typography>
-        <Typography variant="body2" sx={{ mt: 1 }}>{description}</Typography>
-        <Typography variant="h6" sx={{ mt: 2 }}>Age: {age} years</Typography>
-        <Typography variant="h6" color="primary">Price: Ksh {price}</Typography>
+    <div className="livestock-modal-overlay" onClick={onClose}>
+      <div className="livestock-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="close-btn" onClick={onClose}>×</button>
+        <button className="like-btn">❤️</button>
 
-        <Grid container spacing={2} sx={{ mt: 2 }}>
-          {Array.isArray(images) && images.map((imgObj, idx) => (
-            <Grid item xs={12} sm={6} md={4} key={idx}>
-              <Box
-                component="img"
-                src={imgObj.url}
-                alt={`${name} - ${idx}`}
-                sx={{
-                  width: '100%',
-                  height: 200,
-                  objectFit: 'cover',
-                  borderRadius: 2,
-                  boxShadow: 1
-                }}
-                onError={(e) => e.target.style.display = 'none'}
-              />
-            </Grid>
+        <div className="livestock-images">
+          {images.map((imgObj, idx) => (
+            <img
+              key={idx}
+              src={imgObj.url}
+              alt={`${name}-${idx}`}
+              onError={(e) => (e.target.style.display = 'none')}
+            />
           ))}
-        </Grid>
+        </div>
 
-        <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
-          <Button
-            variant="contained"
-            disabled={!is_available}
+        <div className="livestock-details">
+          <h2>{name}</h2>
+          <p className="livestock-sub">{breed} · {type}</p>
+          <p className="livestock-desc">{description}</p>
+          <p><strong>Age:</strong> {age} years</p>
+          <p className="livestock-price">Ksh {price}</p>
+        </div>
+
+        <div className="livestock-buttons">
+          <button
             onClick={onAddToCart}
-            sx={{
-              backgroundColor: 'green',
-              '&:hover': {
-                backgroundColor: 'darkgreen'
-              }
-            }}
+            disabled={!is_available}
+            className="add-to-cart"
           >
             Add to Cart
-          </Button>
-          <Button
-            variant="outlined"
-            color="secondary"
-            disabled={!is_available}
+          </button>
+          <button
             onClick={onBuyNow}
+            disabled={!is_available}
+            className="buy-now"
           >
             Buy Now
-          </Button>
-          <Button variant="text" onClick={onClose}>Close</Button>
-        </Box>
-      </Box>
-    </Modal>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

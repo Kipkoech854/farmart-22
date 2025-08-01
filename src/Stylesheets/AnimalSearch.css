@@ -1,0 +1,125 @@
+.animal-search-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  position: relative;
+}
+
+.search-box {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: 2px solid #4CAF50;
+  border-radius: 25px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.search-input:focus {
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.spinner {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(76, 175, 80, 0.3);
+  border-radius: 50%;
+  border-top-color: #4CAF50;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.suggestions-list {
+  position: absolute;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 100;
+  margin-top: 5px;
+  padding: 0;
+  list-style: none;
+}
+
+.suggestion-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.suggestion-item:hover {
+  background-color: #f5f5f5;
+}
+
+.suggestion-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.animal-name {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.animal-details {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.animal-detail-preview {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  background: #f9f9f9;
+}
+
+.image-gallery {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+  overflow-x: auto;
+}
+
+.preview-image {
+  height: 100px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.view-details-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.view-details-btn:hover {
+  background-color: #45a049;
+}
+
+.error-message {
+  color: #f44336;
+  padding: 10px;
+  background: #ffebee;
+  border-radius: 4px;
+  margin-top: 10px;
+}

@@ -11,7 +11,9 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const { cart } = useCart();
-  const { user, logout, isLoggedIn } = useAuth(); // ✅ use from context
+  const { user, logout, isLoggedIn } = useAuth(); 
+  console.log("user:", user)
+  
 
   const role = getUserRole();
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -47,9 +49,9 @@ const Navbar = () => {
       case "farmer":
         return (
           <>
-            <Link to="/profile" onClick={toggleMenu}>My Profile</Link>
+            <Link to="/farmers/profile" onClick={toggleMenu}>My Profile</Link>
             <Link to="/orders" onClick={toggleMenu}>My Orders</Link>
-            <Link to="/add-animal" onClick={toggleMenu}>Add Animal</Link>
+            <Link to="/add-animal" onClick={toggleMenu}>Add Animal</Link> 
             <button onClick={handleLogout}>Logout</button>
           </>
         );
@@ -120,17 +122,26 @@ const Navbar = () => {
             <Link to="/signup">Sign up</Link>
           </>
         ) : (
-          <div className="avatar-wrapper" onClick={toggleDropdown}>
-            <div className="avatar-text">
-              {user?.username?.[0]?.toUpperCase()}
-              
-            </div>
-            {dropdownOpen && (
-              <div className="dropdown-menu">
-                {renderRoleMenu()}
-              </div>
-            )}
-          </div>
+         <div className="avatar-wrapper" onClick={toggleDropdown}>
+  {user?.profile_picture ? (
+    <img
+      src={`https://farmart-y80m.onrender.com/static/${user.profile_picture}`}
+      alt="Profile"
+      className="avatar-img"
+    />
+  ) : (
+    <div className="avatar-text">
+      {user?.username?.[0]?.toUpperCase()}
+    </div>
+  )}
+
+  {dropdownOpen && (
+    <div className="dropdown-menu">
+      {renderRoleMenu()}
+    </div>
+  )}
+</div>
+
         )}
       </div>
     </div>

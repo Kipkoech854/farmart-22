@@ -1,62 +1,52 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import { isTokenExpired } from '../utils/jwt';
+import { createContext, useContext, useEffect, useState } from "react";
+import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // ✅ NEW
-  const [loading, setLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAuthReady, setIsAuthReady] = useState(false);
 
-  const loadUser = () => {
-    try {
-      const stored = localStorage.getItem("user");
-      if (stored && stored !== "undefined") {
-        const parsed = JSON.parse(stored);
-        if (parsed.token && !isTokenExpired(parsed.token)) {
-          setUser(parsed);
-          setIsLoggedIn(true); // ✅ Set login status
-        } else {
-          localStorage.removeItem("user");
-          setUser(null);
-          setIsLoggedIn(false);
-        }
-      } else {
-        setUser(null);
-        setIsLoggedIn(false);
-      }
-    } catch (err) {
-      console.error("Failed to parse user from localStorage:", err);
-      localStorage.removeItem("user");
-      setUser(null);
-      setIsLoggedIn(false);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // ✅ Check localStorage on mount
   useEffect(() => {
-    loadUser();
-
-    window.addEventListener("storage", loadUser);
-    return () => window.removeEventListener("storage", loadUser);
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUser(decoded);
+        setIsLoggedIn(true);
+      } catch (error) {
+        console.error("Invalid token", error);
+        localStorage.removeItem("token");
+      }
+    }
+    setIsAuthReady(true);
   }, []);
 
-  const login = (userData) => {
-    localStorage.setItem("user", JSON.stringify(userData));
-    setUser(userData);
-    setIsLoggedIn(true); // ✅ On login
+  // Optional: post-login side effects
+  useEffect(() => {
+    if (isLoggedIn && user) {
+      console.log("🔥 Post-login logic here!");
+    }
+  }, [isLoggedIn, user]);
+
+  const login = (token) => {
+    localStorage.setItem("token", token);
+    const decoded = jwtDecode(token);
+    setUser(decoded);
+    setIsLoggedIn(true);
   };
 
   const logout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setUser(null);
-    setIsLoggedIn(false); // ✅ On logout
+    setIsLoggedIn(false);
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn, login, logout, loading }}>
-      {!loading && children}
+    <AuthContext.Provider value={{ user, isLoggedIn, isAuthReady, login, logout }}>
+      {children}
     </AuthContext.Provider>
   );
 };
