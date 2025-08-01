@@ -1,6 +1,7 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser, registerUser } from "../services/authService";
+import { login as loginUser, register as registerUser } from "../services/authService";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -53,10 +54,23 @@ export default AuthForm;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 // import { loginUser, registerUser } from "../services/authService";
-// import { isTokenExpired } from "../utils/jwt";
+// // import { isTokenExpired } from "../utils/jwt";
 
 // const AuthForm = () => {
 //   const [isLogin, setIsLogin] = useState(true);
@@ -106,3 +120,7 @@ export default AuthForm;
 // };
 
 // export default AuthForm;
+
+
+
+

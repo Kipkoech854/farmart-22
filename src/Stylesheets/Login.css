@@ -5,7 +5,7 @@
   height: 100vh;
   overflow: hidden;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
   font-family: sans-serif;
 }
@@ -55,7 +55,7 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 20px;
 }
 
 /* Inputs */

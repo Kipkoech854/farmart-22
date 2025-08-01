@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import '../Stylesheets/Login.css';
 import { SuccessPopup } from '../Utils/SucessPopUp';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ const Login = () => {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
-   const videoRef = useRef(null);
+  const videoRef = useRef(null);
 
   const handleLogin = async () => {
     setErrorMsg('');
@@ -21,8 +22,11 @@ const Login = () => {
     const credentials = { email, password };
 
     try {
-      // Attempt FARMER login
-      const farmerRes = await axios.post('https://farmart-y80m.onrender.com/api/farmers/farmers/login', credentials);
+      // Try Farmer Login
+      const farmerRes = await axios.post(
+        'https://farmart-y80m.onrender.com/api/farmers/farmers/login',
+        credentials
+      );
       const token = farmerRes.data.token;
       const farmer = farmerRes.data.farmer || farmerRes.data.user || farmerRes.data;
 
@@ -37,8 +41,11 @@ const Login = () => {
     }
 
     try {
-      // Attempt USER login
-      const userRes = await axios.post('https://farmart-y80m.onrender.com/auth/login', credentials);
+      // Try User Login
+      const userRes = await axios.post(
+        'https://farmart-y80m.onrender.com/auth/login',
+        credentials
+      );
       const token = userRes.data.access_token || userRes.data.token;
       const user = userRes.data.user || {};
 
@@ -66,6 +73,7 @@ const Login = () => {
     }
   }, [showPopup, navigate]);
 
+
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.playbackRate = 0.5;
@@ -77,6 +85,7 @@ const Login = () => {
     <div className="login-container">
       <video
         ref={videoRef}
+
         src="/videos/Farmart-video-compressed.mp4"
         autoPlay
         loop
@@ -93,17 +102,12 @@ const Login = () => {
         }}
       />
 
-
-
-
-      {/* Glass Morphism Login Box */}
       <div className="login-box">
         <h2 className="login-title">Login to your account</h2>
 
         {errorMsg && <div className="login-error">{errorMsg}</div>}
 
         <form className="login-form" onSubmit={(e) => e.preventDefault()}>
-          {/* Form inputs remain the same */}
           <div>
             <label className="login-label" htmlFor="email">Email</label>
             <input
@@ -113,6 +117,7 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
+              required
             />
           </div>
 
@@ -125,20 +130,20 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
+              required
             />
           </div>
 
-          <button
-            type="button"
-            onClick={handleLogin}
-            className="login-button"
-          >
+          <button type="button" className="login-button" onClick={handleLogin}>
             Log In
           </button>
+
+          <p style={{ textAlign: 'center', marginTop: '10px' }}>
+            Don’t have an account? <a href="/signup">Sign up</a>
+          </p>
         </form>
       </div>
 
-      {/* Popup remains the same */}
       {showPopup && (
         <SuccessPopup
           message="Login successful. Redirecting to shop..."
@@ -150,3 +155,9 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
+
+
