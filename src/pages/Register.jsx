@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SuccessPopup } from '../Utils/SucessPopUp';
 import '../Stylesheets/Register.css';
 
 export const Register = () => {
   const navigate = useNavigate();
+  const videoRef = useRef(null);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -67,16 +68,30 @@ export const Register = () => {
     }
   }, [showPopup, navigate]);
 
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.5;
+    }
+  }, []);
+
   return (
     <div className="register-video-container">
       <video
+        ref={videoRef}
+        src="/videos/Farmart-video-compressed.mp4"
         autoPlay
         loop
         muted
         playsInline
-        className="background-video"
-        src="/videos/Farmart-video-compressed.mp4"
-        type="video/mp4"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          objectFit: "cover",
+          zIndex: -1
+        }}
       />
       <div className="form-overlay">
         <div className="form-box">

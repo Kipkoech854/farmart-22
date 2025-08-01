@@ -18,7 +18,7 @@ const AnimalCard = ({ animal }) => {
         if (!image) return '';
         // Handle static uploads (paths starting with /static/uploads/)
         if (image.url.startsWith('/static/uploads/')) {
-            return `http://127.0.0.1:5555${image.url}`; // Prepend the base URL for static files
+            return `https://farmart-y80m.onrender.com${image.url}`; // Prepend the base URL for static files
         }
         return image.url;
     };

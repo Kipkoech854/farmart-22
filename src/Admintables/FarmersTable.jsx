@@ -12,7 +12,7 @@ export const FarmersTable = () => {
     useEffect(() => {
         const fetchFarmers = async () => {
             try {
-                const res = await axios.get('http://127.0.0.1:5555/api/farmers/adminFarmers');
+                const res = await axios.get('https://farmart-y80m.onrender.com/api/farmers/adminFarmers');
                 setFarmers(res.data);
             } catch (error) {
                 alert(error.message);
@@ -39,7 +39,7 @@ const FarmersTableContent = ({ farmers, onShowRegistration, showRegistration }) 
 
     const fetchAnimals = async (id) => {
         try {
-            const res = await axios.get(`http://127.0.0.1:5555/api/farmers/adminFarmers/${id}/animals`);
+            const res = await axios.get(`https://farmart-y80m.onrender.com/api/farmers/adminFarmers/${id}/animals`);
             setAnimals(res.data);
             setExpandedFarmer(id);
         } catch (error) {
@@ -49,7 +49,7 @@ const FarmersTableContent = ({ farmers, onShowRegistration, showRegistration }) 
 
     const toggleVerification = async (id) => {
         try {
-            await axios.put(`http://127.0.0.1:5555/api/farmers/farmers/${id}/toggle-verify`);
+            await axios.put(`https://farmart-y80m.onrender.com/api/farmers/farmers/${id}/toggle-verify`);
             window.location.reload();
         } catch (err) {
             alert('Failed. Check console.');

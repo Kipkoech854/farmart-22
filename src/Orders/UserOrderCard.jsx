@@ -69,7 +69,7 @@ const OrderItem = React.memo(({ order, onDelete, renderActions }) => {
 
           <div className="order-image">
             <img
-              src={hasImages ? `http://localhost:5555/${firstItem.images[0]}` : fallback}
+              src={hasImages ? `https://farmart-y80m.onrender.com/${firstItem.images[0]}` : fallback}
               alt={firstItem?.name || "animal"}
               onError={(e) => {
                 e.target.onerror = null;

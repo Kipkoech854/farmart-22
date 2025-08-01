@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 import '../Stylesheets/Login.css';
 import { SuccessPopup } from '../Utils/SucessPopUp';
@@ -12,6 +12,7 @@ const Login = () => {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+   const videoRef = useRef(null);
 
   const handleLogin = async () => {
     setErrorMsg('');
@@ -65,25 +66,32 @@ const Login = () => {
     }
   }, [showPopup, navigate]);
 
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.5;
+    }
+  }, []);
+
 
   return (
     <div className="login-container">
-  <video
-  src="/videos/Farmart-video-compressed.mp4"
-  autoPlay
-  loop
-  muted
-  playsInline
-  style={{
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    objectFit: "cover",
-    zIndex: -1
-  }}
-/>
+      <video
+        ref={videoRef}
+        src="/videos/Farmart-video-compressed.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          objectFit: "cover",
+          zIndex: -1
+        }}
+      />
 
 
 

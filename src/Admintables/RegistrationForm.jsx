@@ -31,7 +31,7 @@ export const RegistrationForm = ({newrole}) => {
 
         try {
             const res = await axios.post(
-                'http://127.0.0.1:5555/api/farmers/adminregister',
+                'https://farmart-y80m.onrender.com/api/farmers/adminregister',
                 {
                     email: formData.email,
                     username: formData.username,

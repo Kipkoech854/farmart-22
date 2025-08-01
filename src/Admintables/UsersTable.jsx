@@ -9,7 +9,7 @@ export const UsersTable = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const res = await axios.get('http://127.0.0.1:5555/api/User/adminUsers');
+                const res = await axios.get('https://farmart-y80m.onrender.com/api/User/adminUsers');
                 setUsers(res.data); 
             } catch (error) {
                 alert(error);

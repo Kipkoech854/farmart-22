@@ -67,7 +67,7 @@ export const LivestockPage = () => {
   const handleLike = async (animal) => {
     try {
       const res = await axios.post(
-        `http://127.0.0.1:5555/api/toggle/${animal.id}`,
+        `https://farmart-y80m.onrender.com/api/toggle/${animal.id}`,
         {}, // body is empty unless you need to send data
         {
           headers: {

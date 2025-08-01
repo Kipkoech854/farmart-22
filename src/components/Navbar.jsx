@@ -16,6 +16,7 @@ const Navbar = () => {
   
 
   const role = getUserRole();
+  console.log('role:', role)
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
