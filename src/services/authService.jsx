@@ -10,7 +10,7 @@
 
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:10000';
+const API_BASE_URL = 'https://farmart-y80m.onrender.com';
 
 export const login = async ({ email, password }) => {
   try {

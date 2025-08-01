@@ -5,24 +5,24 @@ import { SuccessPopup } from '../Utils/SucessPopUp';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
   const videoRef = useRef(null);
 
   const handleLogin = async () => {
     setErrorMsg('');
-    localStorage.removeItem("user");
+    setLoading(true);
+    localStorage.removeItem('user');
 
     const credentials = { email, password };
 
     try {
-      // Try Farmer Login
       const farmerRes = await axios.post(
         'https://farmart-y80m.onrender.com/api/farmers/farmers/login',
         credentials
@@ -31,17 +31,16 @@ const Login = () => {
       const farmer = farmerRes.data.farmer || farmerRes.data.user || farmerRes.data;
 
       if (token) {
-        localStorage.setItem("user", JSON.stringify({ token, ...farmer }));
+        localStorage.setItem('user', JSON.stringify({ token, ...farmer }));
         login(token);
         setShowPopup(true);
         return;
       }
     } catch (farmerError) {
-      console.warn("Farmer login failed:", farmerError.response?.data || farmerError.message);
+      console.warn('Farmer login failed:', farmerError.response?.data || farmerError.message);
     }
 
     try {
-      // Try User Login
       const userRes = await axios.post(
         'https://farmart-y80m.onrender.com/auth/login',
         credentials
@@ -50,7 +49,7 @@ const Login = () => {
       const user = userRes.data.user || {};
 
       if (typeof token === 'string' && token.length > 10) {
-        localStorage.setItem("user", JSON.stringify({ token, ...user }));
+        localStorage.setItem('user', JSON.stringify({ token, ...user }));
         login(token);
         setShowPopup(true);
         return;
@@ -58,8 +57,10 @@ const Login = () => {
         throw new Error('Token not found in user login response');
       }
     } catch (userError) {
-      console.warn("User login failed:", userError.response?.data || userError.message);
+      console.warn('User login failed:', userError.response?.data || userError.message);
       setErrorMsg('Invalid credentials for both farmer and user.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,32 +74,29 @@ const Login = () => {
     }
   }, [showPopup, navigate]);
 
-
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.playbackRate = 0.5;
     }
   }, []);
 
-
   return (
     <div className="login-container">
       <video
         ref={videoRef}
-
         src="/videos/Farmart-video-compressed.mp4"
         autoPlay
         loop
         muted
         playsInline
         style={{
-          position: "fixed",
+          position: 'fixed',
           top: 0,
           left: 0,
-          width: "100vw",
-          height: "100vh",
-          objectFit: "cover",
-          zIndex: -1
+          width: '100vw',
+          height: '100vh',
+          objectFit: 'cover',
+          zIndex: -1,
         }}
       />
 
@@ -134,8 +132,13 @@ const Login = () => {
             />
           </div>
 
-          <button type="button" className="login-button" onClick={handleLogin}>
-            Log In
+          <button
+            type="button"
+            className="login-button"
+            onClick={handleLogin}
+            disabled={loading}
+          >
+            {loading ? 'Logging in...' : 'Log In'}
           </button>
 
           <p style={{ textAlign: 'center', marginTop: '10px' }}>

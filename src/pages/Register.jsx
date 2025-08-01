@@ -7,8 +7,9 @@ export const Register = () => {
   const navigate = useNavigate();
   const videoRef = useRef(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // NEW
   const [showPassword, setShowPassword] = useState(false);
-  const [showPopup, setShowPopup] = useState(false); // Added missing state
+  const [showPopup, setShowPopup] = useState(false);
 
   const [formData, setFormData] = useState({
     username: '',
@@ -27,29 +28,58 @@ export const Register = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    setError('');
+ const handleSubmit = async e => {
+  e.preventDefault();
+  setError('');
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match.');
-      return;
+  if (formData.password !== formData.confirmPassword) {
+    setError('Passwords do not match.');
+    return;
+  }
+
+  try {
+    setLoading(true); // Start loading
+
+    const submitData = {
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+      // These two are optional, included if needed:
+      phone: formData.phone || undefined,
+      profile_picture: formData.profile_picture || undefined
+    };
+
+    let endpoint = '';
+    if (formData.role === 'farmer') {
+      endpoint = 'http://127.0.0.1:5555/api/farmers/farmers/register';
+    } else {
+      // Treat any non-farmer role as a normal user
+      submitData.role = formData.role;
+      endpoint = 'http://127.0.0.1:5555/auth/register';
     }
 
-    try {
-      const submitData = {
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-        role: formData.role,
-      };
-      await register(submitData);
-      setShowPopup(true); // Show popup before navigation
-    } catch (err) {
-      console.error('Registration error:', err);
-      setError(err?.response?.data?.message || 'Registration failed.');
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(submitData)
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      throw new Error(result?.msg || result?.error || 'Registration failed.');
     }
-  };
+
+    setShowPopup(true); // Show success
+  } catch (err) {
+    console.error('Registration error:', err);
+    setError(err.message || 'Registration failed.');
+  } finally {
+    setLoading(false); // Stop loading
+  }
+};
+
 
   useEffect(() => {
     if (showPopup) {
@@ -89,6 +119,7 @@ export const Register = () => {
         <div className="form-box">
           <h2 className="form-title">Create an Account</h2>
           {error && <p className="form-error">{error}</p>}
+          {showPopup && <p className="form-success">Registration successful! Redirecting...</p>}
           <form onSubmit={handleSubmit} className="form-fields">
             <div className="form-group">
               <label htmlFor="username">Username</label>
@@ -150,7 +181,7 @@ export const Register = () => {
                 value={formData.role}
                 onChange={handleChange}
               >
-                <option value="user">User</option>
+                <option value="customer">User</option>
                 <option value="farmer">Farmer</option>
               </select>
             </div>
@@ -163,8 +194,8 @@ export const Register = () => {
               {showPassword ? 'Hide Passwords' : 'Show Passwords'}
             </button>
 
-            <button type="submit" className="submit-btn">
-              Register
+            <button type="submit" className="submit-btn" disabled={loading}>
+              {loading ? 'Registering...' : 'Register'}
             </button>
           </form>
         </div>
@@ -172,4 +203,3 @@ export const Register = () => {
     </div>
   );
 };
-
