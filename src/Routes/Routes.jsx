@@ -18,7 +18,7 @@ import FarmerLogout from "../pages/Farmers/FarmerLogout";
 import ResetPassword from "../pages/Farmers/ResetPassword";
 
 import Login from "../pages/Login";
-import {Register} from "../pages/Register";
+import { Register } from "../pages/Register";
 import { Checkout } from "../Utils/Checkout";
 import { ConfirmedOrders } from "../Orders/ConfirmedOrders";
 import { LivestockPage } from '../pages/LivestockPage';
