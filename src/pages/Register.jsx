@@ -51,11 +51,11 @@ export const Register = () => {
 
     let endpoint = '';
     if (formData.role === 'farmer') {
-      endpoint = 'http://127.0.0.1:5555/api/farmers/farmers/register';
+      endpoint = 'https://farmart-y80m.onrender.com/api/farmers/farmers/register';
     } else {
       // Treat any non-farmer role as a normal user
       submitData.role = formData.role;
-      endpoint = 'http://127.0.0.1:5555/auth/register';
+      endpoint = 'https://farmart-y80m.onrender.com/auth/register';
     }
 
     const response = await fetch(endpoint, {
