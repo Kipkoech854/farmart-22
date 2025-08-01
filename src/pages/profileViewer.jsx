@@ -1,69 +1,174 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { logout } from '../redux/actions/authActions';
-import '../Stylesheets/profileViewer.css';
+import { SuccessPopup } from '../Utils/SucessPopUp';
+import '../Stylesheets/Register.css';
 
-const ProfileViewer = () => {
-  const dispatch = useDispatch();
+
+export const Register = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token'); // Or use context if needed
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    role: 'customer',
+  });
 
-  const [userData, setUserData] = useState(null);
+  const [error, setError] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.get('http://localhost:5555/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setUserData(response.data.user);
-      } catch (error) {
-        console.error('Error fetching profile:', error);
-        if (error.response && error.response.status === 401) {
-          dispatch(logout());
-          navigate('/login');
-        }
-      }
-    };
-
-    if (token) {
-      fetchProfile();
-    } else {
-      navigate('/login');
-    }
-  }, [dispatch, navigate, token]);
-
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate('/login');
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  if (!userData) {
-    return <div className="profile-loading">Loading profile...</div>;
-  }
+  const togglePasswordVisibility = () => {
+    setShowPassword(prev => !prev);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setError(''); // Clear previous errors
+
+    if (formData.password !== formData.confirmPassword) {
+      return setError('Passwords do not match');
+    }
+
+    const API_BASE = import.meta.env.VITE_API_URL;
+
+    if (!API_BASE) {
+      console.error('❌ VITE_API_URL is not defined. Please check your .env file.');
+      return setError('Internal error. Please try again later.');
+    }
+
+    const url =
+      formData.role === 'farmer'
+        ? `${API_BASE}/api/farmers/farmers/register`
+        : `${API_BASE}/auth/register`;
+
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+
+        throw new Error(data.error || 'Registration failed');
+      }
+
+      setShowPopup(true);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+
+  useEffect(() => {
+    if (showPopup) {
+      const timeout = setTimeout(() => {
+        navigate('/login');
+      }, 3000);
+      return () => clearTimeout(timeout);
+    }
+  }, [showPopup, navigate]);
 
   return (
-    <div className="profile-viewer">
-      <div className="profile-card">
-        <h2 className="profile-title">My Profile</h2>
-        <div className="profile-info">
-          <p><strong>Full Name:</strong> {userData.full_name}</p>
-          <p><strong>Username:</strong> {userData.username}</p>
-          <p><strong>Email:</strong> {userData.email}</p>
-          <p><strong>Role:</strong> {userData.role}</p>
+    <>
+      <div className="register-container">
+        <div className="register-left">
+          <h1>Welcome!</h1>
+          <p>Create an account to get started managing your farm and shopping easily.</p>
         </div>
-        <button className="logout-btn" onClick={handleLogout}>Logout</button>
+
+        <div className="register-right">
+          <h2 className="register-title">Register</h2>
+          {error && <p className="register-error">{error}</p>}
+
+          <form onSubmit={handleSubmit} className="register-form">
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="Username"
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email"
+              required
+            />
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Password"
+              required
+            />
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm Password"
+              required
+            />
+
+            <div className="show-password-toggle">
+              <label htmlFor="showPassword" className="toggle-label">
+                <input
+                  type="checkbox"
+                  id="showPassword"
+                  checked={showPassword}
+                  onChange={togglePasswordVisibility}
+                  className="toggle-checkbox"
+                />
+                <span className="toggle-text">Show Password</span>
+              </label>
+            </div>
+
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              required
+            >
+              <option value="customer">Customer</option>
+              <option value="farmer">Farmer</option>
+            </select>
+
+            <button type="submit">Sign Up</button>
+          </form>
+        </div>
       </div>
-    </div>
+
+      {showPopup && (
+        <SuccessPopup
+          message="Registration successful! Redirecting to login..."
+          showPopup={true}
+        />
+      )}
+    </>
   );
 };
-
-export default ProfileViewer;
+export default Register;
 
 
 
