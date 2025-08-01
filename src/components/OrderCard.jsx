@@ -5,7 +5,6 @@ import '../Stylesheets/OrderCard.css';
 export const AnimalCard = ({ animal }) => {
   const [imageIndex, setImageIndex] = useState(0);
 
-  // ✅ Corrected image URL extraction logic
   const images = Array.isArray(animal.images)
     ? animal.images
         .map(img =>
@@ -15,7 +14,6 @@ export const AnimalCard = ({ animal }) => {
         )
         .filter(Boolean)
     : [];
-    console.log('images:',images)
 
   const handlePrevImage = () => {
     setImageIndex(prev => (prev > 0 ? prev - 1 : images.length - 1));
@@ -25,13 +23,11 @@ export const AnimalCard = ({ animal }) => {
     setImageIndex(prev => (prev < images.length - 1 ? prev + 1 : 0));
   };
 
-  console.log("animal:", animal);
-
   return (
-    <div className="animal-card">
-      <div className="animal-card-image-container">
+    <div className="animal-card-landscape">
+      <div className="animal-card-image-container-landscape">
         <img
-          className="animal-card-image"
+          className="animal-card-image-landscape"
           src={images[imageIndex] || 'https://via.placeholder.com/800x400?text=No+Image'}
           alt={animal.name}
         />
@@ -57,7 +53,7 @@ export const AnimalCard = ({ animal }) => {
         )}
       </div>
 
-      <div className="animal-card-content">
+      <div className="animal-card-content-landscape">
         <h2 className="animal-card-title">{animal.name}</h2>
 
         <div className="animal-card-chips">
@@ -110,7 +106,7 @@ export const OrderCard = ({ animals }) => {
     : [];
 
   return (
-    <div className="order-card-container">
+    <div className="order-card-container-landscape">
       {normalizedAnimals.map((animal, index) => (
         <AnimalCard key={`animal-${index}`} animal={animal} />
       ))}

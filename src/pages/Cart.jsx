@@ -22,8 +22,13 @@ function Cart() {
 
   return (
     <div className='cart-page'>
-       <OrderCard animals={cart}/>
-       <Checkout/>
+     <section className='cart-section'>
+        <OrderCard animals={cart}/>
+     </section>
+     <section className='checkout-section'>
+      <Checkout/>
+     </section>
+     
     </div>
   );
 }

@@ -1,79 +1,122 @@
-/* styles/Register.css */
-
-.register-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f8f9fa; /* light neutral background */
-  padding: 2rem;
-  font-family: 'Quicksand', sans-serif;
+/* Fullscreen video container */
+.register-video-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
 }
 
-.register-form {
-  background-color: #fff;
-  padding: 2.5rem 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+/* Video background */
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 420px;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* Translucent form overlay */
+.form-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Form box */
+.form-box {
+  margin-top: 100px;
+  background-color: rgba(255, 255, 255, 0.15); /* translucent white */
+  backdrop-filter: blur(10px);
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  color: #000;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #000;
+}
+
+.form-error {
+  color: red;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form-fields {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.register-title {
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.register-form label {
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-  color: #333;
-}
-
-.register-form input,
-.register-form select {
+.form-fields input,
+.form-fields select {
   padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
-.register-form input:focus,
-.register-form select:focus {
-  border-color: #007bff;
-}
-
-.register-form button {
-  padding: 0.75rem;
-  background-color: #007bff;
-  color: white;
-  font-size: 1rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #000;
+}
+
+.form-button {
+  padding: 0.75rem;
+  background-color: #3c8f5c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.register-form button:hover {
-  background-color: #0056b3;
+.form-button:hover {
+  background-color: #367a4e;
+}
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
 }
 
-.register-error {
-  color: #dc3545;
-  text-align: center;
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.form-group label {
+  width: 30%;
+  color: black;
+  font-weight: 500;
   font-size: 0.95rem;
+  font-family: Quicksand, sans-serif;
 }
 
-.register-success {
-  color: #28a745;
-  text-align: center;
-  font-size: 0.95rem;
+.form-group input,
+.form-group select {
+  width: 70%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.form-box {
+  width: 600px;
+  max-width: 95%;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.6); /* translucent */
+  border-radius: 10px;
 }

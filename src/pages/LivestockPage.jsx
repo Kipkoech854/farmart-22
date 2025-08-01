@@ -64,6 +64,23 @@ export const LivestockPage = () => {
   };
 
 
+  const handleLike = async (animal) => {
+    try {
+      const res = await axios.post(
+        `http://127.0.0.1:5555/api/toggle/${animal.id}`,
+        {}, // body is empty unless you need to send data
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+      console.log('Animal liked/unliked successfully', res.data);
+    } catch (error) {
+      console.log('Could not like animal:', error.message);
+    }
+  };
+
 
   const handleSearchResults = (results) => {
     let toSort = results || animals || [];
@@ -157,6 +174,7 @@ export const LivestockPage = () => {
                 livestock={animal}
                 onViewDetails={() => setSelectedAnimal(animal)}
                 onAddToCart={() => handleAddToCart(animal)}
+                onToggleLike={() => (handeLike(animal))}
               />
             </Grid>
           ))}

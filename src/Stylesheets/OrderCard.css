@@ -1,4 +1,192 @@
-/* OrderCard.css */
+/* Landscape layout styles - existing layout kept intact */
+.order-card-container-landscape {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 90px;
+  justify-self: flex-start;
+  align-self: flex-start;
+}
+
+.animal-card-landscape {
+  display: flex;
+  width: 60vw;
+  max-height: 250px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.animal-card-image-container-landscape {
+  position: relative;
+  width: 50%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.animal-card-image-landscape {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Enhanced content styling */
+.animal-card-content-landscape {
+  width: 50%;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to right, #f8f8f8, #ffffff);
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.animal-card-title {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.animal-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.animal-card-chip {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  background: #ecf0f1;
+  color: #7f8c8d;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.animal-card-chip-primary {
+  background: #e8f5e9;
+  color: #27ae60;
+  font-weight: 500;
+}
+
+.animal-card-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #e74c3c;
+  margin: 0.5rem 0;
+}
+
+.animal-card-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #bdc3c7, transparent);
+  margin: 0.75rem 0;
+}
+
+.animal-card-description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #34495e;
+  margin: 0.5rem 0;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.animal-card-status-title {
+  font-size: 0.875rem;
+  color: #7f8c8d;
+  margin: 0.5rem 0 0.25rem 0;
+  font-weight: 500;
+}
+
+.animal-card-status {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.animal-card-status-available {
+  background: #e8f5e9;
+  color: #27ae60;
+}
+
+.animal-card-status-sold {
+  background: #ffebee;
+  color: #e74c3c;
+}
+
+.animal-card-actions {
+  margin-top: 1rem;
+}
+
+/* Arrow buttons (kept your existing colors) */
+.animal-card-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 10;
+  color: white;
+  transition: transform 0.2s;
+}
+
+.animal-card-arrow:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.animal-card-arrow-left {
+  left: 10px;
+  background-color: rgb(16, 59, 16);
+}
+
+.animal-card-arrow-right {
+  right: 10px;
+  background-color: rgb(16, 59, 16);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .animal-card-landscape {
+    flex-direction: column;
+    width: 90vw;
+    max-height: none;
+  }
+  
+  .animal-card-image-container-landscape,
+  .animal-card-content-landscape {
+    width: 100%;
+  }
+  
+  .animal-card-image-container-landscape {
+    height: 300px;
+  }
+
+  .animal-card-content-landscape {
+    padding: 1rem;
+  }
+}
+/* OrderCard.css 
 .order-card-container {
   max-width: 60vw;
   margin: 0 auto;
@@ -159,45 +347,6 @@
   justify-content: flex-end;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .order-card-container {
-    max-width: 80vw;
-  }
-}
-
-@media (max-width: 768px) {
-  .order-card-container {
-    max-width: 90vw;
-  }
-  
-  .animal-card-image-container {
-    height: 250px;
-  }
-}
-
-@media (max-width: 480px) {
-  .order-card-container {
-    max-width: 95vw;
-    padding: 10px;
-  }
-  
-  .animal-card {
-    flex-direction: column;
-  }
-  
-  .animal-card-image-container {
-    height: 200px;
-  }
-  
-  .animal-card-title {
-    font-size: 20px;
-  }
-  
-  .animal-card-price {
-    font-size: 18px;
-  }
-}
 
 
 

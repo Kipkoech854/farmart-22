@@ -1,5 +1,25 @@
-.cart-page{
-    display: flex;
-    flex-direction: row;
-    margin-top: 90px;
+/* Cart.css */
+.cart-page {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-content: space-around;
 }
+
+@media (min-width: 768px) {
+  .cart-page {
+    flex-direction: row;
+    gap: 30px;
+    align-items: flex-start;
+  }
+}
+
+/*.cart-section{
+  width: 60vw;
+}
+.checkout-section{
+  width: 40vw;
+  height: 150px;
+}*/

@@ -65,14 +65,37 @@ const Login = () => {
     }
   }, [showPopup, navigate]);
 
+
   return (
     <div className="login-container">
+  <video
+  src="/videos/Farmart-video-compressed.mp4"
+  autoPlay
+  loop
+  muted
+  playsInline
+  style={{
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    objectFit: "cover",
+    zIndex: -1
+  }}
+/>
+
+
+
+
+      {/* Glass Morphism Login Box */}
       <div className="login-box">
         <h2 className="login-title">Login to your account</h2>
 
         {errorMsg && <div className="login-error">{errorMsg}</div>}
 
         <form className="login-form" onSubmit={(e) => e.preventDefault()}>
+          {/* Form inputs remain the same */}
           <div>
             <label className="login-label" htmlFor="email">Email</label>
             <input
@@ -107,6 +130,7 @@ const Login = () => {
         </form>
       </div>
 
+      {/* Popup remains the same */}
       {showPopup && (
         <SuccessPopup
           message="Login successful. Redirecting to shop..."

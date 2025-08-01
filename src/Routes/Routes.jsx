@@ -4,7 +4,7 @@ import Authmodal from "../components/Authmodal";
 import {Home} from "../pages/Home";
 import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
-import {About} from "../pages/About";
+import About from "../pages/About";
 import Profile from "../pages/profileViewer";
 
 import ProfileView from "../pages/Farmers/ProfileView";
@@ -33,7 +33,7 @@ import { AdminPanel } from "../pages/AdminPanel";
 const appRoutes = [
   { path: "/", element: <Home /> },
   { path: "/cart", element: <Cart /> },
-  { path: "/about", element: <AdminPanel/> },
+  { path: "/about", element: <About/> },
   { path: "/shop", element: <LivestockPage/> },
 
   // General auth pages
